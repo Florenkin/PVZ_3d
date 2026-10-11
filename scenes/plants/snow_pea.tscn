@@ -1,0 +1,125 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/plants/peashooter.tscn" id="base_plant"]
+
+[ext_resource type="Script" path="res://scripts/snow_pea.gd" id="snow_script"]
+
+[sub_resource type="StandardMaterial3D" id="SnowBlue"]
+albedo_color = Color(0.49804, 0.79608, 0.93333, 1)
+roughness = 0.42
+
+
+[sub_resource type="StandardMaterial3D" id="SnowLip"]
+albedo_color = Color(0.72549, 0.93725, 0.97255, 1)
+roughness = 0.34
+
+
+[sub_resource type="StandardMaterial3D" id="SnowStem"]
+albedo_color = Color(0.36078, 0.65882, 0.74118, 1)
+roughness = 0.75
+
+
+[sub_resource type="StandardMaterial3D" id="SnowLeaves"]
+albedo_color = Color(0.44706, 0.78824, 0.85098, 1)
+roughness = 0.62
+
+
+[sub_resource type="StandardMaterial3D" id="SnowLeafLight"]
+albedo_color = Color(0.65098, 0.89804, 0.92549, 1)
+roughness = 0.58
+
+
+[sub_resource type="StandardMaterial3D" id="SnowInterior"]
+albedo_color = Color(0.15686, 0.34118, 0.45882, 1)
+roughness = 0.85
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="SnowEyes"]
+albedo_color = Color(0.10980, 0.27451, 0.39216, 1)
+roughness = 0.23
+
+
+[sub_resource type="StandardMaterial3D" id="IceCrystal"]
+albedo_color = Color(0.72157, 0.93725, 0.98039, 1)
+roughness = 0.25
+emission_enabled = true
+emission = Color(0.30, 0.65, 0.85, 1)
+emission_energy_multiplier = 0.12
+
+[sub_resource type="CylinderMesh" id="CrystalShape"]
+top_radius = 0
+bottom_radius = 0.08
+height = 0.30
+radial_segments = 5
+
+[node name="SnowPea" instance=ExtResource("base_plant")]
+script = ExtResource("snow_script")
+
+[node name="HeadBody" parent="Head"]
+material_override = SubResource("SnowBlue")
+
+[node name="BackBud" parent="Head"]
+material_override = SubResource("SnowBlue")
+
+[node name="OuterTube" parent="Head/Muzzle"]
+material_override = SubResource("SnowBlue")
+
+[node name="Lip" parent="Head/Muzzle"]
+material_override = SubResource("SnowLip")
+
+[node name="InnerCavity" parent="Head/Muzzle"]
+material_override = SubResource("SnowInterior")
+
+[node name="Root" parent="Stem"]
+material_override = SubResource("SnowStem")
+
+[node name="Lower" parent="Stem"]
+material_override = SubResource("SnowStem")
+
+[node name="Upper" parent="Stem"]
+material_override = SubResource("SnowStem")
+
+[node name="Leaf1" parent="Leaves"]
+material_override = SubResource("SnowLeafLight")
+
+[node name="Leaf2" parent="Leaves"]
+material_override = SubResource("SnowLeaves")
+
+[node name="Leaf3" parent="Leaves"]
+material_override = SubResource("SnowLeaves")
+
+[node name="Leaf4" parent="Leaves"]
+material_override = SubResource("SnowLeafLight")
+
+[node name="NearEye" parent="Head/Eyes"]
+material_override = SubResource("SnowEyes")
+
+[node name="FarEye" parent="Head/Eyes"]
+material_override = SubResource("SnowEyes")
+
+[node name="IceCrest" type="Node3D" parent="Head"]
+
+
+[node name="Crystal1" type="MeshInstance3D" parent="Head/IceCrest"]
+position = Vector3(-0.32, 0.25, -0.18)
+rotation = Vector3(0, -0.27, 0.85)
+scale = Vector3(0.85, 0.85, 0.85)
+layers = 1
+mesh = SubResource("CrystalShape")
+material_override = SubResource("IceCrystal")
+
+[node name="Crystal2" type="MeshInstance3D" parent="Head/IceCrest"]
+position = Vector3(-0.32, 0.25, 0)
+rotation = Vector3(0, 0.0, 0.65)
+scale = Vector3(1.25, 1.25, 1.25)
+layers = 1
+mesh = SubResource("CrystalShape")
+material_override = SubResource("IceCrystal")
+
+[node name="Crystal3" type="MeshInstance3D" parent="Head/IceCrest"]
+position = Vector3(-0.32, 0.25, 0.18)
+rotation = Vector3(0, 0.27, 0.85)
+scale = Vector3(0.85, 0.85, 0.85)
+layers = 1
+mesh = SubResource("CrystalShape")
+material_override = SubResource("IceCrystal")

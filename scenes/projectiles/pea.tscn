@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/pea_projectile.gd" id="projectile_script"]
+
+[sub_resource type="StandardMaterial3D" id="PeaGreen"]
+albedo_color = Color(0.37, 0.78, 0.15, 1)
+roughness = 0.35
+
+[sub_resource type="SphereMesh" id="PeaMesh"]
+radius = 0.12
+height = 0.24
+radial_segments = 24
+rings = 12
+
+[sub_resource type="SphereShape3D" id="PeaCollision"]
+radius = 0.12
+
+[node name="Pea" type="Area3D"]
+collision_layer = 8
+collision_mask = 4
+monitorable = false
+script = ExtResource("projectile_script")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("PeaMesh")
+material_override = SubResource("PeaGreen")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("PeaCollision")
+

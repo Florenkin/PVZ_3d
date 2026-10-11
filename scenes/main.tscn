@@ -1,0 +1,176 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="Script" path="res://scripts/demo.gd" id="demo_script"]
+
+[ext_resource type="Script" path="res://scripts/orbit_camera.gd" id="orbit_script"]
+
+[ext_resource type="PackedScene" path="res://scenes/plants/peashooter.tscn" id="plant_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/plants/repeater.tscn" id="repeater_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/plants/threepeater.tscn" id="threepeater_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/plants/gatling_pea.tscn" id="gatling_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/plants/snow_pea.tscn" id="snow_pea_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/plants/wall_nut.tscn" id="wall_nut_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/terrain/lawn_grid.tscn" id="lawn_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/characters/crazy_dave.tscn" id="dave_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/zombie.tscn" id="zombie_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/conehead_zombie.tscn" id="conehead_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/buckethead_zombie.tscn" id="buckethead_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/pole_vaulting_zombie.tscn" id="pole_zombie_scene"]
+
+[ext_resource type="PackedScene" path="res://scenes/environment/dave_house.tscn" id="house_scene"]
+
+[sub_resource type="BoxShape3D" id="BackgroundGroundShape"]
+size = Vector3(200, 0.25, 200)
+
+[sub_resource type="StandardMaterial3D" id="Backdrop"]
+albedo_color = Color(0.62745, 0.69020, 0.54902, 1)
+roughness = 1
+
+
+[sub_resource type="PlaneMesh" id="BackdropPlane"]
+size = Vector2(200, 200)
+
+[sub_resource type="ProceduralSkyMaterial" id="GardenSkyMaterial"]
+sky_top_color = Color(0.42, 0.71, 0.85, 1)
+sky_horizon_color = Color(0.84, 0.92, 0.85, 1)
+ground_bottom_color = Color(0.46, 0.57, 0.36, 1)
+ground_horizon_color = Color(0.84, 0.92, 0.85, 1)
+
+[sub_resource type="Sky" id="GardenSky"]
+sky_material = SubResource("GardenSkyMaterial")
+
+[sub_resource type="Environment" id="GardenEnvironment"]
+background_mode = 2
+sky = SubResource("GardenSky")
+ambient_light_source = 3
+ambient_light_color = Color(0.86, 0.92, 1, 1)
+ambient_light_energy = 0.4
+reflected_light_source = 2
+tonemap_mode = 0
+
+[node name="Garden" type="Node3D"]
+script = ExtResource("demo_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("GardenEnvironment")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.94, -0.65, -0.18)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 0.8
+shadow_enabled = true
+shadow_blur = 2.0
+directional_shadow_max_distance = 35.0
+shadow_bias = 0.04
+
+[node name="SoftFill" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.5, 2.7, 0)
+light_color = Color(0.84, 0.92, 1, 1)
+light_energy = 0.08
+
+[node name="Backdrop" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.425, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("BackdropPlane")
+material_override = SubResource("Backdrop")
+
+[node name="BackgroundGround" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.55, 0)
+collision_layer = 1
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BackgroundGround"]
+shape = SubResource("BackgroundGroundShape")
+
+[node name="LawnGrid" parent="." instance=ExtResource("lawn_scene")]
+
+
+[node name="Plants" type="Node3D" parent="."]
+
+
+[node name="Peashooter" parent="Plants" instance=ExtResource("plant_scene")]
+position = Vector3(-7.2, 0.025, 0)
+
+[node name="Repeater" parent="Plants" instance=ExtResource("repeater_scene")]
+position = Vector3(-7.2, 0.025, -2.4)
+
+[node name="Threepeater" parent="Plants" instance=ExtResource("threepeater_scene")]
+position = Vector3(-7.2, 0.025, 2.4)
+
+[node name="GatlingPea" parent="Plants" instance=ExtResource("gatling_scene")]
+position = Vector3(-7.2, 0.025, -4.8)
+
+[node name="SnowPea" parent="Plants" instance=ExtResource("snow_pea_scene")]
+position = Vector3(-7.2, 0.025, 4.8)
+
+[node name="WallNut" parent="Plants" instance=ExtResource("wall_nut_scene")]
+position = Vector3(7.2, 0.025, 4.8)
+
+[node name="Characters" type="Node3D" parent="."]
+
+
+[node name="CrazyDave" parent="Characters" instance=ExtResource("dave_scene")]
+position = Vector3(-9.6, 0.025, 0)
+rotation = Vector3(0, -1.5707963267948966, 0)
+restrict_to_lawn = true
+
+[node name="Enemies" type="Node3D" parent="."]
+
+
+[node name="Zombie" parent="Enemies" instance=ExtResource("zombie_scene")]
+position = Vector3(9.6, 0.025, 0)
+rotation = Vector3(0, 1.5707963267948966, 0)
+
+[node name="ConeheadZombie" parent="Enemies" instance=ExtResource("conehead_scene")]
+position = Vector3(9.6, 0.025, -2.4)
+rotation = Vector3(0, 1.5707963267948966, 0)
+
+[node name="BucketheadZombie" parent="Enemies" instance=ExtResource("buckethead_scene")]
+position = Vector3(9.6, 0.025, -4.8)
+rotation = Vector3(0, 1.5707963267948966, 0)
+
+[node name="PoleVaultingZombie" parent="Enemies" instance=ExtResource("pole_zombie_scene")]
+position = Vector3(9.6, 0.025, 4.8)
+rotation = Vector3(0, 1.5707963267948966, 0)
+
+[node name="Projectiles" type="Node3D" parent="."]
+
+
+[node name="Debris" type="Node3D" parent="."]
+
+
+[node name="OrbitRig" type="Node3D" parent="."]
+script = ExtResource("orbit_script")
+enabled = false
+default_yaw = 0.65
+default_pitch = 0.25
+default_size = 4.3
+minimum_size = 3.0
+target = Vector3(-8.4, 0.775, 0)
+distance = 7.0
+
+[node name="Camera3D" type="Camera3D" parent="OrbitRig"]
+position = Vector3(-4.298, 2.507, 5.397)
+rotation = Vector3(-0.25, 0.65, 0)
+projection = 1
+current = false
+cull_mask = 3
+size = 4.3
+near = 0.1
+far = 200.0
+
+[node name="House" parent="." instance=ExtResource("house_scene")]
+position = Vector3(-12.6, 0.025, 0)

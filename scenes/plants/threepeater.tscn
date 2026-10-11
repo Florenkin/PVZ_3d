@@ -1,0 +1,470 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://scripts/threepeater.gd" id="threepeater_script"]
+
+[ext_resource type="ArrayMesh" path="res://assets/meshes/leaf.obj" id="leaf_mesh"]
+
+[sub_resource type="StandardMaterial3D" id="ThreepeaterGreen"]
+albedo_color = Color(0.44706, 0.74510, 0.28235, 1)
+roughness = 0.58
+
+
+[sub_resource type="StandardMaterial3D" id="ThreepeaterLip"]
+albedo_color = Color(0.59216, 0.85098, 0.40000, 1)
+roughness = 0.57
+
+
+[sub_resource type="StandardMaterial3D" id="StemGreen"]
+albedo_color = Color(0.25490, 0.58824, 0.23137, 1)
+roughness = 0.8
+
+
+[sub_resource type="StandardMaterial3D" id="LeafGreen"]
+albedo_color = Color(0.29804, 0.63529, 0.24314, 1)
+roughness = 0.76
+
+
+[sub_resource type="StandardMaterial3D" id="LeafLight"]
+albedo_color = Color(0.47451, 0.76863, 0.31373, 1)
+roughness = 0.76
+
+
+[sub_resource type="StandardMaterial3D" id="MuzzleInterior"]
+albedo_color = Color(0.14510, 0.30196, 0.14118, 1)
+roughness = 0.9
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="EyeDark"]
+albedo_color = Color(0.09020, 0.18039, 0.12941, 1)
+roughness = 0.23
+
+
+[sub_resource type="StandardMaterial3D" id="EyeGlint"]
+albedo_color = Color(0.97647, 1.00000, 0.90980, 1)
+roughness = 0.2
+
+
+[sub_resource type="SphereMesh" id="SmoothSphere"]
+radius = 0.5
+height = 1.0
+radial_segments = 48
+rings = 24
+
+[sub_resource type="CylinderMesh" id="Stalk"]
+top_radius = 0.085
+bottom_radius = 0.105
+height = 1.0
+radial_segments = 24
+
+[sub_resource type="CylinderMesh" id="Branch"]
+top_radius = 0.073
+bottom_radius = 0.086
+height = 1.0
+radial_segments = 24
+
+[sub_resource type="CylinderMesh" id="HollowOuterTube"]
+top_radius = 0.232
+bottom_radius = 0.165
+height = 0.41
+radial_segments = 48
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="CylinderMesh" id="InnerCavity"]
+top_radius = 0.185
+bottom_radius = 0.145
+height = 0.17
+radial_segments = 48
+cap_top = false
+cap_bottom = true
+
+[sub_resource type="TorusMesh" id="MuzzleLip"]
+inner_radius = 0.181
+outer_radius = 0.258
+rings = 48
+ring_segments = 16
+
+[node name="Threepeater" type="Node3D"]
+script = ExtResource("threepeater_script")
+
+[node name="Stem" type="Node3D" parent="."]
+
+
+[node name="Root" type="MeshInstance3D" parent="Stem"]
+position = Vector3(0, 0.12, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.34, 0.25, 0.34)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("StemGreen")
+
+[node name="MainStalk" type="MeshInstance3D" parent="Stem"]
+position = Vector3(0, 0.71, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1.16, 1)
+layers = 1
+mesh = SubResource("Stalk")
+material_override = SubResource("StemGreen")
+
+[node name="LeftBranch" type="MeshInstance3D" parent="Stem"]
+position = Vector3(-0.055, 0.7849999999999999, -0.32)
+rotation = Vector3(-0.9791966164597852, 0, 0.14170852899249942)
+scale = Vector3(1, 0.7788452991448301, 1)
+layers = 1
+mesh = SubResource("Branch")
+material_override = SubResource("StemGreen")
+
+[node name="LeftStemLeaf" type="MeshInstance3D" parent="Stem"]
+position = Vector3(-0.02, 0.6, -0.2)
+rotation = Vector3(0, 1.5707963267948966, 0.3)
+scale = Vector3(0.5, 0.5, 0.5)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafGreen")
+
+[node name="RightBranch" type="MeshInstance3D" parent="Stem"]
+position = Vector3(-0.055, 0.7849999999999999, 0.32)
+rotation = Vector3(0.9791966164597852, 0, 0.14170852899249942)
+scale = Vector3(1, 0.7788452991448301, 1)
+layers = 1
+mesh = SubResource("Branch")
+material_override = SubResource("StemGreen")
+
+[node name="RightStemLeaf" type="MeshInstance3D" parent="Stem"]
+position = Vector3(-0.02, 0.6, 0.2)
+rotation = Vector3(0, -1.5707963267948966, 0.3)
+scale = Vector3(0.5, 0.5, 0.5)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafGreen")
+
+[node name="Leaves" type="Node3D" parent="."]
+position = Vector3(0, 0.105, 0)
+
+[node name="Leaf1" type="MeshInstance3D" parent="Leaves"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0.2, 0)
+scale = Vector3(1.12, 1.12, 1.12)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafGreen")
+
+[node name="Leaf2" type="MeshInstance3D" parent="Leaves"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 1.2471975511965976, 0)
+scale = Vector3(1.02, 1.02, 1.02)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafLight")
+
+[node name="Leaf3" type="MeshInstance3D" parent="Leaves"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 2.2943951023931954, 0)
+scale = Vector3(1.12, 1.12, 1.12)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafGreen")
+
+[node name="Leaf4" type="MeshInstance3D" parent="Leaves"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 3.3415926535897933, 0)
+scale = Vector3(1.02, 1.02, 1.02)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafLight")
+
+[node name="Leaf5" type="MeshInstance3D" parent="Leaves"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 4.388790204786391, 0)
+scale = Vector3(1.12, 1.12, 1.12)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafGreen")
+
+[node name="Leaf6" type="MeshInstance3D" parent="Leaves"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 5.435987755982989, 0)
+scale = Vector3(1.02, 1.02, 1.02)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafLight")
+
+[node name="Head" type="Node3D" parent="."]
+position = Vector3(0, 1.34, 0)
+
+[node name="HeadBody" type="MeshInstance3D" parent="Head"]
+position = Vector3(0.0, 0.0, 0.0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.7488, 0.6264, 0.6264)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="BackBud" type="MeshInstance3D" parent="Head"]
+position = Vector3(-0.3096, -0.072, 0.0)
+rotation = Vector3(0, 0, -0.35)
+scale = Vector3(0.17279999999999998, 0.216, 0.2376)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="Muzzle" type="Node3D" parent="Head"]
+position = Vector3(0, -0.021599999999999998, 0)
+
+[node name="OuterTube" type="MeshInstance3D" parent="Head/Muzzle"]
+position = Vector3(0.3924, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(0.72, 0.72, 0.72)
+layers = 1
+mesh = SubResource("HollowOuterTube")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="InnerCavity" type="MeshInstance3D" parent="Head/Muzzle"]
+position = Vector3(0.4752, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(0.72, 0.72, 0.72)
+layers = 1
+mesh = SubResource("InnerCavity")
+material_override = SubResource("MuzzleInterior")
+
+[node name="Lip" type="MeshInstance3D" parent="Head/Muzzle"]
+position = Vector3(0.54432, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(0.72, 0.72, 0.72)
+layers = 1
+mesh = SubResource("MuzzleLip")
+material_override = SubResource("ThreepeaterLip")
+
+[node name="MuzzleTip" type="Marker3D" parent="Head/Muzzle"]
+position = Vector3(0.5832, 0, 0)
+
+[node name="Eyes" type="Node3D" parent="Head"]
+
+
+[node name="NearEye" type="MeshInstance3D" parent="Head/Eyes"]
+position = Vector3(0.018, 0.1008, 0.2916)
+rotation = Vector3(-0.18, 0, 0)
+scale = Vector3(0.10439999999999999, 0.1548, 0.04176)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeDark")
+
+[node name="NearHighlight" type="MeshInstance3D" parent="Head/Eyes"]
+position = Vector3(0.00864, 0.13176, 0.3132)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.02736, 0.037439999999999994, 0.01512)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeGlint")
+
+[node name="FarEye" type="MeshInstance3D" parent="Head/Eyes"]
+position = Vector3(0.018, 0.1008, -0.2916)
+rotation = Vector3(0.18, 0, 0)
+scale = Vector3(0.10439999999999999, 0.1548, 0.04176)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeDark")
+
+[node name="FarHighlight" type="MeshInstance3D" parent="Head/Eyes"]
+position = Vector3(0.00864, 0.13176, -0.3132)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.02736, 0.037439999999999994, 0.01512)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeGlint")
+
+[node name="CrownLeaf" type="MeshInstance3D" parent="Head"]
+position = Vector3(-0.24480000000000002, 0.17279999999999998, 0.0)
+rotation = Vector3(0, 0, 2.0)
+scale = Vector3(0.3024, 0.3024, 0.3024)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafLight")
+
+[node name="LeftHead" type="Node3D" parent="Head"]
+position = Vector3(-0.11, -0.32, -0.64)
+rotation = Vector3(0, 0.36, 0)
+scale = Vector3(0.66, 0.66, 0.66)
+
+[node name="HeadBody" type="MeshInstance3D" parent="Head/LeftHead"]
+position = Vector3(0.0, 0.0, 0.0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1.04, 0.87, 0.87)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="BackBud" type="MeshInstance3D" parent="Head/LeftHead"]
+position = Vector3(-0.43, -0.1, 0.0)
+rotation = Vector3(0, 0, -0.35)
+scale = Vector3(0.24, 0.3, 0.33)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="Muzzle" type="Node3D" parent="Head/LeftHead"]
+position = Vector3(0, -0.03, 0)
+
+[node name="OuterTube" type="MeshInstance3D" parent="Head/LeftHead/Muzzle"]
+position = Vector3(0.545, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(1.0, 1.0, 1.0)
+layers = 1
+mesh = SubResource("HollowOuterTube")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="InnerCavity" type="MeshInstance3D" parent="Head/LeftHead/Muzzle"]
+position = Vector3(0.66, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(1.0, 1.0, 1.0)
+layers = 1
+mesh = SubResource("InnerCavity")
+material_override = SubResource("MuzzleInterior")
+
+[node name="Lip" type="MeshInstance3D" parent="Head/LeftHead/Muzzle"]
+position = Vector3(0.756, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(1.0, 1.0, 1.0)
+layers = 1
+mesh = SubResource("MuzzleLip")
+material_override = SubResource("ThreepeaterLip")
+
+[node name="MuzzleTip" type="Marker3D" parent="Head/LeftHead/Muzzle"]
+position = Vector3(0.81, 0, 0)
+
+[node name="Eyes" type="Node3D" parent="Head/LeftHead"]
+
+
+[node name="NearEye" type="MeshInstance3D" parent="Head/LeftHead/Eyes"]
+position = Vector3(0.025, 0.14, 0.405)
+rotation = Vector3(-0.18, 0, 0)
+scale = Vector3(0.145, 0.215, 0.058)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeDark")
+
+[node name="NearHighlight" type="MeshInstance3D" parent="Head/LeftHead/Eyes"]
+position = Vector3(0.012, 0.183, 0.435)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.038, 0.052, 0.021)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeGlint")
+
+[node name="FarEye" type="MeshInstance3D" parent="Head/LeftHead/Eyes"]
+position = Vector3(0.025, 0.14, -0.405)
+rotation = Vector3(0.18, 0, 0)
+scale = Vector3(0.145, 0.215, 0.058)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeDark")
+
+[node name="FarHighlight" type="MeshInstance3D" parent="Head/LeftHead/Eyes"]
+position = Vector3(0.012, 0.183, -0.435)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.038, 0.052, 0.021)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeGlint")
+
+[node name="CrownLeaf" type="MeshInstance3D" parent="Head/LeftHead"]
+position = Vector3(-0.34, 0.24, 0.0)
+rotation = Vector3(0, 0, 2.0)
+scale = Vector3(0.42, 0.42, 0.42)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafLight")
+
+[node name="RightHead" type="Node3D" parent="Head"]
+position = Vector3(-0.11, -0.32, 0.64)
+rotation = Vector3(0, -0.36, 0)
+scale = Vector3(0.66, 0.66, 0.66)
+
+[node name="HeadBody" type="MeshInstance3D" parent="Head/RightHead"]
+position = Vector3(0.0, 0.0, 0.0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1.04, 0.87, 0.87)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="BackBud" type="MeshInstance3D" parent="Head/RightHead"]
+position = Vector3(-0.43, -0.1, 0.0)
+rotation = Vector3(0, 0, -0.35)
+scale = Vector3(0.24, 0.3, 0.33)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="Muzzle" type="Node3D" parent="Head/RightHead"]
+position = Vector3(0, -0.03, 0)
+
+[node name="OuterTube" type="MeshInstance3D" parent="Head/RightHead/Muzzle"]
+position = Vector3(0.545, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(1.0, 1.0, 1.0)
+layers = 1
+mesh = SubResource("HollowOuterTube")
+material_override = SubResource("ThreepeaterGreen")
+
+[node name="InnerCavity" type="MeshInstance3D" parent="Head/RightHead/Muzzle"]
+position = Vector3(0.66, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(1.0, 1.0, 1.0)
+layers = 1
+mesh = SubResource("InnerCavity")
+material_override = SubResource("MuzzleInterior")
+
+[node name="Lip" type="MeshInstance3D" parent="Head/RightHead/Muzzle"]
+position = Vector3(0.756, 0.0, 0.0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(1.0, 1.0, 1.0)
+layers = 1
+mesh = SubResource("MuzzleLip")
+material_override = SubResource("ThreepeaterLip")
+
+[node name="MuzzleTip" type="Marker3D" parent="Head/RightHead/Muzzle"]
+position = Vector3(0.81, 0, 0)
+
+[node name="Eyes" type="Node3D" parent="Head/RightHead"]
+
+
+[node name="NearEye" type="MeshInstance3D" parent="Head/RightHead/Eyes"]
+position = Vector3(0.025, 0.14, 0.405)
+rotation = Vector3(-0.18, 0, 0)
+scale = Vector3(0.145, 0.215, 0.058)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeDark")
+
+[node name="NearHighlight" type="MeshInstance3D" parent="Head/RightHead/Eyes"]
+position = Vector3(0.012, 0.183, 0.435)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.038, 0.052, 0.021)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeGlint")
+
+[node name="FarEye" type="MeshInstance3D" parent="Head/RightHead/Eyes"]
+position = Vector3(0.025, 0.14, -0.405)
+rotation = Vector3(0.18, 0, 0)
+scale = Vector3(0.145, 0.215, 0.058)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeDark")
+
+[node name="FarHighlight" type="MeshInstance3D" parent="Head/RightHead/Eyes"]
+position = Vector3(0.012, 0.183, -0.435)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.038, 0.052, 0.021)
+layers = 1
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeGlint")
+
+[node name="CrownLeaf" type="MeshInstance3D" parent="Head/RightHead"]
+position = Vector3(-0.34, 0.24, 0.0)
+rotation = Vector3(0, 0, 2.0)
+scale = Vector3(0.42, 0.42, 0.42)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("LeafLight")

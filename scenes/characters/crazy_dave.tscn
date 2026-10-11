@@ -1,0 +1,476 @@
+[gd_scene load_steps=24 format=3]
+
+[ext_resource type="Script" path="res://scripts/crazy_dave.gd" id="dave_script"]
+
+[sub_resource type="StandardMaterial3D" id="Skin"]
+albedo_color = Color(0.92941, 0.71373, 0.54118, 1)
+roughness = 0.85
+
+
+[sub_resource type="StandardMaterial3D" id="WhiteShirt"]
+albedo_color = Color(0.95686, 0.94118, 0.87451, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="ShirtCollar"]
+albedo_color = Color(0.83529, 0.85098, 0.80392, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="BlueJeans"]
+albedo_color = Color(0.30196, 0.47451, 0.63137, 1)
+roughness = 0.92
+
+
+[sub_resource type="StandardMaterial3D" id="BrownShoes"]
+albedo_color = Color(0.34902, 0.27843, 0.20784, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="ChestnutHair"]
+albedo_color = Color(0.45098, 0.27843, 0.15686, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="Moustache"]
+albedo_color = Color(0.34902, 0.22353, 0.12941, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="EyeWhite"]
+albedo_color = Color(1.00000, 0.98431, 0.91765, 1)
+roughness = 0.6
+
+
+[sub_resource type="StandardMaterial3D" id="Pupils"]
+albedo_color = Color(0.14118, 0.15686, 0.12549, 1)
+roughness = 0.4
+
+
+[sub_resource type="StandardMaterial3D" id="Mouth"]
+albedo_color = Color(0.21961, 0.15294, 0.11373, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="PotMetal"]
+albedo_color = Color(0.52941, 0.62353, 0.63922, 1)
+roughness = 0.55
+metallic = 0.35
+
+[sub_resource type="StandardMaterial3D" id="PotRimMetal"]
+albedo_color = Color(0.69020, 0.76471, 0.76863, 1)
+roughness = 0.5
+metallic = 0.3
+
+[sub_resource type="StandardMaterial3D" id="PotHandle"]
+albedo_color = Color(0.28235, 0.29412, 0.26275, 1)
+roughness = 0.8
+
+
+[sub_resource type="SphereMesh" id="SmoothSphere"]
+radius = 0.5
+height = 1.0
+radial_segments = 40
+rings = 20
+
+[sub_resource type="CapsuleMesh" id="LegShape"]
+radius = 0.115
+height = 0.57
+radial_segments = 24
+rings = 8
+
+[sub_resource type="CapsuleMesh" id="ArmShape"]
+radius = 0.078
+height = 0.27
+radial_segments = 24
+rings = 8
+
+[sub_resource type="CylinderMesh" id="NeckShape"]
+top_radius = 0.095
+bottom_radius = 0.11
+height = 0.14
+radial_segments = 24
+
+[sub_resource type="TorusMesh" id="CollarRing"]
+inner_radius = 0.09
+outer_radius = 0.145
+rings = 32
+ring_segments = 12
+
+[sub_resource type="CylinderMesh" id="PotShape"]
+top_radius = 0.285
+bottom_radius = 0.307
+height = 0.14
+radial_segments = 48
+
+[sub_resource type="TorusMesh" id="PotRim"]
+inner_radius = 0.282
+outer_radius = 0.326
+rings = 48
+ring_segments = 12
+
+[sub_resource type="CapsuleMesh" id="HandleShape"]
+radius = 0.041
+height = 0.34
+radial_segments = 24
+rings = 8
+
+[sub_resource type="CapsuleShape3D" id="PlayerCollision"]
+radius = 0.32
+height = 1.82
+
+[node name="CrazyDave" type="CharacterBody3D"]
+floor_snap_length = 0.2
+script = ExtResource("dave_script")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+
+[node name="Body" type="Node3D" parent="Visuals"]
+
+
+[node name="JeansWaist" type="MeshInstance3D" parent="Visuals/Body"]
+position = Vector3(0, 0.7, 0.015)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.69, 0.26, 0.45)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("BlueJeans")
+
+[node name="Shirt" type="MeshInstance3D" parent="Visuals/Body"]
+position = Vector3(0, 1.015, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.87, 0.64, 0.59)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("WhiteShirt")
+
+[node name="Neck" type="MeshInstance3D" parent="Visuals/Body"]
+position = Vector3(0, 1.34, -0.005)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("NeckShape")
+material_override = SubResource("Skin")
+
+[node name="Collar" type="MeshInstance3D" parent="Visuals/Body"]
+position = Vector3(0, 1.315, -0.005)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("CollarRing")
+material_override = SubResource("ShirtCollar")
+
+[node name="Legs" type="Node3D" parent="Visuals"]
+
+
+[node name="Arms" type="Node3D" parent="Visuals"]
+
+
+[node name="LeftLeg" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(-0.175, 0.37, 0.025)
+rotation = Vector3(0, 0, 0.035)
+scale = Vector3(1, 1, 1.12)
+layers = 2
+mesh = SubResource("LegShape")
+material_override = SubResource("BlueJeans")
+
+[node name="LeftShoe" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(-0.18, 0.085, -0.065)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.28, 0.17, 0.43)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("BrownShoes")
+
+[node name="LeftSleeve" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(-0.375, 1.185, 0.005)
+rotation = Vector3(0, 0, -0.25)
+scale = Vector3(0.3, 0.28, 0.32)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("WhiteShirt")
+
+[node name="LeftUpperArm" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(-0.465, 1.01, 0.015)
+rotation = Vector3(0, 0, -0.12)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("ArmShape")
+material_override = SubResource("Skin")
+
+[node name="LeftForearm" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(-0.49, 0.85, -0.025)
+rotation = Vector3(-0.2, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("ArmShape")
+material_override = SubResource("Skin")
+
+[node name="LeftHand" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(-0.49, 0.73, -0.045)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.165, 0.19, 0.17)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Skin")
+
+[node name="LeftThumb" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(-0.432, 0.755, -0.11)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.09, 0.11, 0.08)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Skin")
+
+[node name="RightLeg" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(0.175, 0.37, 0.025)
+rotation = Vector3(0, 0, -0.035)
+scale = Vector3(1, 1, 1.12)
+layers = 2
+mesh = SubResource("LegShape")
+material_override = SubResource("BlueJeans")
+
+[node name="RightShoe" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(0.18, 0.085, -0.065)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.28, 0.17, 0.43)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("BrownShoes")
+
+[node name="RightSleeve" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(0.375, 1.185, 0.005)
+rotation = Vector3(0, 0, 0.25)
+scale = Vector3(0.3, 0.28, 0.32)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("WhiteShirt")
+
+[node name="RightUpperArm" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(0.465, 1.01, 0.015)
+rotation = Vector3(0, 0, 0.12)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("ArmShape")
+material_override = SubResource("Skin")
+
+[node name="RightForearm" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(0.49, 0.85, -0.025)
+rotation = Vector3(-0.2, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("ArmShape")
+material_override = SubResource("Skin")
+
+[node name="RightHand" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(0.49, 0.73, -0.045)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.165, 0.19, 0.17)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Skin")
+
+[node name="RightThumb" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(0.432, 0.755, -0.11)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.09, 0.11, 0.08)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Skin")
+
+[node name="Head" type="Node3D" parent="Visuals"]
+position = Vector3(0, 1.5, 0)
+
+[node name="Hair" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0, 0.055, 0.045)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.57, 0.4, 0.46)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ChestnutHair")
+
+[node name="Face" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0, 0.035, -0.035)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.5, 0.43, 0.45)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Skin")
+
+[node name="Beard" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0, -0.105, -0.11)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.43, 0.27, 0.3)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ChestnutHair")
+
+[node name="Nose" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0, 0.025, -0.272)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.18, 0.16, 0.15)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Skin")
+
+[node name="LeftEar" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(-0.265, 0.04, 0.005)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.125, 0.18, 0.13)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Skin")
+
+[node name="LeftSideburn" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(-0.224, -0.015, -0.075)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.085, 0.24, 0.12)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ChestnutHair")
+
+[node name="LeftEyeWhite" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(-0.105, 0.112, -0.235)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.155, 0.178, 0.07)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeWhite")
+
+[node name="LeftPupil" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(-0.1, 0.108, -0.269)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.058, 0.08, 0.025)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Pupils")
+
+[node name="LeftEyebrow" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(-0.111, 0.202, -0.219)
+rotation = Vector3(0, 0, 0.18)
+scale = Vector3(0.18, 0.044, 0.04)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Moustache")
+
+[node name="LeftMoustache" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(-0.076, -0.055, -0.258)
+rotation = Vector3(0, 0, 0.12)
+scale = Vector3(0.185, 0.07, 0.07)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Moustache")
+
+[node name="RightEar" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.265, 0.04, 0.005)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.125, 0.18, 0.13)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Skin")
+
+[node name="RightSideburn" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.224, -0.015, -0.075)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.085, 0.24, 0.12)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("ChestnutHair")
+
+[node name="RightEyeWhite" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.105, 0.112, -0.235)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.155, 0.178, 0.07)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeWhite")
+
+[node name="RightPupil" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.1, 0.132, -0.269)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.058, 0.08, 0.025)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Pupils")
+
+[node name="RightEyebrow" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.111, 0.202, -0.219)
+rotation = Vector3(0, 0, -0.18)
+scale = Vector3(0.18, 0.044, 0.04)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Moustache")
+
+[node name="RightMoustache" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.076, -0.055, -0.258)
+rotation = Vector3(0, 0, -0.12)
+scale = Vector3(0.185, 0.07, 0.07)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Moustache")
+
+[node name="Mouth" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0, -0.113, -0.255)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.1, 0.09, 0.025)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("Mouth")
+
+[node name="Tooth" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0, -0.091, -0.27)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.06, 0.036, 0.02)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("EyeWhite")
+
+[node name="CookingPot" type="Node3D" parent="Visuals/Head"]
+position = Vector3(0, 0.245, 0.015)
+
+[node name="PotBody" type="MeshInstance3D" parent="Visuals/Head/CookingPot"]
+position = Vector3(0, 0.005, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("PotShape")
+material_override = SubResource("PotMetal")
+
+[node name="PotRim" type="MeshInstance3D" parent="Visuals/Head/CookingPot"]
+position = Vector3(0, -0.065, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("PotRim")
+material_override = SubResource("PotRimMetal")
+
+[node name="PotHandle" type="MeshInstance3D" parent="Visuals/Head/CookingPot"]
+position = Vector3(0.455, 0.01, 0)
+rotation = Vector3(0, 0, -1.5707963267948966)
+scale = Vector3(1, 1, 1)
+layers = 2
+mesh = SubResource("HandleShape")
+material_override = SubResource("PotHandle")
+
+[node name="HandleRivet" type="MeshInstance3D" parent="Visuals/Head/CookingPot"]
+position = Vector3(0.3, 0.01, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.055, 0.06, 0.075)
+layers = 2
+mesh = SubResource("SmoothSphere")
+material_override = SubResource("PotRimMetal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.91, 0)
+shape = SubResource("PlayerCollision")
+
+[node name="WaistMount" type="Node3D" parent="."]
+position = Vector3(0, 0.94, 0)
+
+[node name="Camera3D" type="Camera3D" parent="WaistMount"]
+current = true
+cull_mask = 1
+fov = 75.0
+near = 0.03
+far = 150.0

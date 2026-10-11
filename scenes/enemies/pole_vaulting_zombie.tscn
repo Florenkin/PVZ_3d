@@ -1,0 +1,444 @@
+[gd_scene load_steps=21 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/zombie.tscn" id="base_zombie"]
+
+[ext_resource type="Script" path="res://scripts/pole_vaulting_zombie.gd" id="pole_script"]
+
+[sub_resource type="StandardMaterial3D" id="AthleticRed"]
+albedo_color = Color(0.78431, 0.29804, 0.26667, 1)
+roughness = 0.82
+
+
+[sub_resource type="StandardMaterial3D" id="RunningShorts"]
+albedo_color = Color(0.45490, 0.48627, 0.45098, 1)
+roughness = 0.88
+
+
+[sub_resource type="StandardMaterial3D" id="BlueHeadband"]
+albedo_color = Color(0.32157, 0.52941, 0.67843, 1)
+roughness = 0.75
+
+
+[sub_resource type="StandardMaterial3D" id="BlondHair"]
+albedo_color = Color(0.84314, 0.72157, 0.32941, 1)
+roughness = 0.88
+
+
+[sub_resource type="StandardMaterial3D" id="SportsWhite"]
+albedo_color = Color(0.96078, 0.94118, 0.86275, 1)
+roughness = 0.75
+
+
+[sub_resource type="StandardMaterial3D" id="AthleteSkin"]
+albedo_color = Color(0.50980, 0.58431, 0.45882, 1)
+roughness = 0.9
+
+
+[sub_resource type="StandardMaterial3D" id="FiberglassPole"]
+albedo_color = Color(0.85490, 0.78039, 0.62745, 1)
+roughness = 0.45
+
+
+[sub_resource type="StandardMaterial3D" id="PoleTip"]
+albedo_color = Color(0.32157, 0.34902, 0.29412, 1)
+roughness = 0.8
+
+
+[sub_resource type="SphereMesh" id="AthleteSphere"]
+radius = 0.5
+height = 1.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="BoxMesh" id="AthleteBox"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="TorusMesh" id="HeadbandRing"]
+inner_radius = 0.269
+outer_radius = 0.300
+rings = 40
+ring_segments = 12
+
+[sub_resource type="CylinderMesh" id="PoleShaft"]
+top_radius = 0.031
+bottom_radius = 0.031
+height = 3.6
+radial_segments = 20
+
+[sub_resource type="CylinderMesh" id="PoleWrap"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.11
+radial_segments = 20
+
+[sub_resource type="TextMesh" id="RunnerNumber"]
+text = "07"
+font_size = 48
+pixel_size = 0.0038
+depth = 0.002
+
+[sub_resource type="CapsuleMesh" id="LeftThigh"]
+radius = 0.085
+height = 1.0
+radial_segments = 24
+rings = 8
+
+[sub_resource type="CapsuleMesh" id="LeftShin"]
+radius = 0.073
+height = 1.0
+radial_segments = 24
+rings = 8
+
+[sub_resource type="CapsuleMesh" id="RightThigh"]
+radius = 0.085
+height = 1.0
+radial_segments = 24
+rings = 8
+
+[sub_resource type="CapsuleMesh" id="RightShin"]
+radius = 0.073
+height = 1.0
+radial_segments = 24
+rings = 8
+
+[node name="PoleVaultingZombie" instance=ExtResource("base_zombie")]
+script = ExtResource("pole_script")
+maximum_health = 500
+collision_mask = 33
+
+[node name="Torso" parent="Visuals"]
+position = Vector3(0, 0, -0.09)
+rotation = Vector3(-0.12, 0, 0)
+
+[node name="Head" parent="Visuals"]
+position = Vector3(0, 1.475, -0.25)
+
+[node name="Jacket" parent="Visuals/Torso"]
+material_override = SubResource("AthleticRed")
+
+[node name="JeansWaist" parent="Visuals/Torso"]
+material_override = SubResource("RunningShorts")
+
+[node name="ShirtFront" parent="Visuals/Torso"]
+visible = false
+
+[node name="LeftLapel" parent="Visuals/Torso"]
+visible = false
+
+[node name="RightLapel" parent="Visuals/Torso"]
+visible = false
+
+[node name="TieKnot" parent="Visuals/Torso"]
+visible = false
+
+[node name="TieBlade" parent="Visuals/Torso"]
+visible = false
+
+[node name="TiePoint" parent="Visuals/Torso"]
+visible = false
+
+[node name="WornJacketPatch" parent="Visuals/Torso"]
+visible = false
+
+[node name="Bib" type="MeshInstance3D" parent="Visuals/Torso"]
+position = Vector3(0, 1.015, -0.18)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.24, 0.23, 0.026)
+layers = 1
+mesh = SubResource("AthleteBox")
+material_override = SubResource("SportsWhite")
+
+[node name="Number" type="MeshInstance3D" parent="Visuals/Torso"]
+position = Vector3(0, 1.01, -0.196)
+rotation = Vector3(0, 3.141592653589793, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("RunnerNumber")
+material_override = SubResource("AthleticRed")
+
+[node name="LeftShoulder" parent="Visuals/Arms"]
+position = Vector3(-0.275, 1.15, -0.18)
+material_override = SubResource("AthleteSkin")
+
+[node name="LeftSleeve" parent="Visuals/Arms"]
+position = Vector3(-0.30000000000000004, 1.2650000000000001, -0.28500000000000003)
+rotation = Vector3(-0.785398163397448, 0, 0.1338813233620984)
+scale = Vector3(1, 0.8667471893119704, 1)
+material_override = SubResource("AthleteSkin")
+
+[node name="LeftHandAssembly" parent="Visuals/Arms"]
+position = Vector3(0.04999999999999999, 0.8430000000000001, 0.24699999999999994)
+rotation = Vector3(0, 0, 0)
+
+[node name="LeftForearm" parent="Visuals/Arms/LeftHandAssembly"]
+position = Vector3(-0.36, 0.747, -0.612)
+rotation = Vector3(0.11315098159048463, 0, -0.04513320468831044)
+scale = Vector3(1, 1.3686535658861134, 1)
+
+[node name="LeftLeg" parent="Visuals/Legs"]
+visible = false
+
+[node name="LeftShoe" parent="Visuals/Legs"]
+visible = false
+
+[node name="LeftRunnerLeg" type="Node3D" parent="Visuals/Legs"]
+position = Vector3(-0.13, 0.68, -0.12)
+
+[node name="Thigh" type="MeshInstance3D" parent="Visuals/Legs/LeftRunnerLeg"]
+position = Vector3(-0.009999999999999995, -0.15000000000000002, -0.07)
+rotation = Vector3(-2.704965493776252, 0, 0.06033887567886841)
+scale = Vector3(1, 0.33166247903554, 1)
+mesh = SubResource("LeftThigh")
+material_override = SubResource("AthleteSkin")
+
+[node name="Shin" type="MeshInstance3D" parent="Visuals/Legs/LeftRunnerLeg"]
+position = Vector3(-0.027499999999999997, -0.44000000000000006, -0.07500000000000001)
+rotation = Vector3(2.7069224384405484, 0, 0.048551580622501436)
+scale = Vector3(1, 0.30907118921051185, 1)
+mesh = SubResource("LeftShin")
+material_override = SubResource("AthleteSkin")
+
+[node name="Shorts" type="MeshInstance3D" parent="Visuals/Legs/LeftRunnerLeg"]
+position = Vector3(0, -0.095, 0.03)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.24, 0.29, 0.25)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("RunningShorts")
+
+[node name="Knee" type="MeshInstance3D" parent="Visuals/Legs/LeftRunnerLeg"]
+position = Vector3(-0.01999999999999999, -0.30000000000000004, -0.14)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.17, 0.17, 0.17)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("AthleteSkin")
+
+[node name="Shoe" type="MeshInstance3D" parent="Visuals/Legs/LeftRunnerLeg"]
+position = Vector3(-0.035, -0.6000000000000001, -0.05000000000000001)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.26, 0.16, 0.38)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("AthleticRed")
+
+[node name="ShoeSole" type="MeshInstance3D" parent="Visuals/Legs/LeftRunnerLeg"]
+position = Vector3(-0.035, -0.6450000000000001, -0.05000000000000001)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.27, 0.055, 0.39)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("SportsWhite")
+
+[node name="Sock" type="MeshInstance3D" parent="Visuals/Legs/LeftRunnerLeg"]
+position = Vector3(-0.035, -0.5, -0.010000000000000009)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.17, 0.16)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("SportsWhite")
+
+[node name="RightShoulder" parent="Visuals/Arms"]
+position = Vector3(0.275, 1.15, -0.18)
+material_override = SubResource("AthleteSkin")
+
+[node name="RightSleeve" parent="Visuals/Arms"]
+position = Vector3(0.32, 1.0699999999999998, -0.12)
+rotation = Vector3(2.5535900500422257, 0, -0.35420410578647016)
+scale = Vector3(1, 0.7353864963693783, 1)
+material_override = SubResource("AthleteSkin")
+
+[node name="RightHandAssembly" parent="Visuals/Arms"]
+position = Vector3(0.020000000000000018, 1.3769999999999998, 0.9429999999999998)
+rotation = Vector3(-1.5707963267948966, 0, 0)
+
+[node name="RightForearm" parent="Visuals/Arms/RightHandAssembly"]
+position = Vector3(0.345, 1.008, -0.4919999999999999)
+rotation = Vector3(-1.5182132651839548, 0, -0.0525105164647925)
+scale = Vector3(1, 0.588254920325313, 1)
+
+[node name="RightLeg" parent="Visuals/Legs"]
+visible = false
+
+[node name="RightShoe" parent="Visuals/Legs"]
+visible = false
+
+[node name="RightRunnerLeg" type="Node3D" parent="Visuals/Legs"]
+position = Vector3(0.13, 0.68, -0.12)
+
+[node name="Thigh" type="MeshInstance3D" parent="Visuals/Legs/RightRunnerLeg"]
+position = Vector3(0.009999999999999995, -0.15000000000000002, 0.095)
+rotation = Vector3(2.577023259921693, 0, -0.056261832823949434)
+scale = Vector3(1, 0.35566838487557484, 1)
+mesh = SubResource("RightThigh")
+material_override = SubResource("AthleteSkin")
+
+[node name="Shin" type="MeshInstance3D" parent="Visuals/Legs/RightRunnerLeg"]
+position = Vector3(0.027499999999999997, -0.44000000000000006, 0.23500000000000001)
+rotation = Vector3(2.8305943729842524, 0, -0.050957377976457455)
+scale = Vector3(1, 0.29449108645254446, 1)
+mesh = SubResource("RightShin")
+material_override = SubResource("AthleteSkin")
+
+[node name="Shorts" type="MeshInstance3D" parent="Visuals/Legs/RightRunnerLeg"]
+position = Vector3(0, -0.095, 0.03)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.24, 0.29, 0.25)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("RunningShorts")
+
+[node name="Knee" type="MeshInstance3D" parent="Visuals/Legs/RightRunnerLeg"]
+position = Vector3(0.01999999999999999, -0.30000000000000004, 0.19)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.17, 0.17, 0.17)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("AthleteSkin")
+
+[node name="Shoe" type="MeshInstance3D" parent="Visuals/Legs/RightRunnerLeg"]
+position = Vector3(0.035, -0.6000000000000001, 0.24000000000000002)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.26, 0.16, 0.38)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("AthleticRed")
+
+[node name="ShoeSole" type="MeshInstance3D" parent="Visuals/Legs/RightRunnerLeg"]
+position = Vector3(0.035, -0.6450000000000001, 0.24000000000000002)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.27, 0.055, 0.39)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("SportsWhite")
+
+[node name="Sock" type="MeshInstance3D" parent="Visuals/Legs/RightRunnerLeg"]
+position = Vector3(0.035, -0.5, 0.28)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.17, 0.16)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("SportsWhite")
+
+[node name="ExposedShin" parent="Visuals/Legs"]
+visible = false
+
+[node name="Headband" type="Node3D" parent="Visuals/Head"]
+
+
+[node name="Band" type="MeshInstance3D" parent="Visuals/Head/Headband"]
+position = Vector3(0, 0.135, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 0.8, 0.9)
+layers = 1
+mesh = SubResource("HeadbandRing")
+material_override = SubResource("BlueHeadband")
+
+[node name="Knot" type="MeshInstance3D" parent="Visuals/Head/Headband"]
+position = Vector3(-0.25, 0.135, 0.13)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.09, 0.075, 0.09)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("BlueHeadband")
+
+[node name="Ribbon" type="MeshInstance3D" parent="Visuals/Head/Headband"]
+position = Vector3(-0.278, 0.075, 0.17)
+rotation = Vector3(0.3, 0, -0.22)
+scale = Vector3(0.055, 0.16, 0.014)
+layers = 1
+mesh = SubResource("AthleteBox")
+material_override = SubResource("BlueHeadband")
+
+[node name="Hair1" parent="Visuals/Head"]
+visible = false
+
+[node name="BlondTuft1" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.02, 0.28, 0.07)
+rotation = Vector3(0, -0.2, 0.2)
+scale = Vector3(0.22, 0.055, 0.075)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("BlondHair")
+
+[node name="Hair2" parent="Visuals/Head"]
+visible = false
+
+[node name="BlondTuft2" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.065, 0.268, 0.07)
+rotation = Vector3(0, -0.2, 0.36)
+scale = Vector3(0.22, 0.055, 0.075)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("BlondHair")
+
+[node name="Hair3" parent="Visuals/Head"]
+visible = false
+
+[node name="BlondTuft3" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.11, 0.256, 0.07)
+rotation = Vector3(0, -0.2, 0.52)
+scale = Vector3(0.22, 0.055, 0.075)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("BlondHair")
+
+[node name="Pole" type="Node3D" parent="Visuals"]
+position = Vector3(-0.30, 1.83, 0.05)
+rotation = Vector3(1.5707963267948966, 0, 0)
+
+[node name="Shaft" type="MeshInstance3D" parent="Visuals/Pole"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("PoleShaft")
+material_override = SubResource("FiberglassPole")
+
+[node name="Wrap1" type="MeshInstance3D" parent="Visuals/Pole"]
+position = Vector3(0, -1.55, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("PoleWrap")
+material_override = SubResource("AthleticRed")
+
+[node name="Wrap2" type="MeshInstance3D" parent="Visuals/Pole"]
+position = Vector3(0, -0.4, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("PoleWrap")
+material_override = SubResource("AthleticRed")
+
+[node name="Wrap3" type="MeshInstance3D" parent="Visuals/Pole"]
+position = Vector3(0, 0.4, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("PoleWrap")
+material_override = SubResource("AthleticRed")
+
+[node name="Wrap4" type="MeshInstance3D" parent="Visuals/Pole"]
+position = Vector3(0, 1.55, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("PoleWrap")
+material_override = SubResource("AthleticRed")
+
+[node name="BottomTip" type="MeshInstance3D" parent="Visuals/Pole"]
+position = Vector3(0, -1.79, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.08, 0.12, 0.08)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("PoleTip")
+
+[node name="TopTip" type="MeshInstance3D" parent="Visuals/Pole"]
+position = Vector3(0, 1.79, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.08, 0.12, 0.08)
+layers = 1
+mesh = SubResource("AthleteSphere")
+material_override = SubResource("PoleTip")

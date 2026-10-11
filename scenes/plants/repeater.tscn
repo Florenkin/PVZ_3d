@@ -1,0 +1,111 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/plants/peashooter.tscn" id="base_plant"]
+
+[ext_resource type="Script" path="res://scripts/repeater.gd" id="repeater_script"]
+
+[ext_resource type="ArrayMesh" path="res://assets/meshes/leaf.obj" id="leaf_mesh"]
+
+[sub_resource type="StandardMaterial3D" id="RepeaterGreen"]
+albedo_color = Color(0.37647, 0.70196, 0.26275, 1)
+roughness = 0.58
+
+
+[sub_resource type="StandardMaterial3D" id="RepeaterLip"]
+albedo_color = Color(0.48235, 0.78431, 0.30588, 1)
+roughness = 0.57
+
+
+[sub_resource type="StandardMaterial3D" id="RepeaterLeaves"]
+albedo_color = Color(0.26667, 0.60000, 0.22353, 1)
+roughness = 0.76
+
+
+[sub_resource type="StandardMaterial3D" id="RepeaterLeafLight"]
+albedo_color = Color(0.38039, 0.70588, 0.26667, 1)
+roughness = 0.76
+
+
+[sub_resource type="StandardMaterial3D" id="BrowGreen"]
+albedo_color = Color(0.20000, 0.49020, 0.19608, 1)
+roughness = 0.7
+
+
+[sub_resource type="SphereMesh" id="BrowShape"]
+radius = 0.5
+height = 1.0
+radial_segments = 32
+rings = 16
+
+[node name="Repeater" instance=ExtResource("base_plant")]
+script = ExtResource("repeater_script")
+
+[node name="Head" parent="."]
+scale = Vector3(1.06, 1.04, 1.04)
+
+[node name="HeadBody" parent="Head"]
+material_override = SubResource("RepeaterGreen")
+
+[node name="BackBud" parent="Head"]
+material_override = SubResource("RepeaterGreen")
+
+[node name="OuterTube" parent="Head/Muzzle"]
+material_override = SubResource("RepeaterGreen")
+
+[node name="Lip" parent="Head/Muzzle"]
+material_override = SubResource("RepeaterLip")
+
+[node name="Leaf1" parent="Leaves"]
+material_override = SubResource("RepeaterLeafLight")
+
+[node name="Leaf2" parent="Leaves"]
+material_override = SubResource("RepeaterLeaves")
+
+[node name="Leaf3" parent="Leaves"]
+material_override = SubResource("RepeaterLeaves")
+
+[node name="Leaf4" parent="Leaves"]
+material_override = SubResource("RepeaterLeafLight")
+
+[node name="NearBrow" type="MeshInstance3D" parent="Head/Eyes"]
+position = Vector3(0.065, 0.25, 0.422)
+rotation = Vector3(0, 0, -0.28)
+scale = Vector3(0.25, 0.07, 0.08)
+layers = 1
+mesh = SubResource("BrowShape")
+material_override = SubResource("BrowGreen")
+
+[node name="FarBrow" type="MeshInstance3D" parent="Head/Eyes"]
+position = Vector3(0.065, 0.25, -0.422)
+rotation = Vector3(0, 0, -0.28)
+scale = Vector3(0.25, 0.07, 0.08)
+layers = 1
+mesh = SubResource("BrowShape")
+material_override = SubResource("BrowGreen")
+
+[node name="Crest" type="Node3D" parent="Head"]
+
+
+[node name="Leaf1" type="MeshInstance3D" parent="Head/Crest"]
+position = Vector3(-0.39, 0.22, -0.15)
+rotation = Vector3(0, -0.35, 2.2)
+scale = Vector3(0.65, 0.65, 0.65)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("RepeaterLeaves")
+
+[node name="Leaf2" type="MeshInstance3D" parent="Head/Crest"]
+position = Vector3(-0.39, 0.22, 0)
+rotation = Vector3(0, 0, 2.05)
+scale = Vector3(0.76, 0.76, 0.76)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("RepeaterLeaves")
+
+[node name="Leaf3" type="MeshInstance3D" parent="Head/Crest"]
+position = Vector3(-0.39, 0.22, 0.15)
+rotation = Vector3(0, 0.35, 2.2)
+scale = Vector3(0.65, 0.65, 0.65)
+layers = 1
+mesh = ExtResource("leaf_mesh")
+material_override = SubResource("RepeaterLeaves")

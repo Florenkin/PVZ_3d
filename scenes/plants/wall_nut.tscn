@@ -1,0 +1,701 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/wall_nut.gd" id="wall_nut_script"]
+
+[sub_resource type="StandardMaterial3D" id="GoldenShell"]
+albedo_color = Color(0.70980, 0.54118, 0.31373, 1)
+roughness = 0.93
+
+
+[sub_resource type="StandardMaterial3D" id="ShellRidges"]
+albedo_color = Color(0.60000, 0.44706, 0.24706, 1)
+roughness = 0.96
+
+
+[sub_resource type="StandardMaterial3D" id="NutEyes"]
+albedo_color = Color(1.00000, 0.97255, 0.86667, 1)
+roughness = 0.6
+
+
+[sub_resource type="StandardMaterial3D" id="NutPupils"]
+albedo_color = Color(0.20000, 0.15294, 0.09804, 1)
+roughness = 0.5
+
+
+[sub_resource type="StandardMaterial3D" id="NutMouth"]
+albedo_color = Color(0.44706, 0.31373, 0.19608, 1)
+roughness = 0.9
+
+
+[sub_resource type="SphereMesh" id="NutSphere"]
+radius = 0.5
+height = 1.0
+radial_segments = 48
+rings = 24
+
+[sub_resource type="CapsuleMesh" id="ShellSeam"]
+radius = 0.013
+height = 1.0
+radial_segments = 12
+rings = 4
+
+[sub_resource type="CapsuleShape3D" id="NutCollision"]
+radius = 0.43
+height = 1.35
+
+[node name="WallNut" type="Node3D"]
+script = ExtResource("wall_nut_script")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+
+[node name="Shell" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 0.7, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1.04, 1.4, 0.88)
+layers = 1
+mesh = SubResource("NutSphere")
+material_override = SubResource("GoldenShell")
+
+[node name="Groove0_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.20505917176677088, 0.10127134766281903, 0.1438108205839323)
+rotation = Vector3(0.53694233155638, 0, -0.7283810031597484)
+scale = Vector3(1, 0.1656751284349988, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove0_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.3049004996903652, 0.2310777064598899, 0.19830359028352557)
+rotation = Vector3(0.2898524680402897, 0, -0.5093930964996151)
+scale = Vector3(1, 0.183327028427233, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove0_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.37420168437729956, 0.40139694225465966, 0.24002853544228903)
+rotation = Vector3(0.19869287838285749, 0, -0.2521007815447792)
+scale = Vector3(1, 0.19725635375529202, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove0_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.4001727675936758, 0.597514202831416, 0.2727790302139321)
+rotation = Vector3(0.13478528587891916, 0, -0.01323970228186897)
+scale = Vector3(1, 0.20686579029311586, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove0_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.38515164079951975, 0.8024857971685839, 0.28789522258076433)
+rotation = Vector3(0.011887445910788462, 0, 0.1585755529007045)
+scale = Vector3(1, 0.2075906716518153, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove0_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.34266138241283783, 0.9986030577453402, 0.27176844938724465)
+rotation = Vector3(-0.18317241212067228, 0, 0.26751676371676214)
+scale = Vector3(1, 0.19747304924631323, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove0_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.282372651605356, 1.16892229354011, 0.22097401241166162)
+rotation = Vector3(-0.4112980204279834, 0, 0.38793259523386403)
+scale = Vector3(1, 0.1807623551306149, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove0_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.20204910922433694, 1.2987286523371808, 0.14683993318321675)
+rotation = Vector3(-0.6536144257651173, 0, 0.6036512871478679)
+scale = Vector3(1, 0.16254516118282844, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove1_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.1087645583019581, 0.10127134766281903, 0.20595270524191667)
+rotation = Vector3(0.7565382663832682, 0, -0.3898454942157007)
+scale = Vector3(1, 0.15793782600993464, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove1_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.1568463196964347, 0.2310777064598899, 0.29741694222311355)
+rotation = Vector3(0.49427521286021553, 0, -0.204528105346058)
+scale = Vector3(1, 0.1779372229495596, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove1_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.17685431023985315, 0.40139694225465966, 0.3683184747165521)
+rotation = Vector3(0.3059493316940274, 0, -0.019734514070101624)
+scale = Vector3(1, 0.19642090039925914, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove1_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.1720466407724675, 0.597514202831416, 0.4101300888313807)
+rotation = Vector3(0.11883474643189927, 0, 0.06526360372526835)
+scale = Vector3(1, 0.206867836371801, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove1_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.1601617161105931, 0.8024857971685839, 0.4136802555764364)
+rotation = Vector3(-0.08455464862182062, 0, 0.04992525516593514)
+scale = Vector3(1, 0.20596313593212948, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove1_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.1521019497075931, 0.9986030577453402, 0.37623487064365924)
+rotation = Vector3(-0.2980046168609136, 0, 0.029808034640936256)
+scale = Vector3(1, 0.1959843035934089, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove1_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.13936763966014948, 1.16892229354011, 0.3035072285128502)
+rotation = Vector3(-0.5205902792146415, 0, 0.11056513469916784)
+scale = Vector3(1, 0.1778827064891457, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove1_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.10645253650726266, 1.2987286523371808, 0.2068126858421141)
+rotation = Vector3(-0.7816883763642135, 0, 0.29938269273498025)
+scale = Vector3(1, 0.15665603078606335, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove2_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.048670114717165563, 0.10127134766281903, 0.22184505424533507)
+rotation = Vector3(0.800567497457368, 0, 0.19399083176790433)
+scale = Vector3(1, 0.15549054194056974, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove2_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.08428740131711976, 0.2310777064598899, 0.31775779485474437)
+rotation = Vector3(0.4925679804898208, 0, 0.2327358986077478)
+scale = Vector3(1, 0.17889166768556303, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove2_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.1226109701263306, 0.40139694225465966, 0.3838732784240786)
+rotation = Vector3(0.26049705785378785, 0, 0.18060688907217737)
+scale = Vector3(1, 0.19700570871299503, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove2_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.14364413985610602, 0.597514202831416, 0.41801758279722584)
+rotation = Vector3(0.08939767593751113, 0, 0.032442857108364274)
+scale = Vector3(1, 0.20590174178338325, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove2_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.1342736804600265, 0.8024857971685839, 0.4201624436607338)
+rotation = Vector3(-0.06860040723392603, 0, -0.12309887436496669)
+scale = Vector3(1, 0.20702139399143046, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove2_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.10281811312925807, 0.9986030577453402, 0.38797887432033573)
+rotation = Vector3(-0.26233220036261967, 0, -0.19100042532987804)
+scale = Vector3(1, 0.1974879134119132, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove2_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.07004654404034805, 1.16892229354011, 0.32031076405626313)
+rotation = Vector3(-0.5063193446245009, 0, -0.15860565973336216)
+scale = Vector3(1, 0.17760871915404836, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove2_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.04675789561327597, 1.2987286523371808, 0.2221450727342993)
+rotation = Vector3(-0.8085734055866016, 0, -0.11983696259784446)
+scale = Vector3(1, 0.1549598722467217, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove3_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.1964521123515457, 0.10127134766281903, 0.15219940702843998)
+rotation = Vector3(0.5680282759467289, 0, 0.701340306276076)
+scale = Vector3(1, 0.16496314710783397, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove3_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.29374815021504186, 0.2310777064598899, 0.21002709673835795)
+rotation = Vector3(0.3024452070395007, 0, 0.5018077337890429)
+scale = Vector3(1, 0.1832616131790817, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove3_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.3625767640798408, 0.40139694225465966, 0.2525316695327311)
+rotation = Vector3(0.19585832962951896, 0, 0.25372504017547115)
+scale = Vector3(1, 0.19722740425934923, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove3_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.3887251726080043, 0.597514202831416, 0.2844501312651818)
+rotation = Vector3(0.12945404767678328, 0, 0.013499229688584526)
+scale = Vector3(1, 0.20671999710209313, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove3_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.37322450024474385, 0.8024857971685839, 0.29894875433812473)
+rotation = Vector3(0.011287030778662964, 0, -0.16338107007314268)
+scale = Vector3(1, 0.20775128029371154, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove3_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.3298975079241292, 0.9986030577453402, 0.2828728412290222)
+rotation = Vector3(-0.182011516611688, 0, -0.27080547971165003)
+scale = Vector3(1, 0.19760991636825098, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove3_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.27028171044806565, 1.16892229354011, 0.23160128886361248)
+rotation = Vector3(-0.41773830821311553, 0, -0.3766335635867261)
+scale = Vector3(1, 0.18045366950806624, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove3_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.19330326811289672, 1.2987286523371808, 0.15507154347175112)
+rotation = Vector3(-0.6746955575281192, 0, -0.5720130059291363)
+scale = Vector3(1, 0.16180176317022127, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove4_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.26499741884428196, 0.10127134766281903, 0.02141981517044028)
+rotation = Vector3(0.037189689835060734, 0, 0.895229652315617)
+scale = Vector3(1, 0.1700047112698602, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove4_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.3828202365046674, 0.2310777064598899, 0.029081794561125)
+rotation = Vector3(0.07400425272913372, 0, 0.5900300145363746)
+scale = Vector3(1, 0.18509093436811858, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove4_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.46585891940068413, 0.40139694225465966, 0.04709024770422954)
+rotation = Vector3(0.13085804449501673, 0, 0.32239897383566574)
+scale = Vector3(1, 0.19913774035229231, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove4_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.5066269403901866, 0.597514202831416, 0.07107215203916652)
+rotation = Vector3(0.11327565346933144, 0, 0.08915342974521154)
+scale = Vector3(1, 0.20711626505266978, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove4_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.5040426709245289, 0.8024857971685839, 0.08380627170643387)
+rotation = Vector3(0.010489498824550837, 0, -0.11467123490403916)
+scale = Vector3(1, 0.2063380053908056, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove4_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.46105781840727134, 0.9986030577453402, 0.07391112962708052)
+rotation = Vector3(-0.11663193112528551, 0, -0.3194219001339654)
+scale = Vector3(1, 0.1985890642386252, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove4_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.37998588984499826, 1.16892229354011, 0.0483099560024452)
+rotation = Vector3(-0.18852062877879522, 0, -0.5686427305739153)
+scale = Vector3(1, 0.18530255932841436, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove4_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.26468287656352607, 1.2987286523371808, 0.023995030504493052)
+rotation = Vector3(-0.18032787218393803, 0, -0.8807256651773797)
+scale = Vector3(1, 0.16963496647191442, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove5_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.2185755507922611, 0.10127134766281903, -0.1288245948805695)
+rotation = Vector3(-0.5226814678092997, 0, 0.7365057224451664)
+scale = Vector3(1, 0.16550201973237164, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove5_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.32267868787064347, 0.2310777064598899, -0.17684020429333347)
+rotation = Vector3(-0.22327167655955718, 0, 0.5528099583469586)
+scale = Vector3(1, 0.18480588461130792, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove5_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.40494495425693355, 0.40139694225465966, -0.20083043697194822)
+rotation = Vector3(-0.07013594064155239, 0, 0.3451486591034073)
+scale = Vector3(1, 0.19948929882102495, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove5_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.44960171684949074, 0.597514202831416, -0.21054646717243347)
+rotation = Vector3(-0.030612340735458297, 0, 0.10600021999623481)
+scale = Vector3(1, 0.20622516625125353, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove5_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.44630290233062975, 0.8024857971685839, -0.21540778057981802)
+rotation = Vector3(-0.016810530084271254, 0, -0.1377395860429479)
+scale = Vector3(1, 0.2069607069405983, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove5_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.3977201890440707, 0.9986030577453402, -0.21088580786254113)
+rotation = Vector3(0.06659876565946238, 0, -0.3511308668122439)
+scale = Vector3(1, 0.19987446028555647, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove5_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.3172384903272042, 1.16892229354011, -0.1838735545491743)
+rotation = Vector3(0.2644601084051455, 0, -0.5258317381423118)
+scale = Vector3(1, 0.18371910452650314, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove5_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.2178193060018859, 1.2987286523371808, -0.12974742184604512)
+rotation = Vector3(0.5607588777784039, 0, -0.704455427428706)
+scale = Vector3(1, 0.1646396607355663, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove6_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.10505546827558848, 0.10127134766281903, -0.20727884528643115)
+rotation = Vector3(-0.7503662582568896, 0, 0.4136922072802075)
+scale = Vector3(1, 0.15862520523042, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove6_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.1663858479988451, 0.2310777064598899, -0.2936087305292808)
+rotation = Vector3(-0.44750212104078935, 0, 0.33326602826998464)
+scale = Vector3(1, 0.18003353785191833, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove6_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.2111240708333795, 0.40139694225465966, -0.35524487134721416)
+rotation = Vector3(-0.25919897653252527, 0, 0.15656268168486925)
+scale = Vector3(1, 0.19613340528897377, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove6_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.22243417122672104, 0.597514202831416, -0.3923595679304219)
+rotation = Vector3(-0.11932029035593857, 0, -0.038547542693793124)
+scale = Vector3(1, 0.20659289541494785, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove6_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.20201876429260435, 0.8024857971685839, -0.4001497528179262)
+rotation = Vector3(0.043849339433236725, 0, -0.15885546445497287)
+scale = Vector3(1, 0.20778503347390323, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove6_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.16811820036674618, 0.9986030577453402, -0.37133628955551834)
+rotation = Vector3(0.25409258919835226, 0, -0.17862596334467448)
+scale = Vector3(1, 0.19660326766398953, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove6_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.13553820523850094, 1.16892229354011, -0.30484904164528376)
+rotation = Vector3(0.5027663881586457, 0, -0.17100945064900222)
+scale = Vector3(1, 0.1776266541915833, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove6_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.10092009093581872, 1.2987286523371808, -0.20875340044231508)
+rotation = Vector3(0.7929318945885082, 0, -0.2521867156848973)
+scale = Vector3(1, 0.15633175738832886, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove7_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.03861782624793153, 0.10127134766281903, -0.2232389965080404)
+rotation = Vector3(-0.813022626350575, 0, -0.06479712186702992)
+scale = Vector3(1, 0.15489546894184786, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove7_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.05127520408665645, 0.2310777064598899, -0.3228786104028243)
+rotation = Vector3(-0.5160001132465779, 0, -0.08646578593548579)
+scale = Vector3(1, 0.1769955544233745, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove7_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.07382278692226871, 0.40139694225465966, -0.3927314441286971)
+rotation = Vector3(-0.2743343677375146, 0, -0.15205331797192537)
+scale = Vector3(1, 0.19680825842370522, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove7_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.1034487331619619, 0.597514202831416, -0.4263315390880357)
+rotation = Vector3(-0.07061783957774827, 0, -0.14231149341523405)
+scale = Vector3(1, 0.20758223345609095, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove7_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.12063434588111444, 0.8024857971685839, -0.42318749249637017)
+rotation = Vector3(0.10106780024177177, 0, -0.023922391039613487)
+scale = Vector3(1, 0.20608189573757874, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove7_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.11003319200744738, 0.9986030577453402, -0.3866561561541471)
+rotation = Vector3(0.2722271269312529, 0, 0.13360652225396852)
+scale = Vector3(1, 0.19617093688746992, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove7_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.07725020731951143, 1.16892229354011, -0.319040330565266)
+rotation = Vector3(0.49580458967506225, 0, 0.22240791778120328)
+scale = Vector3(1, 0.17877578357099583, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove7_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.04209882545606232, 1.2987286523371808, -0.22278022976892092)
+rotation = Vector3(0.8008147961401517, 0, 0.19957476856896844)
+scale = Vector3(1, 0.15570343172145346, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove8_0" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.17864280609810784, 0.10127134766281903, -0.16731464261167692)
+rotation = Vector3(-0.6566808718112099, 0, -0.5945795966119652)
+scale = Vector3(1, 0.1619224384549394, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove8_1" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.2660818138347778, 0.2310777064598899, -0.23498980466738034)
+rotation = Vector3(-0.33540366672128985, 0, -0.47813108498461104)
+scale = Vector3(1, 0.18294213306142726, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove8_2" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.3397559490138354, 0.40139694225465966, -0.2742256126864061)
+rotation = Vector3(-0.13276420413347195, 0, -0.3226917977747778)
+scale = Vector3(1, 0.19920756730976338, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove8_3" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.38235688359627906, 0.597514202831416, -0.29071668795431505)
+rotation = Vector3(-0.03887957112068336, 0, -0.10698244047672412)
+scale = Vector3(1, 0.20630609772386696, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove8_4" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.3800545083239171, 0.8024857971685839, -0.2928301202419013)
+rotation = Vector3(0.01827542946547417, 0, 0.12919367356044534)
+scale = Vector3(1, 0.20672868490293958, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove8_5" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.33478886161432536, 0.9986030577453402, -0.2785550425092826)
+rotation = Vector3(0.1316878304642965, 0, 0.326181278730288)
+scale = Vector3(1, 0.19941294159778908, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove8_6" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.2624103674804801, 1.16892229354011, -0.237977394270308)
+rotation = Vector3(0.35209868803745764, 0, 0.45952415987917156)
+scale = Vector3(1, 0.18231239093146787, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Groove8_7" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.17813947615351483, 1.2987286523371808, -0.16770214454571578)
+rotation = Vector3(0.6701859198113995, 0, 0.5741419260837954)
+scale = Vector3(1, 0.1614434611464035, 1)
+layers = 1
+mesh = SubResource("ShellSeam")
+material_override = SubResource("ShellRidges")
+
+[node name="Face" type="Node3D" parent="Visuals"]
+
+
+[node name="LeftEye" type="MeshInstance3D" parent="Visuals/Face"]
+position = Vector3(0.48, 0.87, -0.17)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.095, 0.21, 0.165)
+layers = 1
+mesh = SubResource("NutSphere")
+material_override = SubResource("NutEyes")
+
+[node name="LeftPupil" type="MeshInstance3D" parent="Visuals/Face"]
+position = Vector3(0.528, 0.865, -0.17)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.025, 0.085, 0.064)
+layers = 1
+mesh = SubResource("NutSphere")
+material_override = SubResource("NutPupils")
+
+[node name="LeftGlint" type="MeshInstance3D" parent="Visuals/Face"]
+position = Vector3(0.543, 0.89, -0.16)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.015, 0.026, 0.019)
+layers = 1
+mesh = SubResource("NutSphere")
+material_override = SubResource("NutEyes")
+
+[node name="RightEye" type="MeshInstance3D" parent="Visuals/Face"]
+position = Vector3(0.48, 0.87, 0.17)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.095, 0.21, 0.165)
+layers = 1
+mesh = SubResource("NutSphere")
+material_override = SubResource("NutEyes")
+
+[node name="RightPupil" type="MeshInstance3D" parent="Visuals/Face"]
+position = Vector3(0.528, 0.865, 0.17)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.025, 0.085, 0.064)
+layers = 1
+mesh = SubResource("NutSphere")
+material_override = SubResource("NutPupils")
+
+[node name="RightGlint" type="MeshInstance3D" parent="Visuals/Face"]
+position = Vector3(0.543, 0.89, 0.16)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.015, 0.026, 0.019)
+layers = 1
+mesh = SubResource("NutSphere")
+material_override = SubResource("NutEyes")
+
+[node name="Mouth" type="MeshInstance3D" parent="Visuals/Face"]
+position = Vector3(0.512, 0.58, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.021, 0.035, 0.16)
+layers = 1
+mesh = SubResource("NutSphere")
+material_override = SubResource("NutMouth")
+
+[node name="PlantBody" type="StaticBody3D" parent="."]
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlantBody"]
+position = Vector3(0, 0.675, 0)
+shape = SubResource("NutCollision")

@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/zombie.tscn" id="base_zombie"]
+
+[sub_resource type="StandardMaterial3D" id="ConeOrange"]
+albedo_color = Color(0.92941, 0.51765, 0.17255, 1)
+roughness = 0.72
+
+
+[sub_resource type="StandardMaterial3D" id="ReflectiveBands"]
+albedo_color = Color(0.95686, 0.92549, 0.82745, 1)
+roughness = 0.58
+
+
+[sub_resource type="BoxMesh" id="ConeBase"]
+size = Vector3(0.56, 0.07, 0.56)
+
+[sub_resource type="CylinderMesh" id="TrafficCone"]
+top_radius = 0.035
+bottom_radius = 0.255
+height = 0.65
+radial_segments = 32
+
+[sub_resource type="CylinderMesh" id="LowerBand"]
+top_radius = 0.175
+bottom_radius = 0.215
+height = 0.11
+radial_segments = 32
+
+[sub_resource type="CylinderMesh" id="UpperBand"]
+top_radius = 0.100
+bottom_radius = 0.127
+height = 0.075
+radial_segments = 32
+
+[node name="ConeheadZombie" instance=ExtResource("base_zombie")]
+maximum_health = 570
+has_cone = true
+
+[node name="Cone" type="Node3D" parent="Visuals/Head"]
+position = Vector3(0, 0.29, 0.015)
+rotation = Vector3(0, 0, -0.07)
+
+[node name="Base" type="MeshInstance3D" parent="Visuals/Head/Cone"]
+position = Vector3(0, 0.035, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("ConeBase")
+material_override = SubResource("ConeOrange")
+
+[node name="ConeBody" type="MeshInstance3D" parent="Visuals/Head/Cone"]
+position = Vector3(0, 0.355, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("TrafficCone")
+material_override = SubResource("ConeOrange")
+
+[node name="LowerStripe" type="MeshInstance3D" parent="Visuals/Head/Cone"]
+position = Vector3(0, 0.22, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("LowerBand")
+material_override = SubResource("ReflectiveBands")
+
+[node name="UpperStripe" type="MeshInstance3D" parent="Visuals/Head/Cone"]
+position = Vector3(0, 0.45, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("UpperBand")
+material_override = SubResource("ReflectiveBands")

@@ -1,0 +1,181 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/grass_tile.gd" id="tile_script"]
+
+[ext_resource type="ArrayMesh" path="res://assets/meshes/soil_tile.obj" id="soil_mesh"]
+
+[ext_resource type="ArrayMesh" path="res://assets/meshes/grass_tile.obj" id="turf_mesh"]
+
+[ext_resource type="ArrayMesh" path="res://assets/meshes/grass.obj" id="grass_mesh"]
+
+[ext_resource type="Material" path="res://assets/materials/turf_light.tres" id="turf_material"]
+
+[sub_resource type="StandardMaterial3D" id="WarmSoil"]
+albedo_color = Color(0.61961, 0.46275, 0.31373, 1)
+roughness = 1
+
+
+[sub_resource type="StandardMaterial3D" id="GrassBlades"]
+albedo_color = Color(0.38824, 0.58039, 0.26275, 1)
+roughness = 0.9
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="Pebble"]
+albedo_color = Color(0.78824, 0.70196, 0.54118, 1)
+roughness = 1
+
+
+[sub_resource type="SphereMesh" id="PebbleShape"]
+radius = 0.5
+height = 1.0
+radial_segments = 12
+rings = 6
+
+[sub_resource type="BoxShape3D" id="TileCollision"]
+size = Vector3(2.36, 0.435, 2.36)
+
+[node name="GrassTile" type="Node3D"]
+script = ExtResource("tile_script")
+
+[node name="Soil" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+mesh = ExtResource("soil_mesh")
+material_override = SubResource("WarmSoil")
+
+[node name="Turf" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+mesh = ExtResource("turf_mesh")
+material_override = ExtResource("turf_material")
+
+[node name="GrassTufts" type="Node3D" parent="."]
+
+
+[node name="Tuft01" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(-0.84, 0.02, -0.88)
+rotation = Vector3(0, 0.0, 0)
+scale = Vector3(0.65, 0.65, 0.65)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft02" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(-0.35, 0.02, -0.96)
+rotation = Vector3(0, 1.7, 0)
+scale = Vector3(0.8, 0.8, 0.8)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft03" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(0.53, 0.02, -0.88)
+rotation = Vector3(0, 3.4, 0)
+scale = Vector3(0.95, 0.95, 0.95)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft04" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(0.88, 0.02, -0.55)
+rotation = Vector3(0, 5.1, 0)
+scale = Vector3(1.1, 1.1, 1.1)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft05" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(0.96, 0.02, 0.1)
+rotation = Vector3(0, 6.8, 0)
+scale = Vector3(0.65, 0.65, 0.65)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft06" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(0.87, 0.02, 0.74)
+rotation = Vector3(0, 8.5, 0)
+scale = Vector3(0.8, 0.8, 0.8)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft07" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(0.36, 0.02, 0.95)
+rotation = Vector3(0, 10.2, 0)
+scale = Vector3(0.95, 0.95, 0.95)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft08" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(-0.26, 0.02, 0.94)
+rotation = Vector3(0, 11.9, 0)
+scale = Vector3(1.1, 1.1, 1.1)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft09" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(-0.88, 0.02, 0.66)
+rotation = Vector3(0, 13.6, 0)
+scale = Vector3(0.65, 0.65, 0.65)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft10" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(-0.98, 0.02, 0.12)
+rotation = Vector3(0, 15.299999999999999, 0)
+scale = Vector3(0.8, 0.8, 0.8)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft11" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(-0.72, 0.02, -0.45)
+rotation = Vector3(0, 17.0, 0)
+scale = Vector3(0.95, 0.95, 0.95)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft12" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(0.73, 0.02, 0.44)
+rotation = Vector3(0, 18.7, 0)
+scale = Vector3(1.1, 1.1, 1.1)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft13" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(-0.48, 0.02, 0.71)
+rotation = Vector3(0, 20.4, 0)
+scale = Vector3(0.65, 0.65, 0.65)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Tuft14" type="MeshInstance3D" parent="GrassTufts"]
+position = Vector3(0.22, 0.02, -0.73)
+rotation = Vector3(0, 22.099999999999998, 0)
+scale = Vector3(0.8, 0.8, 0.8)
+mesh = ExtResource("grass_mesh")
+material_override = SubResource("GrassBlades")
+
+[node name="Pebble1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.86, 0.036, 0.85)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.14, 0.07700000000000001, 0.11900000000000001)
+mesh = SubResource("PebbleShape")
+material_override = SubResource("Pebble")
+
+[node name="Pebble2" type="MeshInstance3D" parent="."]
+position = Vector3(-0.72, 0.036, 0.91)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.085, 0.04675000000000001, 0.07225000000000001)
+mesh = SubResource("PebbleShape")
+material_override = SubResource("Pebble")
+
+[node name="Pebble3" type="MeshInstance3D" parent="."]
+position = Vector3(0.92, 0.036, -0.85)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.12, 0.066, 0.102)
+mesh = SubResource("PebbleShape")
+material_override = SubResource("Pebble")
+
+[node name="GroundBody" type="StaticBody3D" parent="."]
+
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundBody"]
+position = Vector3(0, -0.1925, 0)
+shape = SubResource("TileCollision")

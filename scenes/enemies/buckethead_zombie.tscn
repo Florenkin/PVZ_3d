@@ -1,0 +1,156 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/zombie.tscn" id="base_zombie"]
+
+[sub_resource type="StandardMaterial3D" id="BucketSteel"]
+albedo_color = Color(0.52941, 0.60784, 0.61961, 1)
+roughness = 0.45
+metallic = 0.7
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="BucketRim"]
+albedo_color = Color(0.75294, 0.80392, 0.80000, 1)
+roughness = 0.35
+metallic = 0.75
+
+[sub_resource type="StandardMaterial3D" id="BucketInterior"]
+albedo_color = Color(0.26275, 0.33725, 0.35294, 1)
+roughness = 0.75
+metallic = 0.4
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="BucketScuffs"]
+albedo_color = Color(0.32549, 0.41569, 0.42745, 1)
+roughness = 0.8
+metallic = 0.3
+
+[sub_resource type="CylinderMesh" id="BucketBody"]
+top_radius = 0.265
+bottom_radius = 0.335
+height = 0.42
+radial_segments = 48
+cap_top = true
+cap_bottom = false
+
+[sub_resource type="CylinderMesh" id="BucketLining"]
+top_radius = 0.248
+bottom_radius = 0.315
+height = 0.36
+radial_segments = 48
+cap_top = true
+cap_bottom = false
+
+[sub_resource type="TorusMesh" id="RolledRim"]
+inner_radius = 0.313
+outer_radius = 0.355
+rings = 48
+ring_segments = 12
+
+[sub_resource type="TorusMesh" id="TopSeam"]
+inner_radius = 0.251
+outer_radius = 0.282
+rings = 48
+ring_segments = 12
+
+[sub_resource type="TorusMesh" id="WireHandle"]
+inner_radius = 0.336
+outer_radius = 0.353
+rings = 48
+ring_segments = 8
+
+[sub_resource type="SphereMesh" id="HandleHinge"]
+radius = 0.5
+height = 1.0
+radial_segments = 20
+rings = 10
+
+[sub_resource type="BoxMesh" id="ScuffLine"]
+size = Vector3(0.055, 0.009, 0.006)
+
+[node name="BucketheadZombie" instance=ExtResource("base_zombie")]
+maximum_health = 1370
+has_bucket = true
+
+[node name="Bucket" type="Node3D" parent="Visuals/Head"]
+position = Vector3(0, 0.18, 0.015)
+rotation = Vector3(0, 0, 0.07)
+
+[node name="Body" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(0, 0.17, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("BucketBody")
+material_override = SubResource("BucketSteel")
+
+[node name="Interior" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(0, 0.14, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("BucketLining")
+material_override = SubResource("BucketInterior")
+
+[node name="LowerRim" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(0, -0.04, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("RolledRim")
+material_override = SubResource("BucketRim")
+
+[node name="TopSeam" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(0, 0.375, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("TopSeam")
+material_override = SubResource("BucketRim")
+
+[node name="Handle" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(0, 0.13, 0)
+rotation = Vector3(1.5707963267948966, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("WireHandle")
+material_override = SubResource("BucketRim")
+
+[node name="LeftHinge" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(-0.315, 0.13, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.055, 0.07, 0.07)
+layers = 1
+mesh = SubResource("HandleHinge")
+material_override = SubResource("BucketRim")
+
+[node name="RightHinge" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(0.315, 0.13, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.055, 0.07, 0.07)
+layers = 1
+mesh = SubResource("HandleHinge")
+material_override = SubResource("BucketRim")
+
+[node name="Scuff1" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(-0.12, 0.11, -0.28783211855912905)
+rotation = Vector3(0, 0, -0.3)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("ScuffLine")
+material_override = SubResource("BucketScuffs")
+
+[node name="Scuff2" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(-0.09, 0.14, -0.2934189424179561)
+rotation = Vector3(0, 0, -0.3)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("ScuffLine")
+material_override = SubResource("BucketScuffs")
+
+[node name="Scuff3" type="MeshInstance3D" parent="Visuals/Head/Bucket"]
+position = Vector3(0.13, 0.25, -0.2574951619459315)
+rotation = Vector3(0, 0, 0.25)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("ScuffLine")
+material_override = SubResource("BucketScuffs")

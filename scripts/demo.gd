@@ -30,6 +30,12 @@ var CREAM := Color("f6f8ed")
 @onready var _projectiles: Node3D = $Projectiles
 @onready var _debris: Node3D = $Debris
 @onready var _orbit: Node3D = $OrbitRig
+@onready var _sun_system: SunSystem = $SunSystem
+var _sun_label: Label
+var _sun_feedback: Label
+var _sun_feedback_tween: Tween
+var _sun_reticle: Label
+var _displayed_sun: int = 0
 var _idle_button: Button
 var _view_button: Button
 var _zombie_button: Button
@@ -90,6 +96,9 @@ func _ready() -> void:
 	_gatling.configure_combat(_lawn, _projectiles)
 	_snowpea.configure_combat(_lawn, _projectiles)
 	_build_interface()
+	_displayed_sun = _sun_system.sun_value
+	_sun_system.sun_value_changed.connect(_on_sun_value_changed)
+	_sun_system.configure(_lawn)
 	_respawn_timer = Timer.new()
 	_respawn_timer.name = "ZombieRespawnTimer"
 	_respawn_timer.one_shot = true
@@ -366,13 +375,14 @@ func _build_interface() -> void:
 	_resize_interface(root)
 
 	var heading := VBoxContainer.new()
-	heading.position = Vector2(44, 34)
+	heading.position = Vector2(44, 126)
 	heading.add_theme_constant_override("separation", 6)
 	heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(heading)
 	_label(heading, "PVZ  /  3D GARDEN", 13, MUTED)
 	_label(heading, "庭院防线", 34, INK)
 	_label(heading, "站在植物身后，守住这片草坪。", 14, MUTED)
+	_build_sun_counter(root)
 
 	var badge := _button(root, "数值信息  Tab")
 	badge.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
@@ -491,6 +501,68 @@ func _build_interface() -> void:
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hint_panel.add_child(hint)
+
+
+func _build_sun_counter(root: Control) -> void:
+	var panel := PanelContainer.new()
+	panel.name = "SunCounter"
+	panel.position = Vector2(24, 24)
+	panel.custom_minimum_size = Vector2(220, 84)
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var style := _panel_style(Color("fff4c9"), 16, 14, 10)
+	style.border_color = Color("dfbb55")
+	style.set_border_width_all(2)
+	panel.add_theme_stylebox_override("panel", style)
+	root.add_child(panel)
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_theme_constant_override("separation", 12)
+	panel.add_child(row)
+	var icon := TextureRect.new()
+	icon.texture = preload("res://assets/ui/sun.svg")
+	icon.custom_minimum_size = Vector2(60, 60)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(icon)
+	var text := VBoxContainer.new()
+	text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	text.add_theme_constant_override("separation", 0)
+	row.add_child(text)
+	_label(text, "阳光", 13, Color("8a6a24"))
+	_sun_label = _label(text, "0", 30, Color("654617"))
+	_sun_label.name = "SunValue"
+	_sun_feedback = _label(row, "", 18, Color("b27a13"))
+	_sun_feedback.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_sun_feedback.modulate.a = 0.0
+	_sun_reticle = _label(root, "+", 22, Color(1.0, 0.97, 0.76, 0.8))
+	_sun_reticle.name = "SunAim"
+	_sun_reticle.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	_sun_reticle.offset_left = -16
+	_sun_reticle.offset_right = 16
+	_sun_reticle.offset_top = -16
+	_sun_reticle.offset_bottom = 16
+	_sun_reticle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_sun_reticle.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_sun_reticle.add_theme_color_override("font_shadow_color", Color(0.18, 0.22, 0.12, 0.6))
+	_sun_reticle.add_theme_constant_override("shadow_outline_size", 2)
+	_sun_reticle.hide()
+
+
+func _on_sun_value_changed(total: int) -> void:
+	var gained := total - _displayed_sun
+	_displayed_sun = total
+	_sun_label.text = str(total)
+	if _sun_feedback_tween != null:
+		_sun_feedback_tween.kill()
+	_sun_feedback.modulate.a = 0.0
+	if gained > 0:
+		_sun_feedback.text = "+%d" % gained
+		_sun_feedback.modulate.a = 1.0
+		_sun_feedback_tween = create_tween()
+		_sun_feedback_tween.tween_interval(0.5)
+		_sun_feedback_tween.tween_property(_sun_feedback, "modulate:a", 0.0, 0.6)
 
 
 func _label(parent: Node, text: String, font_size: int, color: Color) -> Label:
@@ -617,9 +689,9 @@ func _update_input_hint() -> void:
 	if _sidebar_open:
 		_hint.text = "Tab / Esc 收起数值    ·    M 切换视角    ·    R 重新开始"
 	elif _model_view:
-		_hint.text = "左键拖动旋转    ·    滚轮缩放    ·    Tab 数值信息    ·    M 戴夫视角"
+		_hint.text = "点击收集阳光    ·    拖动旋转    ·    滚轮缩放    ·    M 戴夫视角"
 	else:
-		_hint.text = "WASD 移动    ·    鼠标转向    ·    Tab 数值信息    ·    M 查看模型"
+		_hint.text = "WASD 移动    ·    瞄准阳光按左键收集    ·    Esc 释放鼠标"
 
 
 func _reset_view() -> void:
@@ -627,6 +699,7 @@ func _reset_view() -> void:
 	_cone_respawn_timer.stop()
 	_bucket_respawn_timer.stop()
 	_pole_respawn_timer.stop()
+	_sun_system.reset()
 	_dave.reset_pose()
 	for pea: Node in _projectiles.get_children():
 		_projectiles.remove_child(pea)
@@ -822,6 +895,7 @@ func _enemy_view_height() -> float:
 
 
 func _process(_delta: float) -> void:
+	_sun_reticle.visible = not _model_view and not _sidebar_open and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 	if _model_view and (_inspect_zombie or _inspect_cone or _inspect_bucket or _inspect_pole):
 		_orbit.set_target_position(_selected_enemy().global_position + Vector3(0, _enemy_view_height(), 0))
 

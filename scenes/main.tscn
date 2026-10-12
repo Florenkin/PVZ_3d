@@ -1,6 +1,8 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/demo.gd" id="demo_script"]
+
+[ext_resource type="Script" path="res://scripts/sun_system.gd" id="sun_system_script"]
 
 [ext_resource type="Script" path="res://scripts/orbit_camera.gd" id="orbit_script"]
 
@@ -174,3 +176,6 @@ far = 200.0
 
 [node name="House" parent="." instance=ExtResource("house_scene")]
 position = Vector3(-12.6, 0.025, 0)
+
+[node name="SunSystem" type="Node3D" parent="."]
+script = ExtResource("sun_system_script")

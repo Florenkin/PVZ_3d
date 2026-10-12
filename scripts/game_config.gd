@@ -113,8 +113,10 @@ func _valid_value(value: Variant, baseline: Variant, path: String) -> bool:
 		return true
 	if not _is_number(value):
 		return false
-	if key in ["version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height"] and float(value) != floor(float(value)):
+	if key in ["version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height", "medium_value", "initial_value"] and float(value) != floor(float(value)):
 		return false
+	if path.begins_with("sun.") and key in ["spawn_interval", "medium_value", "fall_speed"]:
+		return value > 0
 	if key == "version":
 		return value == 1
 	if key in ["rows", "columns", "row", "column", "burst_size"]:

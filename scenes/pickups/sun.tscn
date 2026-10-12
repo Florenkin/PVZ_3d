@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/sun_pickup.gd" id="sun_script"]
+
+[node name="Sun" type="Area3D"]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+input_ray_pickable = false
+script = ExtResource("sun_script")

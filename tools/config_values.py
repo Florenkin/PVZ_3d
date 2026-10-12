@@ -29,9 +29,11 @@ def valid(value, baseline, key):
         return key != "movement_bounds" or value[2] > 0 and value[3] > 0
     if not _number(value):
         return False
-    integer_keys = {"version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height"}
+    integer_keys = {"version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height", "medium_value", "initial_value"}
     if key in integer_keys and int(value) != value:
         return False
+    if key in {"spawn_interval", "medium_value", "fall_speed"}:
+        return value > 0
     if key == "version":
         return value == 1
     if key in {"rows", "columns", "row", "column", "burst_size"}:

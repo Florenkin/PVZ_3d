@@ -1,5 +1,15 @@
 {
   "version": 1,
+  "sun": {
+    "enabled": true,
+    "spawn_interval": 10.0,
+    "medium_value": 50,
+    "initial_value": 0,
+    "spawn_height": 7.0,
+    "fall_speed": 1.4,
+    "radius": 0.62,
+    "lifetime": 20.0
+  },
   "lawn": {
     "rows": 5,
     "columns": 9,

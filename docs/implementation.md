@@ -28,6 +28,7 @@
 - `scripts/zombie.gd`：四种僵尸共用的行走、寒冰减速与独立冷色外观、受击、血量阈值、路障及铁桶脱落、随机断手、飞头和物理尸体逻辑。
 - `scripts/zombie_debris.gd`：独立物理刚体，处理重力、碰撞、反弹、摩擦、翻滚、闪白恢复和生命周期。尸体剩余的前臂通过物理肘关节连接，可以随倒地弯折。
 - `scripts/demo.gd`：组合场景、四种僵尸的生命界面，以及四条防线死亡 1 秒后独立刷新相同类型新实例的逻辑。
+- `scripts/sun_system.gd` / `scenes/pickups/sun.tscn` / `scripts/sun_pickup.gd`：每 10 秒在随机空草坪格上方生成中阳光，垂直下落、固定落地和左键一次性收集；独立管理计时、余额、20 秒落地寿命及 R 重置。
 - `scripts/orbit_camera.gd`：模型查看相机的旋转与缩放，默认不启用。
 
 植物的根节点位于地面，炮口朝局部 **+X** 方向。直接把 `peashooter.tscn` 拖入其他 3D 场景即可使用。运行时主要部件的网格、颜色和尺寸由 JSON 应用；未配置的小装饰仍可展开原场景节点编辑。
@@ -62,6 +63,7 @@ Garden
 │   └── PoleVaultingZombie # 撑杆僵尸，第 5 行第 9 列，500 生命
 ├── Projectiles            # 运行时生成的独立豌豆实体
 ├── Debris                 # 脱落路障/铁桶/长杆、断手、飞头和尸体；独立于活着的僵尸
+├── SunSystem              # 掉落计时与余额，子节点为可收集的独立中阳光
 ├── BackgroundGround       # 草坪外背景地面的物理碰撞
 ├── WorldEnvironment
 ├── Sun / SoftFill / Backdrop
@@ -125,6 +127,7 @@ Garden
 ```powershell
 godot --headless --path . --fixed-fps 60 --script res://tests/config_test.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/house_test.gd
+godot --headless --path . --fixed-fps 60 --script res://tests/sun_test.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/combat_test.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/respawn_test.gd
 godot --headless --path . --fixed-fps 60 --script res://tests/repeater_test.gd

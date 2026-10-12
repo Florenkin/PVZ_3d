@@ -791,6 +791,7 @@ def main_scene():
     s = Scene()
     demo = s.ext("Script", "scripts/demo.gd", "demo_script")
     orbit = s.ext("Script", "scripts/orbit_camera.gd", "orbit_script")
+    sun_system = s.ext("Script", "scripts/sun_system.gd", "sun_system_script")
     plant = s.ext("PackedScene", "scenes/plants/peashooter.tscn", "plant_scene")
     repeater = s.ext("PackedScene", "scenes/plants/repeater.tscn", "repeater_scene")
     threepeater = s.ext("PackedScene", "scenes/plants/threepeater.tscn", "threepeater_scene")
@@ -840,6 +841,7 @@ def main_scene():
     s.node("Debris", "Node3D", ".")
     s.node("OrbitRig", "Node3D", ".", f'script = {orbit}\nenabled = false\ndefault_yaw = 0.65\ndefault_pitch = 0.25\ndefault_size = 4.3\nminimum_size = 3.0\ntarget = Vector3(-8.4, 0.775, 0)\ndistance = 7.0')
     s.node("Camera3D", "Camera3D", "OrbitRig", 'position = Vector3(-4.298, 2.507, 5.397)\nrotation = Vector3(-0.25, 0.65, 0)\nprojection = 1\ncurrent = false\ncull_mask = 3\nsize = 4.3\nnear = 0.1\nfar = 200.0')
+    s.node("SunSystem", "Node3D", ".", f'script = {sun_system}')
     s.save("scenes/main.tscn")
 
 

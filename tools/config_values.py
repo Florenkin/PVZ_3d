@@ -29,13 +29,17 @@ def valid(value, baseline, key):
         return key != "movement_bounds" or value[2] > 0 and value[3] > 0
     if not _number(value):
         return False
-    integer_keys = {"version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height", "medium_value", "initial_value"}
+    integer_keys = {"version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "newspaper_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height", "medium_value", "initial_value"}
     if key in integer_keys and int(value) != value:
         return False
     if key in {"spawn_interval", "medium_value", "fall_speed"}:
         return value > 0
     if key == "version":
         return value == 1
+    if key == "anger_pause_duration":
+        return value > 0
+    if key == "enraged_speed_multiplier":
+        return value > 1
     if key in {"rows", "columns", "row", "column", "burst_size"}:
         return 1 <= value <= 64
     if key in {"recoil_degrees", "maximum_recoil_degrees", "vault_lean_degrees"}:
@@ -53,7 +57,7 @@ def valid(value, baseline, key):
     positive = {"maximum_health", "shot_interval", "burst_spacing", "recoil_recovery_time", "knockback_deceleration", "maximum_walk_distance", "respawn_delay", "prepare_time", "vault_height", "landing_clearance", "pole_length", "pole_radius", "gravity", "mass", "lifetime", "cell_size", "tile_width", "tile_thickness", "scale", "font_scale", "radius", "height", "inner_radius", "outer_radius", "maximum_distance", "minimum_size", "maximum_size", "distance", "size", "near", "far", "lane_spread_distance", "target_lane_tolerance", "vault_trigger_distance", "zoom_in_factor", "zoom_out_factor"}
     if key in positive or key.endswith("width") or key.endswith("height") and key not in {"surface_height", "ground_height", "walk_bob_height", "lift_height"}:
         return value > 0
-    if key in {"yaw_degrees", "pitch_degrees", "minimum_pitch_degrees", "maximum_pitch_degrees", "surface_height", "ground_height", "spin_x_min", "spin_x_max", "spin_y", "spin_z", "offset_z"}:
+    if key in {"yaw_degrees", "newspaper_yaw_degrees", "pitch_degrees", "minimum_pitch_degrees", "maximum_pitch_degrees", "surface_height", "ground_height", "spin_x_min", "spin_x_max", "spin_y", "spin_z", "offset_z"}:
         return True
     return value >= 0
 

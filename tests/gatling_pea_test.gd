@@ -66,6 +66,10 @@ func _run() -> void:
 	GameConfiguration.current().apply_entity(_main)
 	_main.auto_respawn_enabled = false
 	root.add_child(_main)
+	# Isolate these existing cases from the new fifth-lane enemy.
+	_main._newspaper_zombie.movement_enabled = false
+	_main._newspaper_zombie.is_ground_zombie = false
+	_main._newspaper_zombie.set_spawn(_main._lawn.cell_to_world(3, 8) + Vector3(40, 0, 0), PI / 2.0)
 	_main._pole_zombie.movement_enabled = false
 	_main._pole_zombie.is_ground_zombie = false
 	_main._pole_zombie.set_spawn(_main._lawn.cell_to_world(4, 8) + Vector3(3, 0, 0), PI / 2.0)
@@ -197,7 +201,7 @@ func _run() -> void:
 	_plant.combat_enabled = true
 	await _step(3600)
 	_check(_shots.size() >= 152 and _long_hits >= 140 and sustained_target.health == 5000 - 20 * _long_hits, "Sustained four-plant combat lost Gatling shots or dealt incorrect damage.")
-	_check(_main.get_node("Enemies").get_child_count() == 5 and _main._projectiles.get_child_count() < 25 and _main._debris.get_child_count() < 24, "Sustained four-plant combat accumulated expired entities.")
+	_check(_main.get_node("Enemies").get_child_count() == 6 and _main._projectiles.get_child_count() < 25 and _main._debris.get_child_count() < 24, "Sustained four-plant combat accumulated expired entities.")
 	_main._reset_view()
 	_check(_main._projectiles.get_child_count() == 0 and _main._debris.get_child_count() == 0 and _plant._burst_shots_remaining == 0, "Restart failed after sustained four-plant combat.")
 	if not _failed:

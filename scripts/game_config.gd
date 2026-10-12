@@ -113,12 +113,16 @@ func _valid_value(value: Variant, baseline: Variant, path: String) -> bool:
 		return true
 	if not _is_number(value):
 		return false
-	if key in ["version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height", "medium_value", "initial_value"] and float(value) != floor(float(value)):
+	if key in ["version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "newspaper_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height", "medium_value", "initial_value"] and float(value) != floor(float(value)):
 		return false
 	if path.begins_with("sun.") and key in ["spawn_interval", "medium_value", "fall_speed"]:
 		return value > 0
 	if key == "version":
 		return value == 1
+	if key == "anger_pause_duration":
+		return value > 0
+	if key == "enraged_speed_multiplier":
+		return value > 1
 	if key in ["rows", "columns", "row", "column", "burst_size"]:
 		return value >= 1 and value <= 64
 	if key in ["recoil_degrees", "maximum_recoil_degrees", "vault_lean_degrees"]:
@@ -135,7 +139,7 @@ func _valid_value(value: Variant, baseline: Variant, path: String) -> bool:
 		return value > 0
 	if key in ["maximum_health", "shot_interval", "burst_spacing", "recoil_recovery_time", "knockback_deceleration", "maximum_walk_distance", "respawn_delay", "prepare_time", "vault_height", "landing_clearance", "pole_length", "pole_radius", "gravity", "mass", "lifetime", "cell_size", "tile_width", "tile_thickness", "scale", "font_scale", "radius", "height", "inner_radius", "outer_radius", "maximum_distance", "minimum_size", "maximum_size", "distance", "size", "near", "far", "lane_spread_distance", "target_lane_tolerance", "vault_trigger_distance", "zoom_in_factor", "zoom_out_factor"] or key.ends_with("width") or key.ends_with("height") and key != "surface_height" and key != "ground_height" and key != "walk_bob_height" and key != "lift_height":
 		return value > 0
-	if key in ["yaw_degrees", "pitch_degrees", "minimum_pitch_degrees", "maximum_pitch_degrees", "surface_height", "ground_height", "spin_x_min", "spin_x_max", "spin_y", "spin_z", "offset_z"]:
+	if key in ["yaw_degrees", "newspaper_yaw_degrees", "pitch_degrees", "minimum_pitch_degrees", "maximum_pitch_degrees", "surface_height", "ground_height", "spin_x_min", "spin_x_max", "spin_y", "spin_z", "offset_z"]:
 		return true
 	return value >= 0
 
@@ -246,7 +250,7 @@ func apply_model(root: Node3D, key: String) -> void:
 		return
 	var original_bounds := model_bounds(root)
 	var part_bounds: Dictionary = {}
-	for path: String in ["Visuals", "Visuals/Torso", "Visuals/Legs", "Visuals/Head", "Visuals/Head/Cone", "Visuals/Head/Bucket", "Visuals/Arms/LeftHandAssembly", "Visuals/Arms/RightHandAssembly"]:
+	for path: String in ["Visuals", "Visuals/Torso", "Visuals/Legs", "Visuals/Head", "Visuals/Head/Cone", "Visuals/Head/Bucket", "Visuals/Newspaper", "Visuals/Arms/LeftHandAssembly", "Visuals/Arms/RightHandAssembly"]:
 		var source := root.get_node_or_null(path) as Node3D
 		if source != null:
 			part_bounds[source] = model_bounds(source).size
@@ -311,7 +315,7 @@ func model_bounds(root: Node3D) -> AABB:
 			var ancestor := mesh.get_parent()
 			var accessory := false
 			while ancestor != root and ancestor != null:
-				accessory = accessory or ancestor.name in ["Pole", "Cone", "Bucket"]
+				accessory = accessory or ancestor.name in ["Pole", "Cone", "Bucket", "Newspaper"]
 				ancestor = ancestor.get_parent()
 			if accessory:
 				continue

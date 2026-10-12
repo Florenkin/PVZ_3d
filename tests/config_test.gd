@@ -76,7 +76,7 @@ func _run() -> void:
 	settings.lawn.tile_width = 2.8
 	settings.lawn.tile_thickness = 0.6
 	settings.lawn.surface_height = 0.15
-	for key: String in ["zombie", "conehead_zombie", "buckethead_zombie", "pole_vaulting_zombie"]:
+	for key: String in ["zombie", "conehead_zombie", "buckethead_zombie", "pole_vaulting_zombie", "newspaper_zombie"]:
 		settings.placements[key].column = 10
 	settings.dave.waist_height = 1.15
 	settings.cameras.first_person.fov = 55

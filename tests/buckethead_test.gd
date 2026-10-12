@@ -62,7 +62,7 @@ func _on_respawn(zombie: Zombie) -> void:
 	_respawn_frames.append(Engine.get_physics_frames())
 	_check(zombie.health == 1370 and zombie.has_bucket and not zombie.has_cone and zombie.get_node("Visuals/Head/Bucket").visible, "Buckethead respawn lost its type, full health or armor.")
 	_check(zombie.global_position.distance_to(_lawn.cell_to_world(0, 8)) < 0.001, "Buckethead did not respawn at the Gatling lane's far baseline.")
-	_check(_main.get_node("Enemies").get_child_count() == 4 and get_nodes_in_group("zombies").size() == 4, "Independent respawns duplicated living enemies.")
+	_check(_main.get_node("Enemies").get_child_count() == 5 and get_nodes_in_group("zombies").size() == 5, "Independent respawns duplicated living enemies.")
 	_check(_main._bucket_health_bar.value == 1370, "Respawn did not update buckethead health UI.")
 	if not _death_frames.is_empty():
 		_check(absf(float(_respawn_frames[-1] - _death_frames[-1]) / Engine.physics_ticks_per_second - 1.0) < 0.035, "Buckethead did not respawn 1 second after death.")
@@ -97,6 +97,10 @@ func _run() -> void:
 	GameConfiguration.current().apply_entity(_main)
 	_main.auto_respawn_enabled = false
 	root.add_child(_main)
+	# Isolate these existing cases from the new fifth-lane enemy.
+	_main._newspaper_zombie.movement_enabled = false
+	_main._newspaper_zombie.is_ground_zombie = false
+	_main._newspaper_zombie.set_spawn(_main._lawn.cell_to_world(3, 8) + Vector3(40, 0, 0), PI / 2.0)
 	_main._pole_zombie.movement_enabled = false
 	_main._pole_zombie.is_ground_zombie = false
 	_main._pole_zombie.set_spawn(_main._lawn.cell_to_world(4, 8) + Vector3(3, 0, 0), PI / 2.0)
@@ -227,7 +231,7 @@ func _run() -> void:
 		plant.combat_enabled = true
 	await _step(5400)
 	_check(_respawn_frames.size() >= 2 and _other_respawns[0] >= 6 and _other_respawns[1] >= 3, "Natural three-lane combat did not repeatedly defeat and refresh all three enemy types.")
-	_check(_main.get_node("Enemies").get_child_count() == 4 and _main._projectiles.get_child_count() < 25 and _main._debris.get_child_count() < 28, "Long combat accumulated dead enemies, peas or debris.")
+	_check(_main.get_node("Enemies").get_child_count() == 5 and _main._projectiles.get_child_count() < 25 and _main._debris.get_child_count() < 28, "Long combat accumulated dead enemies, peas or debris.")
 	_natural = false
 	_main._reset_view()
 	await _step(3)

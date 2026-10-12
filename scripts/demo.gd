@@ -7,6 +7,7 @@ const ZOMBIE_SCENE := preload("res://scenes/enemies/zombie.tscn")
 const CONEHEAD_SCENE := preload("res://scenes/enemies/conehead_zombie.tscn")
 const BUCKETHEAD_SCENE := preload("res://scenes/enemies/buckethead_zombie.tscn")
 const POLE_ZOMBIE_SCENE := preload("res://scenes/enemies/pole_vaulting_zombie.tscn")
+const NEWSPAPER_SCENE := preload("res://scenes/enemies/newspaper_zombie.tscn")
 var INK := Color("294936")
 var MUTED := Color("6b806a")
 var CREAM := Color("f6f8ed")
@@ -27,6 +28,7 @@ var CREAM := Color("f6f8ed")
 @onready var _cone_zombie: Zombie = $Enemies/ConeheadZombie
 @onready var _bucket_zombie: Zombie = $Enemies/BucketheadZombie
 @onready var _pole_zombie: PoleVaultingZombie = $Enemies/PoleVaultingZombie
+@onready var _newspaper_zombie: NewspaperZombie = $Enemies/NewspaperZombie
 @onready var _projectiles: Node3D = $Projectiles
 @onready var _debris: Node3D = $Debris
 @onready var _orbit: Node3D = $OrbitRig
@@ -42,6 +44,7 @@ var _zombie_button: Button
 var _cone_button: Button
 var _bucket_button: Button
 var _pole_button: Button
+var _newspaper_button: Button
 var _view_label: Label
 var _hint: Label
 var _model_view: bool = false
@@ -49,6 +52,7 @@ var _inspect_zombie: bool = false
 var _inspect_cone: bool = false
 var _inspect_bucket: bool = false
 var _inspect_pole: bool = false
+var _inspect_newspaper: bool = false
 var _health_label: Label
 var _health_bar: ProgressBar
 var _combat_status: Label
@@ -65,6 +69,10 @@ var _pole_respawn_timer: Timer
 var _pole_health_label: Label
 var _pole_health_bar: ProgressBar
 var _pole_status: Label
+var _newspaper_respawn_timer: Timer
+var _newspaper_health_label: Label
+var _newspaper_health_bar: ProgressBar
+var _newspaper_status: Label
 var _sidebar: PanelContainer
 var _sidebar_open: bool = false
 var _sidebar_button: Button
@@ -89,6 +97,7 @@ func _ready() -> void:
 	_cone_zombie.set_spawn(_placement_position("conehead_zombie"), _placement_yaw("conehead_zombie"))
 	_bucket_zombie.set_spawn(_placement_position("buckethead_zombie"), _placement_yaw("buckethead_zombie"))
 	_pole_zombie.set_spawn(_placement_position("pole_vaulting_zombie"), _placement_yaw("pole_vaulting_zombie"))
+	_newspaper_zombie.set_spawn(_placement_position("newspaper_zombie"), _placement_yaw("newspaper_zombie"))
 	_debris.add_to_group("combat_debris_container")
 	_plant.configure_combat(_lawn, _projectiles)
 	_repeater.configure_combat(_lawn, _projectiles)
@@ -123,14 +132,22 @@ func _ready() -> void:
 	_pole_respawn_timer.process_callback = Timer.TIMER_PROCESS_PHYSICS
 	_pole_respawn_timer.timeout.connect(_respawn_pole_zombie)
 	add_child(_pole_respawn_timer)
+	_newspaper_respawn_timer = Timer.new()
+	_newspaper_respawn_timer.name = "NewspaperRespawnTimer"
+	_newspaper_respawn_timer.one_shot = true
+	_newspaper_respawn_timer.process_callback = Timer.TIMER_PROCESS_PHYSICS
+	_newspaper_respawn_timer.timeout.connect(_respawn_newspaper_zombie)
+	add_child(_newspaper_respawn_timer)
 	_connect_zombie()
 	_connect_cone_zombie()
 	_connect_bucket_zombie()
 	_connect_pole_zombie()
+	_connect_newspaper_zombie()
 	_on_health_changed(_zombie.health, _zombie.maximum_health)
 	_on_cone_health_changed(_cone_zombie.health, _cone_zombie.maximum_health)
 	_on_bucket_health_changed(_bucket_zombie.health, _bucket_zombie.maximum_health)
 	_on_pole_health_changed(_pole_zombie.health, _pole_zombie.maximum_health)
+	_on_newspaper_health_changed(_newspaper_zombie.health, _newspaper_zombie.maximum_health)
 	_set_model_view(false)
 	# A deterministic capture mode for checking the actual rendered scene.
 	var arguments := OS.get_cmdline_user_args()
@@ -148,6 +165,7 @@ func _ready() -> void:
 		_cone_zombie.movement_enabled = false
 		_bucket_zombie.movement_enabled = false
 		_pole_zombie.movement_enabled = false
+		_newspaper_zombie.movement_enabled = false
 		if "--capture-combat" in arguments:
 			_inspect_zombie = true
 			_set_model_view(true)
@@ -462,6 +480,17 @@ func _build_interface() -> void:
 	_pole_health_bar.add_theme_stylebox_override("fill", _panel_style(Color("c84c44"), 4, 0, 0))
 	details.add_child(_pole_health_bar)
 	_pole_status = _label(details, "寒冰防线    ·    撑杆跳跃一次", 12, MUTED)
+	_newspaper_health_label = _label(details, "读报僵尸：350 / 350", 13, MUTED)
+	_newspaper_health_bar = ProgressBar.new()
+	_newspaper_health_bar.custom_minimum_size = Vector2(ui.health_bar_size[0], ui.health_bar_size[1])
+	_newspaper_health_bar.show_percentage = false
+	_newspaper_health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_newspaper_health_bar.add_theme_stylebox_override("background", _panel_style(Color("dce5d2"), 4, 0, 0))
+	_newspaper_health_bar.add_theme_stylebox_override("fill", _panel_style(Color("a88977"), 4, 0, 0))
+	details.add_child(_newspaper_health_bar)
+	_newspaper_status = _label(details, "持报纸行走", 12, MUTED)
+	_newspaper_button = _button(details, "读报僵尸  N")
+	_newspaper_button.pressed.connect(_toggle_newspaper_view)
 	_label(details, _threepeater_status(), 12, MUTED)
 	_label(details, "寒冰射手    ·    减速 %s%% / %s 秒" % [String.num((1.0 - _snowpea.slow_multiplier) * 100, 1), String.num(_snowpea.slow_duration, 2)], 12, MUTED)
 
@@ -636,6 +665,9 @@ func _input(event: InputEvent) -> void:
 		elif event.keycode == KEY_B:
 			_toggle_pole_view()
 			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_N:
+			_toggle_newspaper_view()
+			get_viewport().set_input_as_handled()
 
 
 func _toggle_view() -> void:
@@ -643,6 +675,7 @@ func _toggle_view() -> void:
 	_inspect_cone = false
 	_inspect_bucket = false
 	_inspect_pole = false
+	_inspect_newspaper = false
 	_set_model_view(not _model_view)
 
 
@@ -658,9 +691,12 @@ func _set_model_view(enabled: bool) -> void:
 	_cone_button.text = "返回游戏  X" if enabled and _inspect_cone else "路障僵尸  X"
 	_bucket_button.text = "返回游戏  V" if enabled and _inspect_bucket else "铁桶僵尸  V"
 	_pole_button.text = "返回游戏  B" if enabled and _inspect_pole else "撑杆僵尸  B"
+	_newspaper_button.text = "返回游戏  N" if enabled and _inspect_newspaper else "读报僵尸  N"
 	_view_label.text = "戴夫腰部视角"
 	if enabled:
-		if _inspect_pole:
+		if _inspect_newspaper:
+			_view_label.text = "读报僵尸模型查看"
+		elif _inspect_pole:
 			_view_label.text = "撑杆僵尸模型查看"
 		elif _inspect_bucket:
 			_view_label.text = "铁桶僵尸模型查看"
@@ -699,6 +735,7 @@ func _reset_view() -> void:
 	_cone_respawn_timer.stop()
 	_bucket_respawn_timer.stop()
 	_pole_respawn_timer.stop()
+	_newspaper_respawn_timer.stop()
 	_sun_system.reset()
 	_dave.reset_pose()
 	for pea: Node in _projectiles.get_children():
@@ -711,6 +748,7 @@ func _reset_view() -> void:
 	_cone_zombie.reset_combat()
 	_bucket_zombie.reset_combat()
 	_pole_zombie.reset_combat()
+	_newspaper_zombie.reset_combat()
 	_plant.reset_combat()
 	_repeater.reset_combat()
 	_threepeater.reset_combat()
@@ -743,6 +781,31 @@ func _connect_pole_zombie() -> void:
 	_pole_zombie.configure_debris(_debris)
 	_pole_zombie.health_changed.connect(_on_pole_health_changed)
 	_pole_zombie.defeated.connect(_on_pole_defeated)
+
+
+func _connect_newspaper_zombie() -> void:
+	_newspaper_zombie.configure_debris(_debris)
+	_newspaper_zombie.health_changed.connect(_on_newspaper_health_changed)
+	_newspaper_zombie.defeated.connect(_on_newspaper_defeated)
+	_newspaper_zombie.rage_started.connect(_on_newspaper_rage_started)
+
+
+func _on_newspaper_defeated() -> void:
+	if auto_respawn_enabled:
+		_newspaper_respawn_timer.start(maxf(respawn_delay, 0.01))
+
+
+func _respawn_newspaper_zombie() -> void:
+	if not auto_respawn_enabled or _newspaper_zombie.is_alive():
+		return
+	var previous := _newspaper_zombie
+	_newspaper_zombie = _replace_enemy(previous, NEWSPAPER_SCENE, "NewspaperZombie") as NewspaperZombie
+	_newspaper_zombie.newspaper_drop_health = previous.newspaper_drop_health
+	_newspaper_zombie.anger_pause_duration = previous.anger_pause_duration
+	_newspaper_zombie.enraged_speed_multiplier = previous.enraged_speed_multiplier
+	_connect_newspaper_zombie()
+	_newspaper_zombie.set_spawn(_placement_position("newspaper_zombie"), _placement_yaw("newspaper_zombie"))
+	zombie_respawned.emit(_newspaper_zombie)
 
 
 func _on_pole_defeated() -> void:
@@ -829,6 +892,7 @@ func _toggle_zombie_view() -> void:
 	if _model_view and _inspect_zombie:
 		_set_model_view(false)
 	else:
+		_inspect_newspaper = false
 		_inspect_zombie = true
 		_inspect_cone = false
 		_inspect_bucket = false
@@ -840,6 +904,7 @@ func _toggle_cone_view() -> void:
 	if _model_view and _inspect_cone:
 		_set_model_view(false)
 	else:
+		_inspect_newspaper = false
 		_inspect_cone = true
 		_inspect_zombie = false
 		_inspect_bucket = false
@@ -851,6 +916,7 @@ func _toggle_bucket_view() -> void:
 	if _model_view and _inspect_bucket:
 		_set_model_view(false)
 	else:
+		_inspect_newspaper = false
 		_inspect_bucket = true
 		_inspect_cone = false
 		_inspect_zombie = false
@@ -862,6 +928,7 @@ func _toggle_pole_view() -> void:
 	if _model_view and _inspect_pole:
 		_set_model_view(false)
 	else:
+		_inspect_newspaper = false
 		_inspect_pole = true
 		_inspect_bucket = false
 		_inspect_cone = false
@@ -869,13 +936,25 @@ func _toggle_pole_view() -> void:
 		_set_model_view(true)
 
 
+func _toggle_newspaper_view() -> void:
+	if _model_view and _inspect_newspaper:
+		_set_model_view(false)
+	else:
+		_inspect_newspaper = true
+		_inspect_zombie = false
+		_inspect_cone = false
+		_inspect_bucket = false
+		_inspect_pole = false
+		_set_model_view(true)
+
+
 func _selected_enemy() -> Zombie:
-	return _pole_zombie if _inspect_pole else (_bucket_zombie if _inspect_bucket else (_cone_zombie if _inspect_cone else _zombie))
+	return _newspaper_zombie if _inspect_newspaper else (_pole_zombie if _inspect_pole else (_bucket_zombie if _inspect_bucket else (_cone_zombie if _inspect_cone else _zombie)))
 
 
 func _focus_model() -> void:
 	var params: Dictionary
-	if _inspect_zombie or _inspect_cone or _inspect_bucket or _inspect_pole:
+	if _inspect_zombie or _inspect_cone or _inspect_bucket or _inspect_pole or _inspect_newspaper:
 		params = GameConfiguration.current().section("cameras.enemy_view")
 		_orbit.target = _selected_enemy().global_position + Vector3(0, _enemy_view_height(), 0)
 		_orbit.default_size = params.pole_size if _inspect_pole else params.size
@@ -883,7 +962,7 @@ func _focus_model() -> void:
 		params = GameConfiguration.current().section("cameras.plant_view")
 		_orbit.target = (_gatling.global_position + _snowpea.global_position) * 0.5 + GameConfiguration.current().vector(params.offset)
 		_orbit.default_size = params.size
-	_orbit.default_yaw = deg_to_rad(params.yaw_degrees)
+	_orbit.default_yaw = deg_to_rad(params.newspaper_yaw_degrees if _inspect_newspaper else params.yaw_degrees)
 	_orbit.default_pitch = deg_to_rad(params.pitch_degrees)
 	_orbit.distance = GameConfiguration.current().section("cameras.orbit").distance
 	_orbit.reset_view()
@@ -896,7 +975,7 @@ func _enemy_view_height() -> float:
 
 func _process(_delta: float) -> void:
 	_sun_reticle.visible = not _model_view and not _sidebar_open and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
-	if _model_view and (_inspect_zombie or _inspect_cone or _inspect_bucket or _inspect_pole):
+	if _model_view and (_inspect_zombie or _inspect_cone or _inspect_bucket or _inspect_pole or _inspect_newspaper):
 		_orbit.set_target_position(_selected_enemy().global_position + Vector3(0, _enemy_view_height(), 0))
 
 
@@ -946,6 +1025,24 @@ func _on_pole_health_changed(health: int, maximum: int) -> void:
 		_pole_status.text = "%s 秒后刷新撑杆僵尸" % String.num(respawn_delay, 2)
 	else:
 		_pole_status.text = "撑杆已击败    ·    R 重新开始"
+
+
+func _on_newspaper_rage_started() -> void:
+	_on_newspaper_health_changed(_newspaper_zombie.health, _newspaper_zombie.maximum_health)
+
+
+func _on_newspaper_health_changed(health: int, maximum: int) -> void:
+	_newspaper_health_label.text = "读报僵尸：%d / %d" % [health, maximum]
+	_newspaper_health_bar.max_value = maximum
+	_newspaper_health_bar.value = health
+	if health <= 0:
+		_newspaper_status.text = "%s 秒后刷新读报僵尸" % String.num(respawn_delay, 2) if auto_respawn_enabled else "读报僵尸已击败    ·    R 重新开始"
+	elif _newspaper_zombie.has_newspaper:
+		_newspaper_status.text = "持报纸    ·    生命 ≤%d 时脱落" % _newspaper_zombie.newspaper_drop_health
+	elif _newspaper_zombie.is_enraged:
+		_newspaper_status.text = "发怒加速    ·    基础移速 ×%s" % String.num(_newspaper_zombie.enraged_speed_multiplier, 2)
+	else:
+		_newspaper_status.text = "报纸脱落    ·    停步发怒 %s 秒" % String.num(_newspaper_zombie.anger_pause_duration, 2)
 
 
 func _placement_position(key: String) -> Vector3:

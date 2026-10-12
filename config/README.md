@@ -16,7 +16,7 @@
 | 寒冰移速倍率、持续时间 | `plants.types.snow_pea.slow_multiplier` / `slow_duration` | 0.5 / 10 秒 |
 | 僵尸移动速度 | `zombies.common.walk_speed` | 0.5 单位/秒 |
 | 普通僵尸血量 | `zombies.common.maximum_health` | 200 |
-| 路障、铁桶、撑杆血量 | `zombies.types.对应类型.maximum_health` | 570 / 1370 / 500 |
+| 路障、铁桶、撑杆、读报血量 | `zombies.types.对应类型.maximum_health` | 570 / 1370 / 500 / 350 |
 | 击退初速度、衰减 | `zombies.common.knockback_speed` / `knockback_deceleration` | 1.4 / 10 |
 | 死亡后刷新时间 | `respawn.respawn_delay` | 1 秒 |
 | 断手、盔甲脱落血量 | `zombies.common.hand_drop_health` / `armor_drop_health` | 100 / 200 |
@@ -101,9 +101,26 @@ R 清空所有阳光实体与余额，并重新开始完整掉落间隔。暂停
 | `planted_tip_offset` | 杆着地点在植物前方的距离，≥0 |
 | `vault_lean_degrees` / `flight_leg_degrees` | 腾空身体前倾角度（0～30°）/ 腿部摆动幅度 ≥0 |
 
+## 读报僵尸
+
+`zombies.types.newspaper_zombie` 继承僵尸公共配置。报纸与身体使用同一个总生命值，不额外建立报纸血量。达到阈值时只掉一次；停步期间仍可受伤，继续受击不会延长发怒计时。发怒完成后基础移速乘以加速倍率，再乘以当前寒冰倍率。直接死亡或 R 重置会取消发怒计时；死亡刷新恢复持报纸、满血和普通速度。
+
+| 字段（在 `zombies.types.newspaper_zombie` 下） | 默认值 | 含义 / 范围 |
+| --- | --- | --- |
+| `maximum_health` | 350 | 总生命，正整数 |
+| `newspaper_drop_health` | 200 | 生命 ≤此值时脱落报纸，非负整数 |
+| `anger_pause_duration` | 1 | 脱落后的停步发怒时间，>0 秒；期间水平移动及击退位移暂停 |
+| `enraged_speed_multiplier` | 2 | 发怒后的基础移速倍率，>1；默认 0.5 → 1.0 单位/秒 |
+
+`placements.newspaper_zombie` 默认第 4 行第 9 列、朝向 90°。`models.newspaper_zombie` 支持整体缩放及报纸、眼镜、发怒眼睛等部件；报纸为 `Visuals/Newspaper`，缩放同步独立掉落碰撞。报纸、帽子和长杆不会扩大站立角色碰撞体。
+
+报纸使用 `physics.parts.newspaper`：默认质量 **0.12**、寿命 **10 秒**、摩擦 **0.95**、反弹系数 **0.03**，其余阻尼和抛出速度沿用掉落物字段规则。N 查看读报僵尸；`cameras.enemy_view.newspaper_yaw_degrees` 默认为 **-80°**，接受任意有限角度，用于避开相邻坚果的遮挡。
+
+当前没有啃食和失败判定，读报僵尸加速后可能走过射手，并在 `maximum_walk_distance` 范围外停止。
+
 ## 掉落物物理
 
-`physics.gravity` 为重力加速度，>0。`physics.debris` 是公共默认值；`physics.parts` 包含 `cone`、`bucket`、`hand`、`head`、`corpse`、`corpse_arm`、`pole`。
+`physics.gravity` 为重力加速度，>0。`physics.debris` 是公共默认值；`physics.parts` 包含 `cone`、`bucket`、`hand`、`head`、`corpse`、`corpse_arm`、`pole`、`newspaper`。
 
 | 字段 | 含义 / 有效范围 |
 | --- | --- |

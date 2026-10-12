@@ -1,0 +1,693 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/zombie.tscn" id="base_zombie"]
+
+[ext_resource type="Script" path="res://scripts/newspaper_zombie.gd" id="newspaper_script"]
+
+[sub_resource type="StandardMaterial3D" id="BlackJacket"]
+albedo_color = Color(0.18824, 0.20784, 0.18039, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="BoxerShorts"]
+albedo_color = Color(0.93333, 0.90980, 0.83137, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="BoxerSpots"]
+albedo_color = Color(0.79608, 0.50980, 0.57255, 1)
+roughness = 0.9
+
+
+[sub_resource type="StandardMaterial3D" id="NewspaperSkin"]
+albedo_color = Color(0.50980, 0.58431, 0.45882, 1)
+roughness = 0.9
+
+
+[sub_resource type="StandardMaterial3D" id="DarkHair"]
+albedo_color = Color(0.23137, 0.26275, 0.20000, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="Newsprint"]
+albedo_color = Color(0.89412, 0.87843, 0.80000, 1)
+roughness = 0.98
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="NewsInk"]
+albedo_color = Color(0.40000, 0.41176, 0.34118, 1)
+roughness = 0.95
+
+
+[sub_resource type="StandardMaterial3D" id="SpectacleWire"]
+albedo_color = Color(0.41176, 0.45490, 0.37255, 1)
+roughness = 0.5
+metallic = 0.35
+
+[sub_resource type="StandardMaterial3D" id="AngryEyes"]
+albedo_color = Color(1.00000, 0.81961, 0.86275, 1)
+roughness = 0.55
+
+
+[sub_resource type="StandardMaterial3D" id="AngryPupils"]
+albedo_color = Color(0.85098, 0.38824, 0.47059, 1)
+roughness = 0.6
+
+
+[sub_resource type="SphereMesh" id="NewspaperSphere"]
+radius = 0.5
+height = 1.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="BoxMesh" id="UnitBox"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="TorusMesh" id="GlassesRing"]
+inner_radius = 0.102
+outer_radius = 0.118
+rings = 32
+ring_segments = 8
+
+[sub_resource type="TextMesh" id="LeftHeadline"]
+text = "THE DAILY"
+font_size = 48
+pixel_size = 0.00135
+depth = 0.001
+
+[sub_resource type="TextMesh" id="RightHeadline"]
+text = "ZOMBIE"
+font_size = 48
+pixel_size = 0.00135
+depth = 0.001
+
+[node name="NewspaperZombie" instance=ExtResource("base_zombie")]
+script = ExtResource("newspaper_script")
+
+maximum_health = 350
+
+walk_speed = 0.5
+
+is_ground_zombie = true
+
+movement_enabled = true
+
+knockback_speed = 1.4
+
+knockback_deceleration = 10.0
+
+maximum_walk_distance = 19.9
+
+newspaper_drop_health = 200
+
+anger_pause_duration = 1.0
+
+enraged_speed_multiplier = 2.0
+
+
+[node name="Jacket" parent="Visuals/Torso"]
+material_override = SubResource("BlackJacket")
+
+[node name="LeftLapel" parent="Visuals/Torso"]
+material_override = SubResource("BlackJacket")
+
+[node name="RightLapel" parent="Visuals/Torso"]
+material_override = SubResource("BlackJacket")
+
+[node name="JeansWaist" parent="Visuals/Torso"]
+material_override = SubResource("BoxerShorts")
+
+[node name="TieKnot" parent="Visuals/Torso"]
+visible = false
+
+[node name="TieBlade" parent="Visuals/Torso"]
+visible = false
+
+[node name="TiePoint" parent="Visuals/Torso"]
+visible = false
+
+[node name="WornJacketPatch" parent="Visuals/Torso"]
+visible = false
+
+[node name="LeftShoulder" parent="Visuals/Arms"]
+material_override = SubResource("BlackJacket")
+
+[node name="LeftSleeve" parent="Visuals/Arms"]
+material_override = SubResource("BlackJacket")
+
+[node name="LeftLeg" parent="Visuals/Legs"]
+material_override = SubResource("NewspaperSkin")
+
+[node name="LeftShoe" parent="Visuals/Legs"]
+material_override = SubResource("BlackJacket")
+
+[node name="LeftBoxerLeg" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(-0.13, 0.57, 0.025)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.27, 0.26, 0.37)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerShorts")
+
+[node name="LeftSpot0" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(-0.195, 0.56, -0.157)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.04, 0.038, 0.016)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerSpots")
+
+[node name="LeftSpot1" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(-0.13, 0.6200000000000001, -0.157)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.04, 0.038, 0.016)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerSpots")
+
+[node name="LeftSpot2" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(-0.065, 0.56, -0.157)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.04, 0.038, 0.016)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerSpots")
+
+[node name="LeftCuff" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(-0.35, 0.907, -0.22)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.19, 0.12, 0.17)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerShorts")
+
+[node name="RightShoulder" parent="Visuals/Arms"]
+material_override = SubResource("BlackJacket")
+
+[node name="RightSleeve" parent="Visuals/Arms"]
+material_override = SubResource("BlackJacket")
+
+[node name="RightLeg" parent="Visuals/Legs"]
+material_override = SubResource("NewspaperSkin")
+
+[node name="RightShoe" parent="Visuals/Legs"]
+material_override = SubResource("BlackJacket")
+
+[node name="RightBoxerLeg" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(0.13, 0.57, 0.025)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.27, 0.26, 0.37)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerShorts")
+
+[node name="RightSpot0" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(0.065, 0.56, -0.157)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.04, 0.038, 0.016)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerSpots")
+
+[node name="RightSpot1" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(0.13, 0.6200000000000001, -0.157)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.04, 0.038, 0.016)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerSpots")
+
+[node name="RightSpot2" type="MeshInstance3D" parent="Visuals/Legs"]
+position = Vector3(0.195, 0.56, -0.157)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.04, 0.038, 0.016)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerSpots")
+
+[node name="RightCuff" type="MeshInstance3D" parent="Visuals/Arms"]
+position = Vector3(0.35, 0.9530000000000001, -0.22)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.19, 0.12, 0.17)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("BoxerShorts")
+
+[node name="Hair1" parent="Visuals/Head"]
+visible = false
+
+[node name="HairTuft1" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(-0.12, 0.29, 0.035)
+rotation = Vector3(0, 0, -0.16)
+scale = Vector3(0.25, 0.085, 0.21)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("DarkHair")
+
+[node name="Hair2" parent="Visuals/Head"]
+visible = false
+
+[node name="HairTuft2" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(-0.009999999999999995, 0.29, 0.035)
+rotation = Vector3(0, 0, -0.03)
+scale = Vector3(0.25, 0.085, 0.21)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("DarkHair")
+
+[node name="Hair3" parent="Visuals/Head"]
+visible = false
+
+[node name="HairTuft3" type="MeshInstance3D" parent="Visuals/Head"]
+position = Vector3(0.1, 0.29, 0.035)
+rotation = Vector3(0, 0, 0.1)
+scale = Vector3(0.25, 0.085, 0.21)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("DarkHair")
+
+[node name="Glasses" type="Node3D" parent="Visuals/Head"]
+
+
+[node name="Bridge" type="MeshInstance3D" parent="Visuals/Head/Glasses"]
+position = Vector3(0, 0.105, -0.307)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.07, 0.018, 0.018)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("SpectacleWire")
+
+[node name="AngryEyes" type="Node3D" parent="Visuals/Head"]
+visible = false
+
+[node name="LeftRim" type="MeshInstance3D" parent="Visuals/Head/Glasses"]
+position = Vector3(-0.137, 0.103, -0.302)
+rotation = Vector3(1.5707963267948966, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("GlassesRing")
+material_override = SubResource("SpectacleWire")
+
+[node name="LeftTemple" type="MeshInstance3D" parent="Visuals/Head/Glasses"]
+position = Vector3(-0.26, 0.103, -0.17)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.018, 0.018, 0.25)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("SpectacleWire")
+
+[node name="LeftEye" type="MeshInstance3D" parent="Visuals/Head/AngryEyes"]
+position = Vector3(-0.137, 0.103, -0.264)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.19, 0.205, 0.083)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("AngryEyes")
+
+[node name="LeftPupil" type="MeshInstance3D" parent="Visuals/Head/AngryEyes"]
+position = Vector3(-0.13, 0.11, -0.309)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.06, 0.077, 0.021)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("AngryPupils")
+
+[node name="LeftBrow" type="MeshInstance3D" parent="Visuals/Head/AngryEyes"]
+position = Vector3(-0.137, 0.208, -0.273)
+rotation = Vector3(0, 0, -0.22)
+scale = Vector3(0.205, 0.042, 0.042)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("DarkHair")
+
+[node name="RightRim" type="MeshInstance3D" parent="Visuals/Head/Glasses"]
+position = Vector3(0.137, 0.103, -0.302)
+rotation = Vector3(1.5707963267948966, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("GlassesRing")
+material_override = SubResource("SpectacleWire")
+
+[node name="RightTemple" type="MeshInstance3D" parent="Visuals/Head/Glasses"]
+position = Vector3(0.26, 0.103, -0.17)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.018, 0.018, 0.25)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("SpectacleWire")
+
+[node name="RightEye" type="MeshInstance3D" parent="Visuals/Head/AngryEyes"]
+position = Vector3(0.137, 0.103, -0.264)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.19, 0.205, 0.083)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("AngryEyes")
+
+[node name="RightPupil" type="MeshInstance3D" parent="Visuals/Head/AngryEyes"]
+position = Vector3(0.13, 0.11, -0.309)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.06, 0.077, 0.021)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("AngryPupils")
+
+[node name="RightBrow" type="MeshInstance3D" parent="Visuals/Head/AngryEyes"]
+position = Vector3(0.137, 0.208, -0.273)
+rotation = Vector3(0, 0, 0.22)
+scale = Vector3(0.205, 0.042, 0.042)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("DarkHair")
+
+[node name="Newspaper" type="Node3D" parent="Visuals"]
+position = Vector3(0, 1.095, -0.66)
+rotation = Vector3(-0.12, 0, 0)
+
+[node name="LeftPage" type="Node3D" parent="Visuals/Newspaper"]
+position = Vector3(-0.265, 0, 0)
+rotation = Vector3(0, 0.2, 0)
+
+[node name="Page" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.55, 0.64, 0.018)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("Newsprint")
+
+[node name="Headline" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0, 0.225, -0.012)
+rotation = Vector3(0, 3.141592653589793, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("LeftHeadline")
+material_override = SubResource("NewsInk")
+
+[node name="Rule" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0, 0.176, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.48, 0.013, 0.005)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line0" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(-0.122, 0.12, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line1" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(-0.122, 0.072, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line2" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(-0.122, 0.023999999999999994, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line3" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(-0.122, -0.02400000000000002, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line4" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(-0.122, -0.07200000000000001, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line5" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(-0.122, -0.12, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line6" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(-0.122, -0.16800000000000004, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line7" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(-0.122, -0.21600000000000003, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line0" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0.122, 0.12, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line1" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0.122, 0.072, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line2" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0.122, 0.023999999999999994, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line3" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0.122, -0.02400000000000002, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line4" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0.122, -0.07200000000000001, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line5" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0.122, -0.12, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line6" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0.122, -0.16800000000000004, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line7" type="MeshInstance3D" parent="Visuals/Newspaper/LeftPage"]
+position = Vector3(0.122, -0.21600000000000003, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="RightPage" type="Node3D" parent="Visuals/Newspaper"]
+position = Vector3(0.265, 0, 0)
+rotation = Vector3(0, -0.2, 0)
+
+[node name="Page" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.55, 0.64, 0.018)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("Newsprint")
+
+[node name="Headline" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0, 0.225, -0.012)
+rotation = Vector3(0, 3.141592653589793, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("RightHeadline")
+material_override = SubResource("NewsInk")
+
+[node name="Rule" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0, 0.176, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.48, 0.013, 0.005)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line0" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(-0.122, 0.12, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line1" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(-0.122, 0.072, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line2" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(-0.122, 0.023999999999999994, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line3" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(-0.122, -0.02400000000000002, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line4" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(-0.122, -0.07200000000000001, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line5" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(-0.122, -0.12, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line6" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(-0.122, -0.16800000000000004, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column0Line7" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(-0.122, -0.21600000000000003, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line0" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.122, 0.12, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line1" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.122, 0.072, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line2" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.122, 0.023999999999999994, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line3" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.122, -0.02400000000000002, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line4" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.122, -0.07200000000000001, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line5" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.122, -0.12, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line6" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.122, -0.16800000000000004, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.16, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Column1Line7" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.122, -0.21600000000000003, -0.013)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.205, 0.008, 0.004)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="Picture" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.12, -0.12, -0.015)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.18, 0.18, 0.005)
+layers = 1
+mesh = SubResource("UnitBox")
+material_override = SubResource("NewsInk")
+
+[node name="PictureFace" type="MeshInstance3D" parent="Visuals/Newspaper/RightPage"]
+position = Vector3(0.12, -0.1, -0.027)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(0.105, 0.12, 0.016)
+layers = 1
+mesh = SubResource("NewspaperSphere")
+material_override = SubResource("Newsprint")

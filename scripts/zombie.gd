@@ -92,6 +92,14 @@ func is_alive() -> bool:
 	return health > 0 and not is_queued_for_deletion()
 
 
+func _walk_speed_multiplier() -> float:
+	return _slow_multiplier
+
+
+func get_walk_speed() -> float:
+	return walk_speed * _walk_speed_multiplier()
+
+
 func reset_combat() -> void:
 	for part: ZombieDebris in _spawned_debris:
 		if is_instance_valid(part):
@@ -387,7 +395,7 @@ func _physics_process(delta: float) -> void:
 	forward.y = 0.0
 	forward = forward.normalized()
 	var walking := movement_enabled and global_position.distance_to(_spawn_transform.origin) < maximum_walk_distance
-	var horizontal_velocity := forward * walk_speed * _slow_multiplier if walking else Vector3.ZERO
+	var horizontal_velocity := forward * get_walk_speed() if walking else Vector3.ZERO
 	horizontal_velocity += _knockback_velocity
 	velocity.x = horizontal_velocity.x
 	velocity.z = horizontal_velocity.z
@@ -398,7 +406,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_knockback_velocity = _knockback_velocity.move_toward(Vector3.ZERO, knockback_deceleration * delta)
 	if walking:
-		_walk_phase += delta * walk_animation_speed * _slow_multiplier
+		_walk_phase += delta * walk_animation_speed * _walk_speed_multiplier()
 		_visuals.position.y = _visuals_rest.origin.y + absf(sin(_walk_phase)) * walk_bob_height
 		for leg: Node3D in _leg_rest_rotations:
 			var sign_value := 1.0 if leg.name == "LeftLeg" else -1.0

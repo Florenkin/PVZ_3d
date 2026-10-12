@@ -655,6 +655,80 @@ def buckethead_scene():
     s.save("scenes/enemies/buckethead_zombie.tscn")
 
 
+def newspaper_scene():
+    s = Scene()
+    base = s.ext("PackedScene", "scenes/enemies/zombie.tscn", "base_zombie")
+    script = s.ext("Script", "scripts/newspaper_zombie.gd", "newspaper_script")
+    jacket = s.material("BlackJacket", "30352e", 0.95)
+    shorts = s.material("BoxerShorts", "eee8d4", 0.95)
+    spots = s.material("BoxerSpots", "cb8292", 0.9)
+    skin = s.material("NewspaperSkin", "829575", 0.9)
+    hair = s.material("DarkHair", "3b4333", 0.95)
+    paper = s.material("Newsprint", "e4e0cc", 0.98, "cull_mode = 2")
+    ink = s.material("NewsInk", "666957", 0.95)
+    glasses = s.material("SpectacleWire", "69745f", 0.5, "metallic = 0.35")
+    angry = s.material("AngryEyes", "ffd1dc", 0.55)
+    red = s.material("AngryPupils", "d96378", 0.6)
+    sphere = s.res("SphereMesh", "NewspaperSphere", "radius = 0.5\nheight = 1.0\nradial_segments = 32\nrings = 16")
+    box = s.res("BoxMesh", "UnitBox", "size = Vector3(1, 1, 1)")
+    lens = s.res("TorusMesh", "GlassesRing", "inner_radius = 0.102\nouter_radius = 0.118\nrings = 32\nring_segments = 8")
+    s.node("NewspaperZombie", instance=base, properties=f"script = {script}\nmaximum_health = 350")
+    for name in ("Jacket", "LeftLapel", "RightLapel"):
+        s.node(name, parent="Visuals/Torso", properties=f"material_override = {jacket}")
+    s.node("JeansWaist", parent="Visuals/Torso", properties=f"material_override = {shorts}")
+    for name in ("TieKnot", "TieBlade", "TiePoint", "WornJacketPatch"):
+        s.node(name, parent="Visuals/Torso", properties="visible = false")
+    for side, sign in (("Left", -1), ("Right", 1)):
+        for name in ("Shoulder", "Sleeve"):
+            s.node(side + name, parent="Visuals/Arms", properties=f"material_override = {jacket}")
+        s.node(side + "Leg", parent="Visuals/Legs", properties=f"material_override = {skin}")
+        s.node(side + "Shoe", parent="Visuals/Legs", properties=f"material_override = {jacket}")
+        s.mesh(side + "BoxerLeg", "Visuals/Legs", sphere, shorts,
+               (sign * 0.13, 0.57, 0.025), (0.27, 0.26, 0.37))
+        for index in range(3):
+            s.mesh(side + "Spot%d" % index, "Visuals/Legs", sphere, spots,
+                   (sign * 0.13 + (index - 1) * 0.065, 0.56 + (index % 2) * 0.06, -0.157), (0.04, 0.038, 0.016))
+        s.mesh(side + "Cuff", "Visuals/Arms", sphere, shorts,
+               (sign * 0.35, 0.93 + sign * 0.023, -0.22), (0.19, 0.12, 0.17))
+    for index in range(3):
+        s.node("Hair%d" % (index + 1), parent="Visuals/Head", properties="visible = false")
+        s.mesh("HairTuft%d" % (index + 1), "Visuals/Head", sphere, hair,
+               (-0.12 + index * 0.11, 0.29, 0.035), (0.25, 0.085, 0.21), (0, 0, -0.16 + index * 0.13))
+    s.node("Glasses", "Node3D", "Visuals/Head")
+    s.mesh("Bridge", "Visuals/Head/Glasses", box, glasses, (0, 0.105, -0.307), (0.07, 0.018, 0.018))
+    s.node("AngryEyes", "Node3D", "Visuals/Head", "visible = false")
+    for side, sign in (("Left", -1), ("Right", 1)):
+        s.mesh(side + "Rim", "Visuals/Head/Glasses", lens, glasses,
+               (sign * 0.137, 0.103, -0.302), rot=(math.pi / 2, 0, 0))
+        s.mesh(side + "Temple", "Visuals/Head/Glasses", box, glasses,
+               (sign * 0.26, 0.103, -0.17), (0.018, 0.018, 0.25))
+        s.mesh(side + "Eye", "Visuals/Head/AngryEyes", sphere, angry,
+               (sign * 0.137, 0.103, -0.264), (0.19, 0.205, 0.083))
+        s.mesh(side + "Pupil", "Visuals/Head/AngryEyes", sphere, red,
+               (sign * 0.13, 0.11, -0.309), (0.06, 0.077, 0.021))
+        s.mesh(side + "Brow", "Visuals/Head/AngryEyes", sphere, hair,
+               (sign * 0.137, 0.208, -0.273), (0.205, 0.042, 0.042), (0, 0, sign * 0.22))
+    s.node("Newspaper", "Node3D", "Visuals", "position = Vector3(0, 1.095, -0.66)\nrotation = Vector3(-0.12, 0, 0)")
+    # Folded pages and printed geometry remain sharp without an external texture.
+    for side, sign in (("Left", -1), ("Right", 1)):
+        page_path = "Visuals/Newspaper/" + side + "Page"
+        s.node(side + "Page", "Node3D", "Visuals/Newspaper",
+               f"position = Vector3({sign * 0.265}, 0, 0)\nrotation = Vector3(0, {-sign * 0.20}, 0)")
+        s.mesh("Page", page_path, box, paper, scale=(0.55, 0.64, 0.018))
+        headline = s.res("TextMesh", side + "Headline", f'text = "{"THE DAILY" if sign < 0 else "ZOMBIE"}"\nfont_size = 48\npixel_size = 0.00135\ndepth = 0.001')
+        s.mesh("Headline", page_path, headline, ink, (0, 0.225, -0.012), rot=(0, math.pi, 0))
+        s.mesh("Rule", page_path, box, ink, (0, 0.176, -0.013), (0.48, 0.013, 0.005))
+        for column in range(2):
+            for line in range(8):
+                width = 0.205 if line % 3 else 0.16
+                s.mesh("Column%dLine%d" % (column, line), page_path, box, ink,
+                       (-0.122 + column * 0.244, 0.12 - line * 0.048, -0.013), (width, 0.008, 0.004))
+        if sign > 0:
+            s.mesh("Picture", page_path, box, ink, (0.12, -0.12, -0.015), (0.18, 0.18, 0.005))
+            s.mesh("PictureFace", page_path, sphere, paper, (0.12, -0.1, -0.027), (0.105, 0.12, 0.016))
+    s.save("scenes/enemies/newspaper_zombie.tscn")
+
+
 def pole_vaulting_scene():
     s = Scene()
     base = s.ext("PackedScene", "scenes/enemies/zombie.tscn", "base_zombie")
@@ -805,6 +879,7 @@ def main_scene():
     conehead = s.ext("PackedScene", "scenes/enemies/conehead_zombie.tscn", "conehead_scene")
     buckethead = s.ext("PackedScene", "scenes/enemies/buckethead_zombie.tscn", "buckethead_scene")
     pole_zombie = s.ext("PackedScene", "scenes/enemies/pole_vaulting_zombie.tscn", "pole_zombie_scene")
+    newspaper = s.ext("PackedScene", "scenes/enemies/newspaper_zombie.tscn", "newspaper_scene")
     ground_shape = s.res("BoxShape3D", "BackgroundGroundShape", "size = Vector3(200, 0.25, 200)")
     floor_color = s.material("Backdrop", "a0b08c", 1)
     plane = s.res("PlaneMesh", "BackdropPlane", "size = Vector2(200, 200)")
@@ -837,6 +912,7 @@ def main_scene():
     s.node("ConeheadZombie", parent="Enemies", instance=conehead, properties="position = Vector3(9.6, 0.025, -2.4)\nrotation = Vector3(0, 1.5707963267948966, 0)")
     s.node("BucketheadZombie", parent="Enemies", instance=buckethead, properties="position = Vector3(9.6, 0.025, -4.8)\nrotation = Vector3(0, 1.5707963267948966, 0)")
     s.node("PoleVaultingZombie", parent="Enemies", instance=pole_zombie, properties="position = Vector3(9.6, 0.025, 4.8)\nrotation = Vector3(0, 1.5707963267948966, 0)")
+    s.node("NewspaperZombie", parent="Enemies", instance=newspaper, properties="position = Vector3(9.6, 0.025, 2.4)\nrotation = Vector3(0, 1.5707963267948966, 0)")
     s.node("Projectiles", "Node3D", ".")
     s.node("Debris", "Node3D", ".")
     s.node("OrbitRig", "Node3D", ".", f'script = {orbit}\nenabled = false\ndefault_yaw = 0.65\ndefault_pitch = 0.25\ndefault_size = 4.3\nminimum_size = 3.0\ntarget = Vector3(-8.4, 0.775, 0)\ndistance = 7.0')
@@ -860,12 +936,13 @@ if __name__ == "__main__":
     parser.add_argument("--pole-only", action="store_true", help="Rebuild pole-vaulting zombie/main scenes without modifying existing models or terrain.")
     parser.add_argument("--nut-only", action="store_true", help="Rebuild wall-nut/main scenes without modifying existing models or terrain.")
     parser.add_argument("--house-only", action="store_true", help="Rebuild the independent walkable house and main scene.")
+    parser.add_argument("--newspaper-only", action="store_true", help="Rebuild newspaper zombie/main scenes without modifying existing models or terrain.")
     args = parser.parse_args()
     if args.config:
         CONFIG = read_config(args.config)
-    if sum((args.layout_only, args.dave_only, args.zombie_only, args.repeater_only, args.threepeater_only, args.gatling_only, args.cone_only, args.bucket_only, args.snow_only, args.pole_only, args.nut_only, args.house_only)) > 1:
+    if sum((args.layout_only, args.dave_only, args.zombie_only, args.repeater_only, args.threepeater_only, args.gatling_only, args.cone_only, args.bucket_only, args.snow_only, args.pole_only, args.nut_only, args.house_only, args.newspaper_only)) > 1:
         parser.error("Choose only one partial rebuild option.")
-    full_rebuild = not any((args.layout_only, args.dave_only, args.zombie_only, args.repeater_only, args.threepeater_only, args.gatling_only, args.cone_only, args.bucket_only, args.snow_only, args.pole_only, args.nut_only, args.house_only))
+    full_rebuild = not any((args.layout_only, args.dave_only, args.zombie_only, args.repeater_only, args.threepeater_only, args.gatling_only, args.cone_only, args.bucket_only, args.snow_only, args.pole_only, args.nut_only, args.house_only, args.newspaper_only))
     if full_rebuild:
         leaf_mesh()
         rounded_tile("soil_tile", 1.15, -0.41, -0.075, 0.16, 0.045)
@@ -893,6 +970,8 @@ if __name__ == "__main__":
         buckethead_scene()
     if full_rebuild or args.pole_only or not (ROOT / "scenes/enemies/pole_vaulting_zombie.tscn").exists():
         pole_vaulting_scene()
+    if full_rebuild or args.newspaper_only or not (ROOT / "scenes/enemies/newspaper_zombie.tscn").exists():
+        newspaper_scene()
     if full_rebuild or args.nut_only or not (ROOT / "scenes/plants/wall_nut.tscn").exists():
         wall_nut_scene()
     if full_rebuild or args.house_only or not (ROOT / "scenes/environment/dave_house.tscn").exists():

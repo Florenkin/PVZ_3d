@@ -76,6 +76,8 @@ var _newspaper_status: Label
 var _sidebar: PanelContainer
 var _sidebar_open: bool = false
 var _sidebar_button: Button
+var _tools: DemoTools
+var _removed_plants: Dictionary = {}
 
 
 func _enter_tree() -> void:
@@ -105,6 +107,11 @@ func _ready() -> void:
 	_gatling.configure_combat(_lawn, _projectiles)
 	_snowpea.configure_combat(_lawn, _projectiles)
 	_build_interface()
+	_tools = DemoTools.new()
+	_tools.name = "DemoTools"
+	_tools.configure(self, _dave)
+	add_child(_tools)
+	_orbit.tool_wheel_active = true
 	_displayed_sun = _sun_system.sun_value
 	_sun_system.sun_value_changed.connect(_on_sun_value_changed)
 	_sun_system.configure(_lawn)
@@ -406,8 +413,8 @@ func _build_interface() -> void:
 	badge.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	badge.offset_left = -204
 	badge.offset_right = -24
-	badge.offset_top = 42
-	badge.offset_bottom = 84
+	badge.offset_top = 64
+	badge.offset_bottom = 106
 	badge.pressed.connect(_toggle_sidebar)
 	_sidebar_button = badge
 
@@ -725,12 +732,20 @@ func _update_input_hint() -> void:
 	if _sidebar_open:
 		_hint.text = "Tab / Esc 收起数值    ·    M 切换视角    ·    R 重新开始"
 	elif _model_view:
-		_hint.text = "点击收集阳光    ·    拖动旋转    ·    滚轮缩放    ·    M 戴夫视角"
+		_hint.text = "滚轮切换道具 · 铲子右键铲除 · Ctrl＋滚轮缩放 · 拖动旋转 · M 戴夫视角"
 	else:
-		_hint.text = "WASD 移动    ·    瞄准阳光按左键收集    ·    Esc 释放鼠标"
+		_hint.text = "WASD 移动 · 滚轮切换道具 · 铲子右键铲除 · 左键收集阳光 · Esc 释放鼠标"
 
 
 func _reset_view() -> void:
+	for plant: Node3D in _removed_plants:
+		plant.show()
+		plant.process_mode = _removed_plants[plant].process_mode
+		plant.add_to_group("vaultable_plants")
+		for shape: CollisionShape3D in _removed_plants[plant].shapes:
+			shape.set_deferred("disabled", _removed_plants[plant].shapes[shape])
+	_removed_plants.clear()
+	_tools.reset_tools()
 	_respawn_timer.stop()
 	_cone_respawn_timer.stop()
 	_bucket_respawn_timer.stop()
@@ -757,6 +772,20 @@ func _reset_view() -> void:
 	_wallnut.global_position = _placement_position("wall_nut")
 	if _model_view:
 		_focus_model()
+
+
+func remove_demo_plant(plant: Node3D) -> bool:
+	if plant.get_parent() != $Plants or not plant.is_visible_in_tree() or _removed_plants.has(plant):
+		return false
+	var shapes: Dictionary = {}
+	for shape: CollisionShape3D in plant.find_children("*", "CollisionShape3D", true, false):
+		shapes[shape] = shape.disabled
+		shape.set_deferred("disabled", true)
+	_removed_plants[plant] = {"process_mode": plant.process_mode, "shapes": shapes}
+	plant.hide()
+	plant.process_mode = Node.PROCESS_MODE_DISABLED
+	plant.remove_from_group("vaultable_plants")
+	return true
 
 
 func _connect_zombie() -> void:

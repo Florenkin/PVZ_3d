@@ -4,7 +4,139 @@
 
 文件为 UTF-8 JSON，不支持注释、尾随逗号。可以省略字段，省略部分使用内置默认值。未知字段会提示并忽略；无效字段会提示并回退。整个文件缺失、无法读取或格式错误时使用全部默认值，游戏仍可运行。提示在 Godot 的输出/调试面板中，包含文件、字段路径或解析行号。程序不会自动覆盖或修复你的 JSON。
 
-## 最常调整的位置
+## 主界面与冒险五个大关
+
+项目默认入口是 `scenes/game.tscn`，主菜单提供演示和冒险。冒险实现 **1-1～5-10 共 50 关**：前院/屋顶 5×9，泳池/浓雾 6×9 且中间两行水路，4-5 是五行夜晚前院；前四关开放 1/3/3/5 行。关卡数据见 `scripts/adventure_levels.gd`，不受旧 `placements` 或演示扩容影响。1-5 保龄球，2-5 打僵尸，3-5 小僵尸，4-5 三组罐子，4-10 暴风雨，5-5 蹦极闪电战，5-10 僵王；夜晚禁止天降阳光。
+
+根对象的 `adventure` 配置冒险经济、卡牌冷却、特殊玩法和计时；植物的费用、HP、伤害与射击间隔来自 `stages.plants`，僵尸的本体、头甲、盾牌、移速倍率和啃食来自 `stages.zombies`。共用 `plants.common.pea_speed`、`zombies.common.walk_speed`、受击/物理、`lawn.cell_size` 与格子几何、`sun.fall_speed`/`lifetime`。演示的 `respawn` 开关不会使冒险死亡实体自动补回。
+
+| 字段（在 `adventure` 下） | 默认值 | 含义 / 有效范围 |
+| --- | --- | --- |
+| `initial_sun_tutorial` / `initial_sun` | 150 / 50 | 1-1 / 其余常规关初始阳光，非负整数；保龄球、传送带、打僵尸初始为 0 |
+| `first_wave_delay` | 18 | 白天首波等待秒数（1-2 除外），>0；1-1 等第一株豌豆种下再计时 |
+| `sunflower_tutorial_delay` | 50 | 1-2 首波等待秒数，>0 |
+| `wave_interval` / `wave_interval_range` | 25 / 6 | 后续波次最大等待为基础秒数加 `[0, range]` 随机秒数；基础 >0，范围 ≥0 |
+| `minimum_wave_gap` | 4 | 场上与当前出场队列清空后，允许提前进入下一波的最少等待，>0 且 ≤ `wave_interval` |
+| `flag_warning_duration` | 5 | 最后一大波提示后等待秒数，>0；1-1 没有旗帜末波 |
+| `sun_first_min` / `sun_first_max` | 4.25 / 7 | 第一次天空阳光等待范围，均 >0，min ≤ max |
+| `sun_base_interval` | 4.25 | 后续天空阳光基础间隔，>0 秒 |
+| `sun_interval_growth` | 0.1 | 每次生成后增加的间隔，≥0 秒 |
+| `sun_max_interval` | 9.5 | 增长后的基础间隔上限，>0 且 ≥ `sun_base_interval` |
+| `sun_interval_jitter` | 2.75 | 每次间隔额外随机 `[0, jitter]`，≥0 秒 |
+| `sun_value` | 25 | 天空中阳光点数，正整数；向日葵产 25 点 |
+| `sun_radius` | 0.46 | 阳光模型与点击球半径，>0 世界单位 |
+| `cherry_fuse` | 1.2 | 樱桃种下后引爆秒数，>0；伤害来自 `stages.plants.cherry_bomb.damage` |
+| `mower_speed` | 8 | 一次性割草机的向右扫场速度，>0 单位/秒 |
+| `night_first_wave_delay` | 35 | 夜晚首波准备时间，>0 秒 |
+| `conveyor_interval` | 4 | 保龄球/传送带每张库存的补给间隔，>0 秒 |
+| `conveyor_capacity` | 10 | 保龄球/传送带最多库存张数，1～16 整数 |
+| `bowling_speed` | 8 | 滚动坚果向前速度，>0 世界单位/秒 |
+| `bowling_damage` | 400 | 普通坚果单次命中伤害，正整数 HP；不绕过盾牌，之后弹向相邻行 |
+| `bowling_explosion_damage` | 1800 | 红坚果接触爆炸伤害，正整数 HP，约 3×3 格范围 |
+| `whack_damage` | 500 | 木锤每次命中伤害，正整数 HP；按真实护甲/盾牌结算 |
+| `whack_sun_value` | 25 | 打僵尸击杀后掉落阳光价值，正整数 |
+| `grave_eat_time` | 4 | 墓碑吞噬者清除其所在墓碑并消失的时间，>0 秒 |
+| `mine_arm_time` | 15 | 土豆雷种下到能够接触引爆的等待，>0 秒 |
+| `mushroom_fuse` | 1 | 清醒的寒冰菇/毁灭菇种下到爆发的时间，>0 秒 |
+| `crater_lifetime` | 180 | 毁灭菇弹坑阻止种植的时间，>0 秒 |
+| `pool_first_wave_delay` | 30 | 白天泳池首波准备，>0 秒 |
+| `roof_first_wave_delay` | 45 | 白天屋顶首波准备，>0 秒；5-10 是独立 Boss 流程 |
+| `ice_lifetime` | 30 | 冰车冰道阻止种植的时间，>0 秒，辣椒可提前清除 |
+| `squash_windup` | 0.8 | 倭瓜找到目标后起跳到砸落的时间，>0 秒 |
+| `blover_duration` | 25 | 三叶草使浓雾消失的时间，>0 秒 |
+| `storm_interval` / `storm_flash_duration` | 12 / 2 | 4-10 两次闪电间隔 / 全场照亮时长，均 >0 秒 |
+| `mini_scale` / `mini_health_multiplier` / `mini_speed_multiplier` | 0.5 / 0.5 / 1.5 | 3-5 模型及碰撞 / 各层生命 / 移速倍率，均 >0；生命取整且本体至少 1 HP |
+| `boss_attack_interval` | 20 | 僵王推进攻击序列的间隔，>0 秒，给传送带补回防线的时间 |
+| `boss_head_interval` / `boss_head_duration` | 18 / 9 | 闭头后下次伸头的等待 / 伸头时长，均 >0 秒；首次伸头当前固定 3 秒 |
+| `boss_ball_speed` | 3.2 | 冰火球向左速度，>0 世界单位/秒 |
+| `card_cooldowns.peashooter` / `sunflower` | 7.5 / 7.5 | 种植后卡牌冷却，均 >0 秒 |
+| `card_cooldowns.cherry_bomb` / `wall_nut` | 50 / 30 | 樱桃 / 坚果种植后卡牌冷却，均 >0 秒 |
+| `card_cooldowns.potato_mine` / `hypno_shroom` | 30 / 30 | 土豆雷 / 魅惑菇冷却，均 >0 秒 |
+| `card_cooldowns.snow_pea` / `chomper` / `repeater` | 均 7.5 | 寒冰 / 大嘴花 / 双发冷却，均 >0 秒 |
+| `card_cooldowns.puff_shroom` / `sun_shroom` / `fume_shroom` | 均 7.5 | 小喷 / 阳光 / 大喷冷却，均 >0 秒 |
+| `card_cooldowns.grave_buster` / `scaredy_shroom` / `lily_pad` | 均 7.5 | 墓碑吞噬者 / 胆小菇 / 睡莲冷却，均 >0 秒 |
+| `card_cooldowns.ice_shroom` / `doom_shroom` | 均 50 | 寒冰菇 / 毁灭菇冷却，均 >0 秒 |
+| `card_cooldowns.squash` / `tangle_kelp` / `tall_nut` / `sea_shroom` / `plantern` / `pumpkin` / `marigold` | 均 30 | 后续对应卡牌冷却，均 >0 秒 |
+| `card_cooldowns.jalapeno` | 50 | 火爆辣椒卡牌冷却，>0 秒 |
+| `card_cooldowns.threepeater` / `spikeweed` / `torchwood` / `cactus` / `blover` / `split_pea` / `starfruit` / `magnet_shroom` | 均 7.5 | 后续对应卡牌冷却，均 >0 秒 |
+| `card_cooldowns.cabbage_pult` / `flower_pot` / `kernel_pult` / `coffee_bean` / `garlic` / `umbrella_leaf` / `melon_pult` | 均 7.5 | 屋顶对应卡牌冷却，均 >0 秒 |
+
+天空每次等待为 `min(sun_max_interval, sun_base_interval + 已生成数量 × sun_interval_growth) + 随机抖动`。三组区间冲突（首阳光、增长上限、最小波间隔）时 `adventure` 整组回退到默认值并报告路径，单项类型/范围错误只回退该项。
+
+冒险使用 `dave` 与 `cameras.first_person` 的移动、灵敏度、腰部高度和相机配置。`derive_bounds_from_lawn` 开启时按实际 5×9 或 6×9 场地与 `boundary_inset` 计算移动边界，不受演示扩容影响；关闭时保留手动 `movement_bounds`，是否限制移动仍由 `restrict_to_lawn` 决定。空手右键打开暂停选择面板，点击卡牌或在面板内按 1–9 选择前九张，其他卡牌点击选择；准星瞄准草坪格后左键使用。滚轮切换空手/已解锁的铲子，打僵尸另外提供木锤，S 为后退。手持植物当前固定缩为 0.32 倍，落点模型 Alpha 不透明度为 0.45；这两个显示常量不是 JSON 字段。
+
+免费供应关不使用 `card_cooldowns` 或阳光费用，成功使用才扣一张库存；取消选择和无效位置不扣库存。满库存时停止补给计时，选择/暂停时也冻结。夜晚的剩余墓碑在末波出怪；墓碑吞噬者只清除种植所在格。阳光菇当前 120 秒成长，从 15 改为每次 25 阳光；寒冰菇当前冻结 4 秒、后续减速 20 秒；这两种能力的时长沿用现有实现常量。毁灭菇范围当前为三个格距的圆形区域，并清除附近墓碑。
+
+冒险种植成功才扣费；冷却、占用、场外、未开放行、未解锁或余额不足的操作不扣费。选择植物与暂停同时停止卡牌冷却、阳光产生/落下、波次、交战、刚体掉落、特效和戴夫移动。R 重试会用当前启动快照重建空场地、初始余额与割草机；不会重新读取 JSON。死亡的植物/僵尸不刷新，避免演示逻辑干扰胜负。
+
+`GameProgress` 保存进度到 `user://adventure_progress.json`，该文件不是项目数值配置。全部 50 关默认开放，无需更改 JSON 或存档，可在菜单或命令行任意选择。格式版本仍为 1，新增 `completed_levels` 数组记录实际通关的编号，`completed_level` 保留从 1-1 开始连续完成的范围；旧文件缺少数组时自动迁移其前 N 关完成记录。跳关、重玩不会虚增其他关卡的完成状态，失败/退出不增加记录，无效编号被拒绝。1-5 起直接有铲子，前四个教学关仍在完成 1-4 后提供；通关 2-4 或更后面的关卡后开放图鉴，按最高通关关卡展示内容。5-10 获得奖杯，实际累计完成 50 关才标记冒险全部完成。命令行 `-- --level=1`～`50` 或 `-- --level=5-10` 直接进关，`-- --mode=demo` 直接进入演示。
+
+验证入口：[adventure_test.gd](../tests/adventure_test.gd) 与 [adventure_hand_test.gd](../tests/adventure_hand_test.gd) 验证原有输入、事务、物理暂停与右手；[adventure_expansion_test.gd](../tests/adventure_expansion_test.gd) 验证扩展关卡、特殊规则、夜晚、存档与图鉴。[adventure_playthrough_test.gd](../tests/adventure_playthrough_test.gd) 和 [adventure_expansion_playthrough_test.gd](../tests/adventure_expansion_playthrough_test.gd) 分别使用真实资源完整挑战前四关及新增十六关。测试不覆盖真实存档。
+
+[adventure_campaign_test.gd](../tests/adventure_campaign_test.gd) 检查后三十关、叠放、水路、坡面、浓雾、罐子、僵王和五十关存档；[adventure_campaign_playthrough_test.gd](../tests/adventure_campaign_playthrough_test.gd) 用默认资源/冷却/供应挑战 3-1～5-10。
+
+底座、顶部和南瓜各有独立生命。水路陆生植物需要睡莲，屋顶需要花盆；屋顶当前预置前三列 15 个花盆，这些摆放常量不在 JSON。铲顶部保留底座，底座死亡移除同格上层。咖啡豆用现有 `stages.plants.coffee_bean.attack_interval`（1.5 秒）定点唤醒；南瓜与保护伞使用现有 HP、费用与覆盖常量。蹦极当前六秒结束一次访问，未保护时偷走目标格或在 5-5 空投敌人；金盏花产生的金币仅属于当前关，不写入进度或开放商店。
+
+砸罐子使用固定三组 15/20/25 罐及专用内容，不使用普通波次或自动补给；每组清空后暂停等待继续。僵王本体使用 `stages.zombies.zomboss.body_health`（40000 HP），闭头免伤、伸头可被所有行投手命中。攻击序列包括召唤、交替冰火球、蹦极、踩踏和房车；寒冰菇消除火球、同路辣椒消除冰球。特殊关卡供应权重与候选写在 `AdventureLevels`，对应 3D 适配范围见 README。
+
+## 演示手持道具
+
+五个大关与 0 键原演示共用 `demo_tools`。进入场景默认空手，滚轮循环切换空手/铲子，右手持铲，空手时收在背部；铲子右键移除植物，M 全景/模型视角使用 Ctrl＋滚轮缩放。
+
+| 字段 | 默认值 | 含义 / 有效范围 |
+| --- | --- | --- |
+| `demo_tools.shovel_reach` | 4.8 | 戴夫视角从相机沿瞄准射线的最大作用距离，>0 世界单位；非数值、非有限值或 ≤0 回退默认值 |
+
+全景/模型视角使用镜头远裁剪距离进行鼠标选取；所有视角均检查墙体、地面和僵尸遮挡。Tab 侧栏打开时禁用道具输入。手动铲除不触发 `stages.plant_respawn_delay`，不退阳光；R 与场景切换恢复固定阵容，R 同时恢复空手。冒险模式的卡牌/铲子逻辑不使用此字段。
+
+相关默认值在 `scripts/game_config_defaults.gd`，范围校验在 `scripts/game_config.gd`；[demo_tools_test.gd](../tests/demo_tools_test.gd) 验证错误值回退、实际输入、射线距离/遮挡、移除与恢复、缩放、左键收集阳光及模式清理。
+
+## 五个大关的配置
+
+从主界面点击“演示模式”，进入 `scenes/adventure.tscn`。**1–5** 切换白天、夜晚、泳池、浓雾、屋顶；**0** 进入原演示。根对象的 `stages` 管理大关演示，下面原有 `plants`、`zombies`、`placements` 的类型数值与固定位置说明针对 0 键原演示。演示大关共用 `lawn.cell_size`/草坪几何、`plants.common.pea_speed`、`zombies.common.walk_speed` 与受击参数、物理、戴夫、房屋和通用阳光参数。
+
+| 字段（在 `stages` 下） | 默认值 | 含义 / 有效范围 |
+| --- | --- | --- |
+| `start_stage` | 1 | 启动大关，1～5 整数；命令行 `-- --stage=0` 可临时进入原演示 |
+| `plant_columns` | 4 | 左侧植物占用列数，2～6 整数；第 1 列预留给戴夫 |
+| `minimum_rows` | 6 | 场地最少行数，6～20 整数；累计植物过多时自动扩行 |
+| `board_columns` | 13 | 场地总列数，9～32 整数；必须 ≥ `plant_columns + 6` |
+| `plant_respawn_delay` | 8 | 植物死亡/使用后恢复展示的等待秒数，>0；不是原版卡牌冷却 |
+| `sun_value` | 25 | 新大关天空中阳光点数，正整数；植物产阳光使用原版 15/25 点 |
+| `fog_opacity` | 0.42 | 浓雾透明度，0～0.8，0 表示透明 |
+| `label_font_size` | 26 | 模型上方中文/血量标签字号，12～60 整数 |
+
+植物列数与总列数冲突时，两项一起回退到默认值并报告原因。行数为陆地植物数量除以 `plant_columns` 向上取整，并与 `minimum_rows` 取较大值；泳池/浓雾额外预留中央两行水道。默认五个大关依次为 **6×13、6×13、8×13、10×13、10×13**。新大关在运行时自动布局，不读取 `placements` 的旧固定坐标。
+
+`stages.plants` 以 `stage_catalog.gd` 中的 40 个基础植物键名为索引，例如 `peashooter`、`wall_nut`、`melon_pult`。初始化费用、HP 与主要伤害来源见 [plan.md](../plan.md)。
+
+| 字段（在 `stages.plants.类型` 下） | 含义 / 有效范围 |
+| --- | --- |
+| `sun_cost` | 标签显示的原版阳光费用，非负整数；当前不实际扣费 |
+| `maximum_health` | 初始化生命，正整数；普通植物 300、坚果/南瓜 4000、高坚果 8000 |
+| `damage` | 攻击基础伤害，非负整数；豌豆 20、卷心菜 40、西瓜 80，爆炸类通常 1800 |
+| `attack_interval` | 演示攻击/能力轮次秒数，>0；射手通常 1.5、投手 3、生产 24；大嘴花该值为吞食后的消化时长，默认 42 |
+| `range_cells` | 检测距离（格），>0；世界距离乘以 `lawn.cell_size`，短射程蘑菇默认 3、大喷菇 4 |
+
+特殊能力有单独规则：玉米普通伤害 20、25% 黄油伤害 40 并定身 4 秒；土豆雷准备 15 秒；寒冰豌豆减速 50% 持续 10 秒；三线展开 3.6 世界单位；双发/裂荚连射间隔 0.18 秒。白天蘑菇睡眠，咖啡豆自动寻找睡眠对象。功能型植物和瞬发植物用自动触发与恢复展示演示，不代表原版种植时序。
+
+`stages.zombies` 以 `stage_catalog.gd` 中的 26 个僵尸键名为索引。新大关拆分本体、头甲和盾牌：路障 **270+370=640**、铁桶 **270+1100=1370**、读报 **270+150=420**、橄榄球 **270+1400=1670**、铁门 **270+1100=1370**；巨人本体 **3000**、僵王本体 **40000**。这是原版初始化值；旧演示仍使用普通 200、路障 570、铁桶 1370、读报 350。
+
+| 字段（在 `stages.zombies.类型` 下） | 含义 / 有效范围 |
+| --- | --- |
+| `body_health` | 本体生命，正整数 |
+| `helmet_health` / `shield_health` | 头甲 / 盾牌生命，非负整数；总生命为三项之和 |
+| `speed_multiplier` | 相对 `zombies.common.walk_speed` 的移速倍率，≥0；静止机甲/蹦极使用 0 |
+| `bite_damage_per_second` | 普通啃食每秒伤害，≥0，默认 100 HP/秒；寒冰减速时减半 |
+| `ability_interval` | 舞王召唤、投石车/简化僵王等能力周期，>0 秒，默认 8；小丑使用 8～16 秒随机引爆，冰车另按短周期铺冰 |
+
+普通弹体依次损伤盾牌、头甲、本体；抛物线/穿透/背向弹体绕过盾牌。各层血量耗尽后隐藏或掉落装备，本体归零触发当前项目的即时死亡与尸体流程；没有模拟原版脱头后继续行走的衰减。大关读报损失盾牌后停步 1 秒、移速乘以 3.3，0 键原演示继续使用原先 2 倍规则。
+
+`respawn.auto_respawn_enabled` 及 `respawn.respawn_delay` 共用：开关控制大关植物/僵尸是否自动补回，僵尸等待默认 1 秒，植物等待由 `stages.plant_respawn_delay` 指定。R 使用启动快照重建当前场景；切换释放整棵旧场景树。夜晚与浓雾强制关闭天降阳光，但仍能收集植物阳光；其夜间光照与屋顶/雾的初始全景范围按场景设定。运行时的金币、阳光与临时能力状态在切换时清空。
+
+可运行 `tests/stages_test.gd` 检查字段容错、累计名单、放置、输入与生命分层，`tests/stages_stability_test.gd` 检查五个大关各 90 秒自动交战后的状态与重置。实机图可用 `tools/capture_stages.gd` 在非 headless 模式生成。
+
+## 原演示最常调整的位置
 
 | 修改内容 | JSON 字段 | 初始值 |
 | --- | --- | --- |

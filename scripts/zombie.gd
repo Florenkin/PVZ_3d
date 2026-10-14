@@ -338,7 +338,9 @@ func _physics_kind(kind: StringName) -> String:
 
 func _capture_arm_geometry() -> void:
 	# Preserve authored collision/animation anchors, transformed by configured limbs.
-	var defaults: Dictionary = GameConfiguration.current().default_values().models[GameConfiguration.current().entity_key(self)].parts
+	var models: Dictionary = GameConfiguration.current().default_values().models
+	var model_key := GameConfiguration.current().entity_key(self)
+	var defaults: Dictionary = models.get(model_key, models.zombie).parts
 	for side: String in ["Left", "Right"]:
 		var sign_value := -1.0 if side == "Left" else 1.0
 		var path := "Visuals/Arms/" + side + "HandAssembly/" + side + "Forearm"
@@ -388,6 +390,10 @@ func _publish_part(part: ZombieDebris, detached: bool = true) -> void:
 func _physics_process(delta: float) -> void:
 	_update_slow(delta)
 	_update_hit_effect(delta)
+	_step_movement(delta)
+
+
+func _step_movement(delta: float) -> void:
 	if not is_alive():
 		velocity = Vector3.ZERO
 		return

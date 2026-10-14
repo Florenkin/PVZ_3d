@@ -113,6 +113,35 @@ func _valid_value(value: Variant, baseline: Variant, path: String) -> bool:
 		return true
 	if not _is_number(value):
 		return false
+	if path.begins_with("demo_tools."):
+		return value > 0
+	if path.begins_with("adventure."):
+		if key == "conveyor_capacity":
+			return float(value) == floor(float(value)) and value >= 1 and value <= 16
+		if key in ["bowling_damage", "bowling_explosion_damage", "whack_damage", "whack_sun_value"]:
+			return float(value) == floor(float(value)) and value > 0
+		if key in ["initial_sun", "initial_sun_tutorial", "sun_value"]:
+			return float(value) == floor(float(value)) and value >= (1 if key == "sun_value" else 0)
+		if key in ["wave_interval_range", "sun_interval_growth", "sun_interval_jitter"]:
+			return value >= 0
+		return value > 0
+	if path.begins_with("stages."):
+		if key in ["start_stage", "plant_columns", "minimum_rows", "board_columns", "label_font_size", "sun_value", "sun_cost", "body_health", "helmet_health", "shield_health", "damage"] and float(value) != floor(float(value)):
+			return false
+		if key == "start_stage":
+			return value >= 1 and value <= 5
+		if key == "plant_columns":
+			return value >= 2 and value <= 6
+		if key == "minimum_rows":
+			return value >= 6 and value <= 20
+		if key == "board_columns":
+			return value >= 9 and value <= 32
+		if key == "label_font_size":
+			return value >= 12 and value <= 60
+		if key == "fog_opacity":
+			return value >= 0 and value <= 0.8
+		if key in ["sun_value", "body_health", "attack_interval", "ability_interval", "range_cells", "plant_respawn_delay"]:
+			return value > 0
 	if key in ["version", "rows", "columns", "row", "column", "pea_damage", "maximum_health", "burst_size", "armor_drop_health", "hand_drop_health", "newspaper_drop_health", "window_width", "window_height", "minimum_width", "minimum_height", "viewport_width", "viewport_height", "medium_value", "initial_value"] and float(value) != floor(float(value)):
 		return false
 	if path.begins_with("sun.") and key in ["spawn_interval", "medium_value", "fall_speed"]:
@@ -149,6 +178,13 @@ func _is_number(value: Variant) -> bool:
 
 
 func _validate_relationships(defaults: Dictionary) -> void:
+	if values.adventure.sun_first_min > values.adventure.sun_first_max or values.adventure.sun_base_interval > values.adventure.sun_max_interval or values.adventure.minimum_wave_gap > values.adventure.wave_interval:
+		_warn("adventure", "阳光间隔或波次等待范围冲突，使用默认冒险参数")
+		values.adventure = defaults.adventure.duplicate(true)
+	if values.stages.plant_columns + 6 > values.stages.board_columns:
+		_warn("stages.plant_columns / board_columns", "植物阵线与僵尸出生区重叠，使用默认大关布局")
+		values.stages.plant_columns = defaults.stages.plant_columns
+		values.stages.board_columns = defaults.stages.board_columns
 	var house: Dictionary = values.house
 	if house.width <= house.door_width + house.wall_thickness * 2.0 or house.depth <= house.wall_thickness * 2.0 or house.wall_height <= house.door_height + 0.15 or house.door_height < 2.0 or house.door_width < 1.0:
 		_warn("house", "房屋尺寸或门洞尺寸冲突，使用默认房屋参数")

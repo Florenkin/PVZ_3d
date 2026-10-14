@@ -15,13 +15,14 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="PVZ 3D · 豌豆射手"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
 [autoload]
 
 GameConfig="*res://scripts/game_config.gd"
+GameProgress="*res://scripts/adventure_progress.gd"
 
 [display]
 

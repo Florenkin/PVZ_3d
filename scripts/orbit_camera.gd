@@ -16,6 +16,7 @@ var minimum_pitch_degrees: float = 6.87549354156988
 var maximum_pitch_degrees: float = 65.8901464400447
 var zoom_in_factor: float = 0.91
 var zoom_out_factor: float = 1.09
+var tool_wheel_active: bool = false
 
 
 func _enter_tree() -> void:
@@ -52,9 +53,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			_dragging = event.pressed
-		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP and (not tool_wheel_active or event.ctrl_pressed):
 			camera.size = clampf(camera.size * zoom_in_factor, minimum_size, maximum_size)
-		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN and (not tool_wheel_active or event.ctrl_pressed):
 			camera.size = clampf(camera.size * zoom_out_factor, minimum_size, maximum_size)
 	elif event is InputEventMouseMotion and _dragging:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):

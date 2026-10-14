@@ -33,6 +33,8 @@ func _enter_tree() -> void:
 @onready var camera: Camera3D = $WaistMount/Camera3D
 var first_person_active: bool = true
 var interface_open: bool = false
+var escape_releases_mouse: bool = true
+var click_captures_mouse: bool = true
 var _spawn_position: Vector3
 var _spawn_yaw: float
 var _gravity: float = 9.8
@@ -123,7 +125,7 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not first_person_active or interface_open:
 		return
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+	if click_captures_mouse and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		_capture_mouse()
 		get_viewport().set_input_as_handled()
 	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -131,7 +133,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		waist_mount.rotation.x = clampf(waist_mount.rotation.x - event.relative.y * mouse_sensitivity, -deg_to_rad(pitch_limit_degrees), deg_to_rad(pitch_limit_degrees))
 		get_viewport().set_input_as_handled()
 	elif event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_ESCAPE:
+		if event.keycode == KEY_ESCAPE and escape_releases_mouse:
 			_release_mouse()
 			get_viewport().set_input_as_handled()
 

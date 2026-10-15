@@ -1,0 +1,22 @@
+{
+  "dimensions_y_up_m": [
+    1.36132550239563,
+    3.28135275840759,
+    1.08839631080627
+  ],
+  "godot": "4.7.2-stable (official)",
+  "green_shin_material_found": true,
+  "head_depth_to_width_ratio": 0.962108948055021,
+  "head_dimensions_y_up_m": [
+    0.986085772514343,
+    0.870068311691284,
+    0.948721945285797
+  ],
+  "materials": 25,
+  "mesh_nodes": 263,
+  "missing_materials": 0,
+  "removable_cone_parts": 7,
+  "result": "PASS",
+  "surfaces": 264,
+  "triangles": 665476
+}

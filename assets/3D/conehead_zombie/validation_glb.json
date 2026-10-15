@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "glb_version": 2,
+  "bytes": 75158864,
+  "meshes": 263,
+  "surfaces": 264,
+  "triangles": 665476,
+  "materials": 25,
+  "embedded_images": 30,
+  "pbr_textured_materials": 10,
+  "external_dependencies": 0,
+  "normal_mapped_meshes_have_tangents": true,
+  "cone_parts_under_removable_parent": 7,
+  "approved_A_reference_matches": true,
+  "studio_exported": false,
+  "animations": 0,
+  "sha256": "270da4acb89827a075ff869888bac4acc302b3199972c9294cab4db408ff218f"
+}

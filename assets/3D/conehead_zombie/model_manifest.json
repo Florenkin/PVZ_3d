@@ -1,0 +1,73 @@
+{
+  "asset": "conehead_zombie",
+  "approved_reference": "source/reference_A_approved.png",
+  "authoring_tool": "4.5.3 LTS",
+  "mesh_objects": 263,
+  "vertices": 333918,
+  "triangles": 665476,
+  "materials": 25,
+  "bounds_blender_z_up_m": {
+    "min": [
+      -0.6755196452140808,
+      -0.5747230052947998,
+      0.008999999612569809
+    ],
+    "max": [
+      0.6858057975769043,
+      0.5136733055114746,
+      3.2903528213500977
+    ]
+  },
+  "dimensions_m": [
+    1.361325442790985,
+    1.0883963108062744,
+    3.281352821737528
+  ],
+  "head_dimensions_blender_xyz_m": [
+    0.9860857725143433,
+    0.9487219452857971,
+    0.8700683116912842
+  ],
+  "head_depth_to_width_ratio": 0.9621089480550206,
+  "cone": {
+    "parts": [
+      "Cone_outer_shell_A",
+      "Cone_inner_hollow_shell",
+      "Cone_open_top_rounded_broken_lip",
+      "Cone_square_flange_rounded_open_base",
+      "Cone_lower_molded_collar",
+      "Cone_horizontal_molding_upper",
+      "Cone_horizontal_molding_lower"
+    ],
+    "tilt_degrees": 14,
+    "shell_height_m": 0.88,
+    "wall_thickness_m": 0.012,
+    "base_width_m": 0.98,
+    "seated_base_height_m": 2.3600001335144043,
+    "skull_clearance_error_m": 0.0025652298709815113,
+    "open_top": true,
+    "hollow_shell": true,
+    "removable_parent": "TrafficCone_removable",
+    "texture_size_px": 2048
+  },
+  "removed_covered_hairs": [
+    "Sparse_bent_hair_00",
+    "Sparse_bent_hair_01",
+    "Sparse_bent_hair_05",
+    "Sparse_bent_hair_06",
+    "Sparse_bent_hair_07",
+    "Sparse_bent_hair_08",
+    "Sparse_bent_hair_12",
+    "Sparse_bent_hair_14",
+    "Sparse_bent_hair_15"
+  ],
+  "shin_skin_srgb": [
+    0.405,
+    0.49,
+    0.425
+  ],
+  "base_source_sha256": "62637ee6baa7e497c7a043af0f894747b07c904f44b05a0e4a49942769bf559c",
+  "pose": "static reference pose, no armature or animations",
+  "textures": "embedded GLB, packed BLEND, independent source PNGs",
+  "game_integration": "none"
+}

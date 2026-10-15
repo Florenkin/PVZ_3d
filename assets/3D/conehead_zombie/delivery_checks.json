@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "preview_pngs": 9,
+  "source_texture_pngs": 30,
+  "python_scripts_parsed": 3,
+  "local_document_links": 204,
+  "triangles_consistent_in_blender_glb_godot": 665476,
+  "original_normal_zombie_unchanged": true,
+  "original_game_files_changed": false,
+  "approved_A_reference_matches": true,
+  "final_logs_without_errors": true
+}

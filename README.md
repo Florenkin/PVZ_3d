@@ -6,6 +6,10 @@
 
 版本变化见 [更新日志 CHANGELOG.md](CHANGELOG.md)，后续开发的同步维护约定见 [AGENTS.md](AGENTS.md)。
 
+独立制作的[普通僵尸参考模型](assets/3D/normal_zombie/README.md)已按用户选定的 B 组三视图优化饱满后脑、连续眼窝/肩部、手部、服装、材质与灰绿色小腿，提供 GLB、Blender 源文件及真实模型转面预览；该资源尚未接入游戏，原有僵尸与玩法保持原样。
+
+按原始图片新生成的[普通僵尸三视图候选](assets/3D/normal_zombie_reference_sheets/README.md)包含 A–D 四套全身/头部视角，A/B/C 已将左小腿统一为灰绿色；B 组已选作本轮模型优化参考，候选图片保留用于对比。
+
 原版五个冒险大关的植物解锁、僵尸出场、特性与数值参考见 [plan.md](plan.md)，包括商店植物和特殊关附录。场景名单与基础数值以该文档为依据；实际演示规则与实现范围见下文。
 
 ![主界面：冒险模式与演示模式](docs/images/main-menu.png)
@@ -513,4 +517,4 @@ python tools/build_assets.py --newspaper-only
 
 游戏更新与对应的 `CHANGELOG.md` 条目一起提交；发布版本时再将“未发布”区整理为指定版本的记录。
 
-提交游戏源文件、场景、配置、模型资源、文档及 `.uid` 文件。[.gitignore](.gitignore) 已排除 `.godot/` 缓存和 `artifacts/` 本地测试产物；本页截图保存在 `docs/images/`，会随文档提交。`docs/.gdignore` 让 Godot 跳过文档目录的资源扫描。
+提交游戏源文件、场景、配置、模型资源、文档及 `.uid` 文件。[.gitignore](.gitignore) 已排除 `.godot/` 缓存和 `artifacts/` 本地测试产物，但保留 `artifacts/.gdignore` 隔离文件；本页截图保存在 `docs/images/`，会随文档提交。`docs/.gdignore` 和 `artifacts/.gdignore` 分别让 Godot 跳过文档、临时工具与测试产物的资源扫描，防止把 Blender 自带的 GLSL 等文件作为游戏资源导入。`.gitignore` 本身不会阻止 Godot 扫描。已遇到这些工具文件的加载错误时，确认关闭错误弹窗后重新打开项目，让编辑器重新扫描目录。

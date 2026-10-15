@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "glb_version": 2,
+  "bytes": 57692900,
+  "meshes": 265,
+  "primitives": 266,
+  "triangles": 573975,
+  "materials": 23,
+  "embedded_images": 27,
+  "pbr_textured_materials": 9,
+  "external_dependencies": 0,
+  "mesh_attributes": [
+    "POSITION",
+    "NORMAL",
+    "TEXCOORD_0"
+  ],
+  "normal_mapped_meshes_have_tangents": true,
+  "studio_exported": false,
+  "animations": 0,
+  "sha256": "6d5e00dae247600671fa91e91bea9e9c31581096d59a2eb6c936af4b1cfbf24a"
+}

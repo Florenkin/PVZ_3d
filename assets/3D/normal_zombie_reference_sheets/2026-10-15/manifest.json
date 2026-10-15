@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-15",
+  "tool": "built-in image_gen",
+  "generated_sheets": 4,
+  "recolored_body_sheets": 3,
+  "panels_in_latest_candidates": 12,
+  "reference_image_count": 1,
+  "existing_model_unchanged": true,
+  "existing_model_sha256": {
+    "assets\\3D\\normal_zombie\\normal_zombie.glb": "768ddb38f5da0227f88506604042d69edf808b40e31512258c086018d595d6ba",
+    "assets\\3D\\normal_zombie\\source\\normal_zombie.blend": "a308a667e72f3fa661d0485dd84ffe73cc29214e3b591ba02c9818805af31049"
+  },
+  "images": [
+    {
+      "file": "A_standard_front_left_back.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "bytes": 2088605,
+      "sha256": "930c18bb0ce25d314492e07a0ad5ca0e3687e11f48515726356e9377f1b62d79"
+    },
+    {
+      "file": "A_standard_front_left_back_green_shin.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "bytes": 1960602,
+      "sha256": "820635a98c360e640814d676d51b1b97257d2f49d83508d518aae0d39579954f"
+    },
+    {
+      "file": "B_three_quarter_turnaround.png",
+      "size_px": [
+        1774,
+        887
+      ],
+      "bytes": 1972110,
+      "sha256": "d743d72f9c504726ed65c67d7dd6f36d2b509971db734e809dfe77dcaeef01df"
+    },
+    {
+      "file": "B_three_quarter_turnaround_green_shin.png",
+      "size_px": [
+        1774,
+        887
+      ],
+      "bytes": 1902244,
+      "sha256": "1115149e05859fd80794825f8ff977aa439440801894a3b1b388c5bb2e0e3104"
+    },
+    {
+      "file": "C_standard_front_right_back.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "bytes": 2132814,
+      "sha256": "df06b00b30cc3f3b8e3d8b0a9f7cfd25b482958e3dd5c2fdf5a842a8750d12ca"
+    },
+    {
+      "file": "C_standard_front_right_back_green_shin.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "bytes": 2000505,
+      "sha256": "c2e3c14527bd1a590224683718beefacb77466588b59ec2b35f245579138d6eb"
+    },
+    {
+      "file": "D_head_volume_three_views.png",
+      "size_px": [
+        1991,
+        790
+      ],
+      "bytes": 2299901,
+      "sha256": "784a6912fdddb8198442c27e1bcff9aa3a9191cb81271083501819fe69ad6486"
+    },
+    {
+      "file": "reference.png",
+      "size_px": [
+        567,
+        900
+      ],
+      "bytes": 576234,
+      "sha256": "ba47c03bed34e0f6405936e241a52b1414ae2c18f0fc13fec4b87dcc23617d49"
+    }
+  ]
+}

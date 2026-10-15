@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-15",
+  "tool": "built-in image_gen",
+  "mode": "precise-object-edit",
+  "change": "Only recolor anatomical left exposed shin to existing grey-green zombie skin in A/B/C.",
+  "existing_3d_model_modified": false,
+  "edits": [
+    {
+      "id": "A",
+      "input": "A_standard_front_left_back.png",
+      "output": "A_standard_front_left_back_green_shin.png",
+      "prompt": "Use case: precise-object-edit.\nInput image 1 is the EDIT TARGET, the existing three-panel zombie character reference sheet.\nMake exactly ONE localized correction in all three panels: recolor the pale ivory/white exposed lower leg of the zombie's anatomical LEFT leg, from below the green knee down to the blue denim ankle cuff, into the SAME natural desaturated grey/sage-green zombie skin color as the knee, face and hands. This is the leg with the short jagged trouser hem and visible shin. In a frontal view it is on the viewer's right; in a rear view it is on the viewer's left. Apply the recolor in every panel where this exposed shin is visible.\nKeep the entire skin between knee and ankle cuff sage-green, with a smooth natural continuity to the knee. No white, ivory, pale bone-colored strip or boundary should remain on that shin. Preserve the original subtle mottled skin texture, shading, highlights and volume, just adjust its local albedo hue/color.\nPreserve EVERYTHING ELSE exactly: head shape and fullness, head depth, eyes and pupils, mouth/teeth, hair, face color, hands, body proportions, leg geometry and pose, torn blue trousers, ankle cuff, brown shoes, jacket, ivory shirt, white tie stripes, labels A/B/C and viewpoint captions, three-panel composition, studio lighting and background. The ivory eyeballs, teeth, shirt and tie stripes MUST stay ivory; only the shin skin changes. Do not redesign, redraw, change camera angle, add objects, crop, alter the type, or turn the shin into trousers or a sock. Preserve the existing image dimensions and framing."
+    },
+    {
+      "id": "B",
+      "input": "B_three_quarter_turnaround.png",
+      "output": "B_three_quarter_turnaround_green_shin.png",
+      "prompt": "Use case: precise-object-edit.\nInput image 1 is the EDIT TARGET, the existing three-panel zombie character reference sheet.\nMake exactly ONE localized correction in all three panels: recolor the pale ivory/white exposed lower leg of the zombie's anatomical LEFT leg, from below the green knee down to the blue denim ankle cuff, into the SAME natural desaturated grey/sage-green zombie skin color as the knee, face and hands. This is the leg with the short jagged trouser hem and visible shin. In a frontal view it is on the viewer's right; in a rear view it is on the viewer's left. Apply the recolor in every panel where this exposed shin is visible.\nKeep the entire skin between knee and ankle cuff sage-green, with a smooth natural continuity to the knee. No white, ivory, pale bone-colored strip or boundary should remain on that shin. Preserve the original subtle mottled skin texture, shading, highlights and volume, just adjust its local albedo hue/color.\nPreserve EVERYTHING ELSE exactly: head shape and fullness, head depth, eyes and pupils, mouth/teeth, hair, face color, hands, body proportions, leg geometry and pose, torn blue trousers, ankle cuff, brown shoes, jacket, ivory shirt, white tie stripes, labels A/B/C and viewpoint captions, three-panel composition, studio lighting and background. The ivory eyeballs, teeth, shirt and tie stripes MUST stay ivory; only the shin skin changes. Do not redesign, redraw, change camera angle, add objects, crop, alter the type, or turn the shin into trousers or a sock. Preserve the existing image dimensions and framing."
+    },
+    {
+      "id": "C",
+      "input": "C_standard_front_right_back.png",
+      "output": "C_standard_front_right_back_green_shin.png",
+      "prompt": "Use case: precise-object-edit.\nInput image 1 is the EDIT TARGET, the existing three-panel zombie character reference sheet.\nMake exactly ONE localized correction in all three panels: recolor the pale ivory/white exposed lower leg of the zombie's anatomical LEFT leg, from below the green knee down to the blue denim ankle cuff, into the SAME natural desaturated grey/sage-green zombie skin color as the knee, face and hands. This is the leg with the short jagged trouser hem and visible shin. In a frontal view it is on the viewer's right; in a rear view it is on the viewer's left. Apply the recolor in every panel where this exposed shin is visible.\nKeep the entire skin between knee and ankle cuff sage-green, with a smooth natural continuity to the knee. No white, ivory, pale bone-colored strip or boundary should remain on that shin. Preserve the original subtle mottled skin texture, shading, highlights and volume, just adjust its local albedo hue/color.\nPreserve EVERYTHING ELSE exactly: head shape and fullness, head depth, eyes and pupils, mouth/teeth, hair, face color, hands, body proportions, leg geometry and pose, torn blue trousers, ankle cuff, brown shoes, jacket, ivory shirt, white tie stripes, labels A/B/C and viewpoint captions, three-panel composition, studio lighting and background. The ivory eyeballs, teeth, shirt and tie stripes MUST stay ivory; only the shin skin changes. Do not redesign, redraw, change camera angle, add objects, crop, alter the type, or turn the shin into trousers or a sock. Preserve the existing image dimensions and framing."
+    }
+  ]
+}

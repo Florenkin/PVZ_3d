@@ -82,6 +82,7 @@ var _removed_plants: Dictionary = {}
 
 func _enter_tree() -> void:
 	GameConfiguration.current().apply_scene(self)
+	($Enemies/Zombie as Zombie).imported_demo_model_enabled = bool(GameConfiguration.current().section("demo_zombie_animation").enabled)
 	var ui := GameConfiguration.current().section("ui")
 	INK = GameConfiguration.current().color(ui.ink_color)
 	MUTED = GameConfiguration.current().color(ui.muted_color)
@@ -910,6 +911,7 @@ func _replace_enemy(previous: Zombie, scene: PackedScene, node_name: String) -> 
 	replacement.knockback_speed = previous.knockback_speed
 	replacement.knockback_deceleration = previous.knockback_deceleration
 	replacement.maximum_walk_distance = previous.maximum_walk_distance
+	replacement.imported_demo_model_enabled = previous.imported_demo_model_enabled
 	enemies.remove_child(previous)
 	previous.queue_free()
 	replacement.name = node_name

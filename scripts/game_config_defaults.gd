@@ -3,6 +3,9 @@ extends RefCounted
 const TEXT = """
 {
   "version": 1,
+  "demo_zombie_animation": {
+    "enabled": true
+  },
   "sun": {
     "enabled": true,
     "spawn_interval": 10.0,

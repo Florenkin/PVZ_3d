@@ -1,5 +1,8 @@
 {
   "version": 1,
+  "demo_zombie_animation": {
+    "enabled": true
+  },
   "demo_tools": {
     "shovel_reach": 4.8
   },

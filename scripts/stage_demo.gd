@@ -98,6 +98,8 @@ func _enter_tree() -> void:
 		child.stage = self
 		child.position = lawn.cell_to_local(row, column)
 		child.rotation.y = PI * 0.5
+		child.imported_demo_model_enabled = child.enemy_kind == "zombie" and bool(GameConfiguration.current().section("demo_zombie_animation").enabled)
+		child.set_meta("demo_animation_lawn", lawn)
 		_enemy_slots.append({"name": String(child.name), "kind": child.enemy_kind, "position": child.position})
 
 
@@ -223,6 +225,8 @@ func _make_enemy(kind: String) -> StageZombie:
 	enemy.set_script(load("res://scripts/stage_zombie.gd"))
 	enemy.set("enemy_kind", kind)
 	enemy.set("stage", self)
+	enemy.set("imported_demo_model_enabled", kind == "zombie" and bool(GameConfiguration.current().section("demo_zombie_animation").enabled))
+	enemy.set_meta("demo_animation_lawn", lawn)
 	return enemy as StageZombie
 
 

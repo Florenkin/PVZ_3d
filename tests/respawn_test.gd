@@ -55,7 +55,11 @@ func _on_respawn(zombie: Zombie) -> void:
 
 
 func _run() -> void:
-	GameConfiguration.current().use_values_for_tests(GameConfiguration.current().default_values())
+	# Physical-corpse assertions cover the legacy option; the default skinned
+	# fall across respawn has its own integration suite.
+	var legacy_values := GameConfiguration.current().default_values()
+	legacy_values.demo_zombie_animation.enabled = false
+	GameConfiguration.current().use_values_for_tests(legacy_values)
 	_main = load("res://scenes/main.tscn").instantiate() as Node3D
 	GameConfiguration.current().apply_entity(_main)
 	root.add_child(_main)

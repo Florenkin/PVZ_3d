@@ -230,6 +230,7 @@ func _physics_process(delta: float) -> void:
 	if _freeze_remaining > 0.0 or _rage_remaining > 0.0:
 		_freeze_remaining = maxf(0.0, _freeze_remaining - delta)
 		_rage_remaining = maxf(0.0, _rage_remaining - delta)
+		_animate_demo_model(delta, &"Frozen")
 		return
 	if _jump_remaining > 0.0:
 		_jump_remaining = maxf(0.0, _jump_remaining - delta)
@@ -279,6 +280,7 @@ func _physics_process(delta: float) -> void:
 				var damage := int(_bite_accumulator)
 				_bite_accumulator -= damage
 				other.receive_hit(damage, Vector3.RIGHT)
+				_animate_demo_model(delta, &"Eat")
 				return
 	walk_speed = _base_speed * (3.3 if _angry else 1.0)
 	# Advance movement separately: status timers have already advanced once.
@@ -357,6 +359,7 @@ func _attack_plant(plant: StagePlant, delta: float) -> void:
 		global_position.x = plant.global_position.x - 1.25
 		_update_label()
 		return
+	_animate_demo_model(delta, &"Eat")
 	_bite_accumulator += float(settings.bite_damage_per_second) * delta * (0.5 if _slow_remaining > 0 else 1.0)
 	var damage := int(_bite_accumulator)
 	_bite_accumulator -= damage

@@ -70,7 +70,11 @@ func _spawn_pea(position: Vector3, speed: float = 10.0) -> PeaProjectile:
 
 
 func _run() -> void:
-	GameConfiguration.current().use_values_for_tests(GameConfiguration.current().default_values())
+	# This suite verifies the retained physical-parts mode; the imported model's
+	# default lifecycle is exercised separately by animated_zombie_test.gd.
+	var legacy_values := GameConfiguration.current().default_values()
+	legacy_values.demo_zombie_animation.enabled = false
+	GameConfiguration.current().use_values_for_tests(legacy_values)
 	_main = load("res://scenes/main.tscn").instantiate() as Node3D
 	GameConfiguration.current().apply_entity(_main)
 	# Keep individual combat cases isolated from the main scene's respawn loop.

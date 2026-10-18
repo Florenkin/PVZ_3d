@@ -1,0 +1,71 @@
+{
+  "result": "PASS",
+  "checked_at_beijing": "2026-10-19T01:45:17+08:00",
+  "headless_regression_tests": [
+    "animated_zombie_test.gd",
+    "config_test.gd",
+    "combat_test.gd",
+    "respawn_test.gd",
+    "zombie_parts_test.gd",
+    "snow_pea_test.gd",
+    "stages_test.gd",
+    "stages_stability_test.gd",
+    "demo_tools_test.gd",
+    "adventure_test.gd",
+    "adventure_hand_test.gd",
+    "adventure_expansion_test.gd",
+    "adventure_campaign_test.gd",
+    "buckethead_test.gd",
+    "pole_vaulting_test.gd",
+    "newspaper_test.gd",
+    "repeater_test.gd",
+    "threepeater_test.gd",
+    "gatling_pea_test.gd",
+    "plant_recoil_test.gd",
+    "house_test.gd",
+    "sun_test.gd"
+  ],
+  "headless_regression_count": 22,
+  "compatibility_gpu_test": "animated_zombie_test.gd on NVIDIA GeForce RTX 4060 Ti: PASS",
+  "root_editor_import": "PASS, exit 0, no script or resource errors",
+  "not_run": [
+    "adventure_playthrough_test.gd",
+    "adventure_expansion_playthrough_test.gd",
+    "adventure_campaign_playthrough_test.gd"
+  ],
+  "previews_png_verified": [
+    "demo_eat.png",
+    "demo_fall.png",
+    "demo_walk.png",
+    "eat.png",
+    "fall.png",
+    "godot_eat.png",
+    "godot_fall.png",
+    "godot_walk.png",
+    "idle.png",
+    "walk.png"
+  ],
+  "actual_godot_animation_gif_frame_counts": {
+    "walk": 22,
+    "eat": 24,
+    "fall": 37
+  },
+  "source_python_scripts_syntax_checked": [
+    "build_rig.py",
+    "render_poses.py",
+    "validate_rig.py"
+  ],
+  "config_provided_values_match_embedded_defaults": true,
+  "existing_json_and_fallback_fields_unchanged": true,
+  "input_download_and_preserved_copy_sha256": "b7d828a23f494b60198b15f1cc472aa560c57bfc335fba88fd94395f14c91a3e",
+  "prior_reference_assets_unchanged": {
+    "assets/3D/normal_zombie/normal_zombie.glb": "6d5e00dae247600671fa91e91bea9e9c31581096d59a2eb6c936af4b1cfbf24a",
+    "assets/3D/normal_zombie/source/normal_zombie.blend": "62637ee6baa7e497c7a043af0f894747b07c904f44b05a0e4a49942769bf559c",
+    "assets/3D/conehead_zombie/conehead_zombie.glb": "270da4acb89827a075ff869888bac4acc302b3199972c9294cab4db408ff218f",
+    "assets/3D/conehead_zombie/source/conehead_zombie.blend": "7c3de4a456f8a4103d4dfeb50352b2fbe1767c76fee326cc81210e543a08d00f"
+  },
+  "animated_glb_sha256": "87d8f6642c2dca15ab240818d12351db3b7748bfc43155c5e3210e9340e05ee0",
+  "blend_sha256": "e7ded02fd72fa5444e59abd359f86388fa2d79b87f95ee8e0b25096b78c27a32",
+  "local_document_links_checked": 191,
+  "git_diff_whitespace": "PASS"
+}

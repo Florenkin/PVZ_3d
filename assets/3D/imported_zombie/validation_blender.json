@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "blender_version": "4.5.3 LTS",
+  "bones": 25,
+  "vertices": 203489,
+  "triangles": 382770,
+  "actions": [
+    "Eat",
+    "Fall",
+    "Hit",
+    "Idle",
+    "Walk"
+  ],
+  "packed_images_match_source": [
+    {
+      "name": "zombie_basecolor.jpg",
+      "bytes": 1897362
+    },
+    {
+      "name": "zombie_metallic_roughness.jpg",
+      "bytes": 1673156
+    },
+    {
+      "name": "zombie_normal.png",
+      "bytes": 1798963
+    }
+  ],
+  "blend_sha256": "e7ded02fd72fa5444e59abd359f86388fa2d79b87f95ee8e0b25096b78c27a32"
+}

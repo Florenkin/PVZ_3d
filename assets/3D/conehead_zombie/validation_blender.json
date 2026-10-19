@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "blender": "4.5.3 LTS",
+  "mesh_objects": 263,
+  "triangles": 665476,
+  "packed_texture_images": 30,
+  "source_textures_independent": true,
+  "source_png_matches_packed_bytes": true,
+  "cone_parts_under_removable_parent": 7,
+  "armatures": 0,
+  "sha256": "7c3de4a456f8a4103d4dfeb50352b2fbe1767c76fee326cc81210e543a08d00f"
+}

@@ -32,6 +32,10 @@ const MAX_RECOIL_RADIANS: float = PI / 6.0
 var health: int = 200
 var _visuals_rest: Transform3D = Transform3D.IDENTITY
 var _arm_geometry: Dictionary = {}
+var imported_demo_model_enabled: bool = false
+var animated_visual: DemoZombieVisual
+var _legacy_meshes: Array[MeshInstance3D] = []
+var _animated_corpses: Array[DemoZombieCorpse] = []
 
 
 func _enter_tree() -> void:
@@ -69,8 +73,10 @@ func _ready() -> void:
 	_visuals_rest = _visuals.transform
 	_capture_arm_geometry()
 	_gravity = float(GameConfiguration.current().section("physics").gravity)
+	if imported_demo_model_enabled:
+		_install_imported_demo_visual()
 	for mesh: MeshInstance3D in _visuals.find_children("*", "MeshInstance3D", true, false):
-		_materials[mesh] = mesh.material_override
+		_materials[mesh] = mesh.material_override if mesh.material_override != null else mesh.get_active_material(0)
 	for name: String in ["LeftLeg", "RightLeg"]:
 		var leg := _legs.get_node(name) as Node3D
 		_leg_rest_rotations[leg] = leg.rotation
@@ -92,7 +98,19 @@ func is_alive() -> bool:
 	return health > 0 and not is_queued_for_deletion()
 
 
+func _walk_speed_multiplier() -> float:
+	return _slow_multiplier
+
+
+func get_walk_speed() -> float:
+	return walk_speed * _walk_speed_multiplier()
+
+
 func reset_combat() -> void:
+	for corpse: DemoZombieCorpse in _animated_corpses:
+		if is_instance_valid(corpse):
+			corpse.queue_free()
+	_animated_corpses.clear()
 	for part: ZombieDebris in _spawned_debris:
 		if is_instance_valid(part):
 			part.queue_free()
@@ -126,7 +144,33 @@ func reset_combat() -> void:
 	health = maximum_health
 	show()
 	_collision.set_deferred("disabled", false)
+	if animated_visual != null:
+		for mesh: MeshInstance3D in _legacy_meshes:
+			mesh.hide()
+		animated_visual.reset_pose()
 	health_changed.emit(health, maximum_health)
+
+
+func _install_imported_demo_visual() -> void:
+	for mesh: MeshInstance3D in _visuals.find_children("*", "MeshInstance3D", true, false):
+		_legacy_meshes.append(mesh)
+		mesh.hide()
+	animated_visual = DemoZombieVisual.new()
+	animated_visual.name = "ImportedAnimatedZombie"
+	animated_visual.scale = Vector3.ONE * DemoZombieVisual.MODEL_HEIGHT
+	animated_visual.rotation.y = PI
+	_visuals.add_child(animated_visual)
+	damaged.connect(func(_amount: int) -> void:
+		if is_alive():
+			animated_visual.notify_hit()
+	)
+
+
+func _animate_demo_model(delta: float, state: StringName) -> void:
+	if animated_visual == null:
+		return
+	var rate := get_walk_speed() / 0.5 if state == &"Walk" else _walk_speed_multiplier()
+	animated_visual.animate(delta, state, rate)
 
 
 func apply_slow(multiplier: float, duration: float) -> void:
@@ -217,6 +261,8 @@ func _drop_bucket(backward: Vector3) -> void:
 
 func _drop_hand(backward: Vector3) -> void:
 	_hand_dropped = true
+	if animated_visual != null:
+		return
 	var side := "Left" if _rng.randi_range(0, 1) == 0 else "Right"
 	var sign_value := -1.0 if side == "Left" else 1.0
 	var source := _visuals.get_node("Arms/" + side + "HandAssembly") as Node3D
@@ -231,6 +277,9 @@ func _drop_hand(backward: Vector3) -> void:
 
 
 func _die(backward: Vector3) -> void:
+	if animated_visual != null:
+		_die_animated()
+		return
 	_head_dropped = true
 	_slow_remaining = 0.0
 	_slow_multiplier = 1.0
@@ -296,6 +345,33 @@ func _die(backward: Vector3) -> void:
 	hide()
 
 
+func _die_animated() -> void:
+	_slow_remaining = 0.0
+	_slow_multiplier = 1.0
+	_restore_materials()
+	_recoil_angle = 0.0
+	_visuals.rotation.x = 0.0
+	var parent := _debris_parent
+	if not is_instance_valid(parent):
+		parent = get_tree().get_first_node_in_group("combat_debris_container") as Node3D
+	if parent == null:
+		parent = get_parent() as Node3D
+	var corpse := DemoZombieCorpse.new()
+	corpse.name = "AnimatedZombieCorpse"
+	corpse.lifetime = float(GameConfiguration.current().section("physics.parts.corpse").lifetime)
+	parent.add_child(corpse)
+	corpse.global_transform = _visuals.global_transform
+	var animation_lawn := get_meta("demo_animation_lawn") as StageLawn if has_meta("demo_animation_lawn") else null
+	if is_instance_valid(animation_lawn):
+		var p := global_position
+		var dx := (animation_lawn.surface_at(p + Vector3.RIGHT * .1) - animation_lawn.surface_at(p - Vector3.RIGHT * .1)) / .2
+		var dz := (animation_lawn.surface_at(p + Vector3.BACK * .1) - animation_lawn.surface_at(p - Vector3.BACK * .1)) / .2
+		var normal := Vector3(-dx, 1, -dz).normalized()
+		corpse.global_basis = Basis(Quaternion(Vector3.UP, normal)) * corpse.global_basis
+	_animated_corpses.append(corpse)
+	hide()
+
+
 func _make_part(source: Node3D, kind: StringName, center: Vector3, shape: Shape3D) -> ZombieDebris:
 	var part := ZombieDebris.new()
 	part.name = String(kind).to_pascal_case()
@@ -330,7 +406,9 @@ func _physics_kind(kind: StringName) -> String:
 
 func _capture_arm_geometry() -> void:
 	# Preserve authored collision/animation anchors, transformed by configured limbs.
-	var defaults: Dictionary = GameConfiguration.current().default_values().models[GameConfiguration.current().entity_key(self)].parts
+	var models: Dictionary = GameConfiguration.current().default_values().models
+	var model_key := GameConfiguration.current().entity_key(self)
+	var defaults: Dictionary = models.get(model_key, models.zombie).parts
 	for side: String in ["Left", "Right"]:
 		var sign_value := -1.0 if side == "Left" else 1.0
 		var path := "Visuals/Arms/" + side + "HandAssembly/" + side + "Forearm"
@@ -380,6 +458,10 @@ func _publish_part(part: ZombieDebris, detached: bool = true) -> void:
 func _physics_process(delta: float) -> void:
 	_update_slow(delta)
 	_update_hit_effect(delta)
+	_step_movement(delta)
+
+
+func _step_movement(delta: float) -> void:
 	if not is_alive():
 		velocity = Vector3.ZERO
 		return
@@ -387,7 +469,7 @@ func _physics_process(delta: float) -> void:
 	forward.y = 0.0
 	forward = forward.normalized()
 	var walking := movement_enabled and global_position.distance_to(_spawn_transform.origin) < maximum_walk_distance
-	var horizontal_velocity := forward * walk_speed * _slow_multiplier if walking else Vector3.ZERO
+	var horizontal_velocity := forward * get_walk_speed() if walking else Vector3.ZERO
 	horizontal_velocity += _knockback_velocity
 	velocity.x = horizontal_velocity.x
 	velocity.z = horizontal_velocity.z
@@ -397,8 +479,19 @@ func _physics_process(delta: float) -> void:
 		velocity.y = 0.0
 	move_and_slide()
 	_knockback_velocity = _knockback_velocity.move_toward(Vector3.ZERO, knockback_deceleration * delta)
+	if animated_visual != null:
+		var biting := false
+		for index in get_slide_collision_count():
+			var contact := get_slide_collision(index).get_collider() as Node
+			while contact != null and contact != get_parent():
+				if contact.is_in_group("vaultable_plants"):
+					biting = true
+					break
+				contact = contact.get_parent()
+		_animate_demo_model(delta, &"Eat" if biting else (&"Walk" if walking else &"Idle"))
+		return
 	if walking:
-		_walk_phase += delta * walk_animation_speed * _slow_multiplier
+		_walk_phase += delta * walk_animation_speed * _walk_speed_multiplier()
 		_visuals.position.y = _visuals_rest.origin.y + absf(sin(_walk_phase)) * walk_bob_height
 		for leg: Node3D in _leg_rest_rotations:
 			var sign_value := 1.0 if leg.name == "LeftLeg" else -1.0

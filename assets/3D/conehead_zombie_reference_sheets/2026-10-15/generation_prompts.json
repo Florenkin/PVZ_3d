@@ -1,0 +1,106 @@
+{
+  "date_beijing": "2026-10-15",
+  "engine": "built-in image_gen.imagegen",
+  "use_case": "stylized-concept / precise-object-edit",
+  "purpose": "Review-only Conehead Zombie reference candidates; no 3D modeling authorized before user review",
+  "final_candidates": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "selected_prompt_ids": {
+    "A": "A",
+    "B": "B_v2",
+    "C": "C_green_shin_edit",
+    "D": "D"
+  },
+  "discarded_prompt_ids": [
+    "B"
+  ],
+  "prompts": [
+    {
+      "id": "A",
+      "prompt": "Use case: stylized-concept.\nAsset type: review-only character turnaround reference sheet for a future 3D Conehead Zombie model. Sheet A.\nInput images: Image 1 is the previously approved normal-zombie B turnaround, a character identity/proportion/material reference. Image 2 is the original normal-zombie front illustration, a supporting style reference. These are references, not layouts to reproduce exactly.\nPrimary request: depict that SAME normal zombie now wearing a battered orange traffic cone on its head, recognizable as a Plants vs. Zombies Conehead Zombie. Keep its plump spherical deep cranium (not a flattened disk), gray sage-green mottled skin, asymmetrical bulging yellow-ivory eyes and tiny black pupils, two small nostrils, open mouth with a few crooked teeth, sparse bent black hairs, brown worn open suit jacket, ivory ragged shirt, red tie with ivory diagonal stripes, indigo torn trousers, chunky worn brown shoes, forward drooping five-finger hands and relaxed hunched reference pose.\nCone design: a single weathered orange molded traffic cone, tall tapered silhouette, slightly battered/blunted top, broad low square flange with softly rounded corners seated naturally on the upper cranium, a modest fixed sideways lean, subtle molded rings, scratches, grime and worn matte orange plastic. Solid orange; no reflective white bands, no markings or logos. Keep both eyes and the whole face unobscured. The cone should read as a separate removable object rather than growing out of the skull.\nImportant body invariant: anatomical LEFT leg has short torn trouser hem and exposed knee AND shin, ALL the exposed skin is the same normal sage-green zombie skin, no white shin or exposed bone. Anatomical RIGHT leg has the longer trouser with knee hole. In a direct front view the exposed shin is on the viewer's RIGHT. Preserve asymmetry in every view, do not mirror the character.\nComposition: ONE wide landscape sheet with THREE evenly separated full-body views of exactly the same design and pose, baseline aligned and equal height: direct FRONT, exact LEFT PROFILE, exact BACK. Orthographic-like camera, minimal perspective. Entire cone tip, hair, hands and both shoes must fit with generous margin. Large enough characters to judge modeling proportions. Light neutral warm-gray seamless studio background and floor, soft diffuse product lighting, clear silhouettes and fine visible texture, high-quality stylized CG/clay rendering consistent with the references.\nText: only a small 'A' upper left, and simple bottom labels 'FRONT', 'LEFT', 'BACK' below the matching characters.\nConstraints: one character per view, no plants, house, lawn, weapons, gore, extra garments or accessories. Do not change the zombie identity or body design. This is a concept image for user review, not a mesh render.",
+      "referenced_image_paths": [
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\normal_zombie\\source\\reference_B_approved.png",
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\normal_zombie\\source\\reference.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "B",
+      "prompt": "Use case: stylized-concept.\nAsset type: review-only high-detail 3D-style Conehead Zombie character turnaround, sheet B.\nInput images: Image 1 is the newly generated Conehead Zombie design A and is the PRIMARY CHARACTER AND CONE design reference. Image 2 is the previously approved normal zombie B sheet, a supporting face/body/material reference. Generate new camera angles of the SAME cone-wearing zombie.\nPrimary request: a wide studio sheet containing three fully visible views of exactly one consistent zombie design: LEFT FRONT three-quarter 45 degrees, RIGHT FRONT three-quarter 45 degrees, and RIGHT REAR three-quarter 135 degrees. Keep identical character proportions and pose, head and cone shape, asymmetrical eyes, clothing, damage locations and texture treatment across the three images. Equal character scale, feet on a shared baseline, generous breathing room over every cone tip and below both shoes.\nSubject identity: plump deep spherical gray sage-green zombie head, big unequal yellowed eyes, black pinpoint pupils, recessed sockets, tiny nose holes, vacant open mouth and five crooked teeth, sparse wiry hair; worn brown open jacket, ivory ragged shirt, faded red tie with cream diagonal stripes, dark blue torn pants, broad brown shoes, drooping five-finger hands.\nCone: SAME solid-orange worn molded-plastic traffic cone as image 1, slightly leaning, flattened rounded-square flange resting around the top of the cranium, subtle raised horizontal molded rings, blunted damaged top and scuffed/grimy surface. No reflective white bands or text. Preserve the cone's fixed lean relative to the head as it rotates. Do not change its size from view to view or occlude the eyes.\nAnatomical invariant: the zombie's LEFT knee and entire left lower shin are bare sage-green skin, with short ragged trouser hem and bunched blue ankle fabric; the RIGHT trouser leg is longer with a knee hole. Never show white bone, white shin, or swap the legs by mirroring.\nStyle/material: polished stylized CG/clay rendering, organic rounded volumes, subtle skin pores and mottling, matte worn woven jacket/denim and aged leather, light neutral warm-gray seamless studio with soft balanced shadows. Keep the normal-zombie reference's friendly vacant expression and head/body proportion. Orthographic-like turntable views, no dramatic perspective.\nText: only 'B' at the upper left and small labels below: 'FRONT LEFT 45', 'FRONT RIGHT 45', 'REAR RIGHT 135'.\nAvoid: cropped cone or feet, background scenery, plants, grass, added props, extra armor, white bands, gore, flattened skull, duplicate or extra fingers. This is an AI concept reference for user review, not an existing mesh render.",
+      "referenced_image_paths": [
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\conehead_zombie_reference_sheets\\2026-10-15\\A_front_side_rear.png",
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\normal_zombie\\source\\reference_B_approved.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "B_v2",
+      "prompt": "Use case: stylized-concept. Sheet B, a NEW character turnaround for review.\nReference role: use the supplied normal zombie image only for the zombie's identity, clothes, proportions and CG materials. Now make him a Conehead Zombie by adding a tall battered SOLID ORANGE plastic traffic cone on his plump round head. No white reflective stripe. The cone has a low square flange, softly rounded corners, slight fixed sideways lean, molded horizontal rings and an irregular blunted hollow tip, with scuffs and grime.\nCRITICAL NEW CAMERA LAYOUT: create THREE DIFFERENT FULL-BODY turntable camera views across a wide landscape page, not copies or recolors of the reference layout:\nLEFT PANEL: three-quarter front view with the zombie's NOSE POINTING TO THE LEFT EDGE OF THE PAGE. We see the large eye nearer camera, the nose displaced left of the back-of-head silhouette, and the front of his jacket.\nMIDDLE PANEL: three-quarter front view FROM THE OPPOSITE SIDE with his NOSE POINTING TO THE RIGHT EDGE OF THE PAGE. His face and forward-drooping hands clearly face right, we see the other cheek and eye, and the front of the jacket. This is an actual camera orbit, NEVER mirror the body/clothes.\nRIGHT PANEL: back three-quarter view from the opposite rear side, with the zombie facing away toward the LEFT EDGE OF THE PAGE. We mainly see the BACK OF THE JACKET AND SKULL, only a narrow side of the cheek/eye.\nAll three show the SAME zombie, SAME pose, and SAME cone relative to his head; equal scale, aligned soles, entire cone tip and shoes visible, no cropping. Keep the exact anatomical asymmetry: LEFT leg short ragged trousers with exposed gray-sage GREEN knee AND shin and blue fabric bunched above shoe; RIGHT leg long blue trousers with knee hole. No white shin/bone. Left/right refers to the character, not the viewer. Five fingers per hand.\nIdentity: rounded fully volumetric sage gray-green mottled head, uneven huge yellow-ivory eyes, small black pupils, tiny nostrils, dark open mouth with five crooked teeth, sparse black bent hairs. Brown worn open jacket, ivory torn shirt, red/cream diagonal striped tie, indigo ripped trousers and broad brown shoes. Keep these unchanged from the reference, adding only the cone.\nHigh-detail stylized 3D/clay CG, soft diffuse studio light, neutral light-gray seamless background and subtle floor contact shadows, visible cloth weave/leather scuffs and pores. Camera at torso height, orthographic-like, no foreshortening.\nOnly a small 'B' top left. No bottom labels, text or logos, no scenery, plants or other characters. Clear opposite facing directions are essential. These are candidate concept images only, not actual mesh renders.",
+      "referenced_image_paths": [
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\normal_zombie\\source\\reference_B_approved.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "C",
+      "prompt": "Use case: stylized-concept.\nAsset type: Conehead Zombie reference sheet C, THREE FULL-BODY ORTHOGRAPHIC MODELING VIEWS.\nInput image: supporting identity/material reference ONLY. It shows the ordinary zombie; depict exactly that zombie now wearing a solid-orange battered traffic cone. Do NOT reproduce the reference's camera or background scene.\nScene: light warm-gray seamless studio background and floor, soft diffuse lighting, high-detail stylized CG/clay treatment.\nPrecise composition: three equal full-height characters, generous margins from cone tip to shoes, shared floor baseline, sparse wide landscape sheet.\nLEFT PANEL = PURE SIDE PROFILE FACING THE LEFT PAGE EDGE, 90 degrees from the camera. The face is in silhouette pointing left, only ONE eye is visible, the other is entirely occluded by the skull, and the two arms and legs overlap naturally from this angle. Show the FULL round rear cranium depth behind the face, the neck, forward bent arms, hunched torso and whole cone.\nMIDDLE PANEL = PURE SIDE PROFILE FACING THE RIGHT PAGE EDGE, seen FROM THE OPPOSITE SIDE, again 90 degrees. Only the OTHER eye is visible and the other is occluded. This is a camera orbit around the SAME asymmetric zombie, NOT a mirrored copy. Keep the same pose.\nRIGHT PANEL = DIRECT STRAIGHT BACK, 180 degrees: symmetrically see the BACK of his head, back of orange cone, back of brown jacket, back of legs and shoes. NO FACE, NO EYES and NO NOSE visible in the back view. Not a three-quarter back.\nSubject identity unchanged: large fully rounded plump gray sage-green skull with subtle pores/mottling, unequal ivory-yellow round eyes and tiny black pupils, tiny paired nostrils, open mouth with sparse crooked teeth, sparse bent dark hairs. Brown weathered suit coat, red tie with cream diagonal stripes, offwhite ragged shirt, indigo torn pants, five-finger drooping hands and broad scuffed brown shoes. All bare skin, including the entire exposed lower shin, is normal zombie sage-green, never white bone. Anatomical LEFT leg has short torn trousers, bare knee and shin, bunched blue fabric above shoe; anatomical RIGHT has long trousers and knee hole. Thus in DIRECT BACK view bare shin is on viewer LEFT. Preserve this across camera orbits.\nCone design: a tall tapered SOLID ORANGE aged molded-plastic traffic cone, fixed mild sideways lean, slightly crushed blunt hollow upper tip, subtle horizontal molded rings near the lower cone, broad low squared flange with rounded corners seated on the upper skull. Orange scuffs and dirt, no white reflective stripe, no logos. Same shape and same scale from all views; it is worn on top, not grown out of the skull, and does not cover the eyes.\nText: only a small 'C' in upper-left corner, no bottom labels.\nAvoid: front or three-quarter eyes in the side views, any visible face in the back view, copying the supplied front photo's angle, white shin, changing leg damage sides, background props/scenery/plants, gore or additional clothes. Concept image only for user review, not a built 3D mesh.",
+      "referenced_image_paths": [
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\normal_zombie\\source\\reference.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "C_green_shin_edit",
+      "prompt": "Use case: precise-object-edit. Edit target: the supplied sheet C of a Conehead Zombie in two side views and a straight back view.\nChange ONLY the pale ivory/white skin color on the exposed lower shin of the character's anatomical LEFT leg in ALL THREE views. Recolor the entire exposed shin from directly below the knee down to the blue ankle cuff to the SAME muted gray sage-GREEN zombie skin as the neighboring knee, hands and face. The skin should be continuously green all the way down, with natural muted shading and subtle mottled pores, no white or ivory patches, no white bone visible. The knee and shin are the same continuous green skin material.\nPreserve absolutely everything else: exact composition, angles, poses, proportions, opposite facing profiles, direct back view, head shapes, facial details, cone geometry and lean, orange color, scratches, jackets, tie stripes, trouser damage and asymmetry, blue ankle cloth, shoes, fingers, background, lighting, image framing, and letter C. Do not repaint the ivory shirt or nails, do not move any parts. This is one targeted skin recolor, not a redesign.",
+      "referenced_image_paths": [
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\conehead_zombie_reference_sheets\\2026-10-15\\C_profiles_back_initial.png"
+      ],
+      "transparent_background": false
+    },
+    {
+      "id": "D",
+      "prompt": "Use case: stylized-concept.\nAsset type: Conehead Zombie sheet D, HEAD AND CONE DETAIL REFERENCES for user review before any 3D modeling.\nInput images: Image 1 is the primary reference for the same Conehead Zombie's orange cone, rounded head, face identity, colors and surfaces. Image 2 is supporting normal-zombie face/style reference. Make NEW CLOSE-UP VIEWS, do not copy a full-body composition.\nComposition: one wide landscape sheet with THREE evenly spaced large BUSTS of the SAME zombie, cropped only below the shoulders, with the ENTIRE orange cone tip, flange, head and neck always inside the frame and generous margins. Equal head and cone scale. Left panel: close front three-quarter head/bust view facing the page left. Middle panel: TRUE SIDE PROFILE of the head facing the page right, only one eye visible, visibly deep spherical rear skull. Right panel: REAR THREE-QUARTER HEAD from a moderately ELEVATED camera, looking down about 25 degrees, clearly showing the dark irregular opening at the blunt cone tip, tapered cone shell, square rounded-corner flange outline and how the flange sits naturally on the upper scalp. Show the same cone from above rather than a second separate floating cone.\nSubject: retain plump sage gray-green rounded cranium, recessed sockets, unequal huge warm yellow-ivory eyes, black pinpoint pupils, tiny paired nostrils, open vacant mouth and sparse crooked rounded teeth, wrinkled/mottled porous skin, a few wiry dark hairs peeking from under the cone. Brown worn jacket shoulders, ivory shirt collar and red striped tie glimpsed below neck.\nCone: same slightly leaning tall tapered orange traffic cone seen in the reference, hollow worn blunted opening, molded annular details near bottom, broad LOW SQUARE FLANGE with soft rounded corners, realistic thick molded plastic edge, aged matte orange material with subtle scuffs, shallow scratches, worn areas and grime. No white reflective bands, no letters/logos. Keep it fixed relative to the head in all camera views. It should sit naturally on the full rounded head, not be fused to skin, not squeeze the skull flat and not cover eyes.\nStyle: polished high-detail stylized CG/clay, pale neutral-gray studio, soft diffuse balanced lighting and restrained speculars, crisp readable contours and rich material microdetail. Make the cone design, head depth and contact position easy to judge.\nText: only small 'D' upper left; no other labels or text.\nAvoid: full bodies or legs, missing cone tip, excessive perspective, new cone shape per panel, alternate head designs, plants/scenery, horror gore or extra accessories. These are AI-generated candidate design references, not actual built 3D models.",
+      "referenced_image_paths": [
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\conehead_zombie_reference_sheets\\2026-10-15\\B_opposite_front_angles.png",
+        "C:\\PROJECT\\Godot\\PVZ_3d\\assets\\3D\\normal_zombie\\source\\reference_B_approved.png"
+      ],
+      "transparent_background": false
+    }
+  ],
+  "files": [
+    {
+      "id": "A",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135b2-bae0-76c2-aade-9164d62cb747\\exec-dcb0d088-b1e8-4b4c-a266-9e7da55dc01e.png",
+      "filename": "A_front_side_rear.png"
+    },
+    {
+      "id": "B",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135b2-bae0-76c2-aade-9164d62cb747\\exec-98057b21-b69a-491c-a042-c9e4950c5335.png",
+      "filename": "B_opposite_front_angles.png"
+    },
+    {
+      "id": "C_initial",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135b2-bae0-76c2-aade-9164d62cb747\\exec-4b9759ed-0c2f-49df-98f1-cf391274f627.png",
+      "filename": "C_profiles_back_initial.png",
+      "status": "superseded by green-shin correction"
+    },
+    {
+      "id": "C",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135b2-bae0-76c2-aade-9164d62cb747\\exec-6515faaf-82ce-49d6-b2d2-cf4d84c04775.png",
+      "filename": "C_profiles_back_green_shin.png"
+    },
+    {
+      "id": "D",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135b2-bae0-76c2-aade-9164d62cb747\\exec-029ab4d6-5b3d-4ddb-bca2-5b00901d41ae.png",
+      "filename": "D_head_cone_details.png"
+    }
+  ],
+  "model_hashes_before": {
+    "glb": "6d5e00dae247600671fa91e91bea9e9c31581096d59a2eb6c936af4b1cfbf24a",
+    "blend": "62637ee6baa7e497c7a043af0f894747b07c904f44b05a0e4a49942769bf559c"
+  }
+}

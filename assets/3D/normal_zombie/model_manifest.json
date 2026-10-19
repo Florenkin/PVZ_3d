@@ -1,0 +1,40 @@
+{
+  "asset": "normal_zombie",
+  "authoring_tool": "4.5.3 LTS",
+  "mesh_objects": 265,
+  "vertices": 287614,
+  "triangles": 573975,
+  "materials": 23,
+  "bounds_blender_z_up_m": {
+    "min": [
+      -0.6755196452140808,
+      -0.5747230052947998,
+      0.008999999612569809
+    ],
+    "max": [
+      0.6858057975769043,
+      0.5233203172683716,
+      2.6494250297546387
+    ]
+  },
+  "dimensions_m": [
+    1.361325442790985,
+    1.0980433225631714,
+    2.640425030142069
+  ],
+  "pose": "static reference pose, no armature or animations",
+  "textures": "embedded in GLB and packed in BLEND; source PNGs in source/textures",
+  "game_integration": "none",
+  "approved_reference": "source/reference_B_approved.png",
+  "head_dimensions_blender_xyz_m": [
+    0.929551750421524,
+    0.967049241065979,
+    0.9556652307510376
+  ],
+  "head_depth_to_width_ratio": 1.0403393255162512,
+  "shin_skin_srgb": [
+    0.405,
+    0.49,
+    0.425
+  ]
+}

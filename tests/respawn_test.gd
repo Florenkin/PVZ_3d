@@ -46,7 +46,7 @@ func _on_respawn(zombie: Zombie) -> void:
 	_check(not zombie.get_node("CollisionShape3D").disabled, "New zombie's collision was disabled.")
 	for mesh: MeshInstance3D in zombie.get_node("Visuals").find_children("*", "MeshInstance3D", true, false):
 		_check(mesh.material_override != Zombie.HIT_MATERIAL, "New zombie inherited the death flash.")
-	_check(_main.get_node("Enemies").get_child_count() == 4, "Respawn left a duplicate enemy in the scene.")
+	_check(_main.get_node("Enemies").get_child_count() == 5, "Respawn left a duplicate enemy in the scene.")
 	_check(_main._health_bar.value == 200, "Respawn did not update the health bar.")
 	_check(_main._combat_status.text.contains("伤害 20"), "Respawn did not restore the combat status.")
 	if not _death_frames.is_empty():
@@ -55,10 +55,18 @@ func _on_respawn(zombie: Zombie) -> void:
 
 
 func _run() -> void:
-	GameConfiguration.current().use_values_for_tests(GameConfiguration.current().default_values())
+	# Physical-corpse assertions cover the legacy option; the default skinned
+	# fall across respawn has its own integration suite.
+	var legacy_values := GameConfiguration.current().default_values()
+	legacy_values.demo_zombie_animation.enabled = false
+	GameConfiguration.current().use_values_for_tests(legacy_values)
 	_main = load("res://scenes/main.tscn").instantiate() as Node3D
 	GameConfiguration.current().apply_entity(_main)
 	root.add_child(_main)
+	# Isolate these existing cases from the new fifth-lane enemy.
+	_main._newspaper_zombie.movement_enabled = false
+	_main._newspaper_zombie.is_ground_zombie = false
+	_main._newspaper_zombie.set_spawn(_main._lawn.cell_to_world(3, 8) + Vector3(40, 0, 0), PI / 2.0)
 	_main._pole_zombie.movement_enabled = false
 	_main._pole_zombie.is_ground_zombie = false
 	_main._pole_zombie.set_spawn(_main._lawn.cell_to_world(4, 8) + Vector3(3, 0, 0), PI / 2.0)
@@ -98,7 +106,7 @@ func _run() -> void:
 	_check(not is_instance_valid(zombie), "The old zombie instance was not freed.")
 	zombie = _main._zombie
 	_check(zombie.get_instance_id() != old_id, "Respawn reused the dead instance instead of creating a new zombie.")
-	_check(get_nodes_in_group("zombies").size() == 4, "A freed zombie remained in the detection group.")
+	_check(get_nodes_in_group("zombies").size() == 5, "A freed zombie remained in the detection group.")
 	_check(is_instance_valid(corpse) and corpse.visible, "Respawn prematurely removed the old physical corpse.")
 
 	# Movement, target detection and actual projectile damage resume automatically.
@@ -128,7 +136,7 @@ func _run() -> void:
 	_check(_main._respawn_timer.is_stopped(), "Restart did not cancel the pending respawn timer.")
 	await _step(90)
 	_check(_respawn_frames.size() == 2 and is_instance_valid(zombie) and zombie.health == 200, "A pending respawn survived restart.")
-	_check(_main.get_node("Enemies").get_child_count() == 4, "Restart created duplicate zombies.")
+	_check(_main.get_node("Enemies").get_child_count() == 5, "Restart created duplicate zombies.")
 
 	# Full automatic combat must keep cycling without manual death or restart.
 	_main._reset_view()
@@ -136,7 +144,7 @@ func _run() -> void:
 	var expected_respawns := _respawn_frames.size() + 2
 	await _step(2400)
 	_check(_respawn_frames.size() >= expected_respawns, "Automatic combat did not complete two death/respawn cycles.")
-	_check(_main.get_node("Enemies").get_child_count() == 4, "Repeated automatic fights accumulated old enemies.")
+	_check(_main.get_node("Enemies").get_child_count() == 5, "Repeated automatic fights accumulated old enemies.")
 	for i in range(1, _spawn_ids.size()):
 		_check(_spawn_ids[i] != _spawn_ids[i - 1], "Consecutive respawns did not create distinct instances.")
 	_check(_main.get_node("Characters/CrazyDave").camera.is_current(), "Repeated fights changed the player camera.")

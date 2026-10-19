@@ -59,6 +59,10 @@ func _run() -> void:
 	GameConfiguration.current().apply_entity(_main)
 	_main.auto_respawn_enabled = false
 	root.add_child(_main)
+	# Isolate these existing cases from the new fifth-lane enemy.
+	_main._newspaper_zombie.movement_enabled = false
+	_main._newspaper_zombie.is_ground_zombie = false
+	_main._newspaper_zombie.set_spawn(_main._lawn.cell_to_world(3, 8) + Vector3(40, 0, 0), PI / 2.0)
 	_main._pole_zombie.movement_enabled = false
 	_main._pole_zombie.is_ground_zombie = false
 	_main._pole_zombie.set_spawn(_main._lawn.cell_to_world(4, 8) + Vector3(3, 0, 0), PI / 2.0)

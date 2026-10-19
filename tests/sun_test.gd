@@ -113,7 +113,7 @@ func _run() -> void:
 	# A real HUD button consumes clicks even when a sun sits behind it.
 	var ui_sun := system.spawn_sun()
 	ui_sun.set_physics_process(false)
-	var button_position := Vector2(1180, 62)
+	var button_position: Vector2 = main._sidebar_button.get_global_rect().get_center()
 	ui_sun.global_position = main._orbit.camera.project_position(button_position, 2.0)
 	await step(2)
 	await mouse_click(button_position)

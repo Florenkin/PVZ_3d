@@ -48,7 +48,12 @@ func _run() -> void:
 	check(config.values.lawn.rows == 5 and config.values.placements.wall_nut.row == 5, "Conflicting layout did not fall back coherently.")
 	config.use_values_for_tests({"plants": {"common": {"pea_damage": 35}, "types": {"repeater": {"pea_damage": 45}}}})
 	check(config.entity_stats("peashooter").pea_damage == 35 and config.entity_stats("repeater").pea_damage == 45, "Type override precedence failed.")
+	config.use_values_for_tests({"adventure": {"mini_scale": 0, "mini_health_multiplier": -1, "boss_attack_interval": 0, "blover_duration": 30.0}})
+	check(config.values.adventure.mini_scale == 0.5 and config.values.adventure.mini_health_multiplier == 0.5 and config.values.adventure.boss_attack_interval == 20.0 and config.values.adventure.blover_duration == 30.0 and config.warnings.size() == 3, "Late-world invalid multipliers and boss timing must fall back while retaining valid neighboring fields.")
 	var settings := config.default_values()
+	# This customized profile explicitly exercises legacy part scaling and
+	# separate head/corpse lifetimes; the default rig is covered in its own suite.
+	settings.demo_zombie_animation.enabled = false
 	settings.plants.common.pea_damage = 37
 	settings.plants.common.pea_speed = 12.0
 	settings.plants.common.shot_interval = 0.3
@@ -76,7 +81,7 @@ func _run() -> void:
 	settings.lawn.tile_width = 2.8
 	settings.lawn.tile_thickness = 0.6
 	settings.lawn.surface_height = 0.15
-	for key: String in ["zombie", "conehead_zombie", "buckethead_zombie", "pole_vaulting_zombie"]:
+	for key: String in ["zombie", "conehead_zombie", "buckethead_zombie", "pole_vaulting_zombie", "newspaper_zombie"]:
 		settings.placements[key].column = 10
 	settings.dave.waist_height = 1.15
 	settings.cameras.first_person.fov = 55

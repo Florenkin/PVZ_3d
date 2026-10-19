@@ -99,15 +99,22 @@ func _on_respawn(zombie: Zombie) -> void:
 		_check(zombie.global_position.distance_to(_lawn.cell_to_world(2, 8)) < 0.001, "Normal zombie respawned outside its baseline.")
 	_check(zombie.get_node("Visuals/Head").visible, "Replacement inherited a missing head.")
 	_check(zombie.get_node("Visuals/Arms/LeftHandAssembly").visible and zombie.get_node("Visuals/Arms/RightHandAssembly").visible, "Replacement inherited a missing hand.")
-	_check(_main.get_node("Enemies").get_child_count() == 4, "Independent lane respawns created duplicate enemies.")
+	_check(_main.get_node("Enemies").get_child_count() == 5, "Independent lane respawns created duplicate enemies.")
 
 
 func _run() -> void:
-	GameConfiguration.current().use_values_for_tests(GameConfiguration.current().default_values())
+	# Keep validating the configurable legacy dismemberment/rigid-body mode.
+	var legacy_values := GameConfiguration.current().default_values()
+	legacy_values.demo_zombie_animation.enabled = false
+	GameConfiguration.current().use_values_for_tests(legacy_values)
 	_main = load("res://scenes/main.tscn").instantiate() as Node3D
 	GameConfiguration.current().apply_entity(_main)
 	_main.auto_respawn_enabled = false
 	root.add_child(_main)
+	# Isolate these existing cases from the new fifth-lane enemy.
+	_main._newspaper_zombie.movement_enabled = false
+	_main._newspaper_zombie.is_ground_zombie = false
+	_main._newspaper_zombie.set_spawn(_main._lawn.cell_to_world(3, 8) + Vector3(40, 0, 0), PI / 2.0)
 	_main._pole_zombie.movement_enabled = false
 	_main._pole_zombie.is_ground_zombie = false
 	_main._pole_zombie.set_spawn(_main._lawn.cell_to_world(4, 8) + Vector3(3, 0, 0), PI / 2.0)
@@ -247,7 +254,7 @@ func _run() -> void:
 	_main._repeater.combat_enabled = true
 	await _step(3600)
 	_check(_normal_respawns >= 3 and _cone_respawns >= 2, "Natural combat did not repeatedly defeat and respawn both enemy types.")
-	_check(_main.get_node("Enemies").get_child_count() == 4, "Long combat accumulated dead standing enemies.")
+	_check(_main.get_node("Enemies").get_child_count() == 5, "Long combat accumulated dead standing enemies.")
 	_check(_main.get_node("Debris").get_child_count() < 15, "Long combat accumulated expired physical debris.")
 	_main._reset_view()
 	await _step(3)

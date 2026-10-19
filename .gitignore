@@ -1,3 +1,4 @@
 .godot/
-artifacts/
+artifacts/*
+!artifacts/.gdignore
 

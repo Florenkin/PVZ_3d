@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/menu_backdrop.gd" id="menu"]
+[ext_resource type="Script" path="res://scripts/lawn_grid.gd" id="lawn"]
+[ext_resource type="PackedScene" path="res://scenes/environment/dave_house.tscn" id="house"]
+
+[sub_resource type="BoxShape3D" id="BackgroundGroundShape"]
+size = Vector3(200, 0.25, 200)
+
+[sub_resource type="StandardMaterial3D" id="Backdrop"]
+albedo_color = Color(0.62745, 0.69020, 0.54902, 1)
+roughness = 1
+
+
+[sub_resource type="PlaneMesh" id="BackdropPlane"]
+size = Vector2(200, 200)
+
+[sub_resource type="ProceduralSkyMaterial" id="GardenSkyMaterial"]
+sky_top_color = Color(0.42, 0.71, 0.85, 1)
+sky_horizon_color = Color(0.84, 0.92, 0.85, 1)
+ground_bottom_color = Color(0.46, 0.57, 0.36, 1)
+ground_horizon_color = Color(0.84, 0.92, 0.85, 1)
+
+[sub_resource type="Sky" id="GardenSky"]
+sky_material = SubResource("GardenSkyMaterial")
+
+[sub_resource type="Environment" id="GardenEnvironment"]
+background_mode = 2
+sky = SubResource("GardenSky")
+ambient_light_source = 3
+ambient_light_color = Color(0.86, 0.92, 1, 1)
+ambient_light_energy = 0.4
+reflected_light_source = 2
+tonemap_mode = 0
+
+[node name="MenuGarden" type="Node3D"]
+script = ExtResource("menu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("GardenEnvironment")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.94, -0.65, -0.18)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 0.8
+shadow_enabled = true
+shadow_blur = 2.0
+directional_shadow_max_distance = 35.0
+shadow_bias = 0.04
+
+[node name="SoftFill" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.5, 2.7, 0)
+light_color = Color(0.84, 0.92, 1, 1)
+light_energy = 0.08
+
+[node name="Backdrop" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.425, 0)
+rotation = Vector3(0, 0, 0)
+scale = Vector3(1, 1, 1)
+layers = 1
+mesh = SubResource("BackdropPlane")
+material_override = SubResource("Backdrop")
+
+[node name="BackgroundGround" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.55, 0)
+collision_layer = 1
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BackgroundGround"]
+shape = SubResource("BackgroundGroundShape")
+
+[node name="LawnGrid" type="Node3D" parent="."]
+script = ExtResource("lawn")
+
+[node name="Tiles" type="Node3D" parent="LawnGrid"]
+
+[node name="Decor" type="Node3D" parent="."]
+
+[node name="House" parent="." instance=ExtResource("house")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+projection = 1
+size = 17.0
+far = 200.0
+current = true

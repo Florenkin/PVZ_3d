@@ -1,0 +1,101 @@
+{
+  "date_beijing": "2026-10-15",
+  "status": "awaiting_user_review",
+  "engine": "built-in image_gen.imagegen",
+  "candidate_sheets": 4,
+  "candidate_views": 12,
+  "candidate_files": {
+    "A": "A_front_side_rear.png",
+    "B": "B_opposite_front_angles.png",
+    "C": "C_profiles_back_green_shin.png",
+    "D": "D_head_cone_details.png"
+  },
+  "images": [
+    {
+      "file": "A_front_side_rear.png",
+      "candidate": "A",
+      "size_px": [
+        1774,
+        887
+      ],
+      "bytes": 1913283,
+      "sha256": "fe112a4a407993b10d98327f122e137e1aa6a429e71803fa1c7729bb3f1db528"
+    },
+    {
+      "file": "B_opposite_front_angles.png",
+      "candidate": "B",
+      "size_px": [
+        1774,
+        887
+      ],
+      "bytes": 1934630,
+      "sha256": "812d3d8382dac170253c6a150958040858382f8cc21940f00b627e77288e4e6a"
+    },
+    {
+      "file": "C_profiles_back_green_shin.png",
+      "candidate": "C",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "bytes": 1873175,
+      "sha256": "08aaab038674eca348dcad2f3979f6ed7632287f0225cbbd60e8c39ef7849d06"
+    },
+    {
+      "file": "C_profiles_back_initial.png",
+      "candidate": null,
+      "size_px": [
+        1536,
+        1024
+      ],
+      "bytes": 1917854,
+      "sha256": "9acf8d00aa2df0203bb3be716e86bb89b194febe02ac742c662268112d5d1780"
+    },
+    {
+      "file": "D_head_cone_details.png",
+      "candidate": "D",
+      "size_px": [
+        1774,
+        887
+      ],
+      "bytes": 2062762,
+      "sha256": "524c71205104a250536abc3e3371a1d2363d9ed66dd1314c358ce7178908c8d7"
+    },
+    {
+      "file": "reference_normal_B.png",
+      "candidate": null,
+      "size_px": [
+        1774,
+        887
+      ],
+      "bytes": 1902244,
+      "sha256": "1115149e05859fd80794825f8ff977aa439440801894a3b1b388c5bb2e0e3104"
+    },
+    {
+      "file": "reference_original.png",
+      "candidate": null,
+      "size_px": [
+        567,
+        900
+      ],
+      "bytes": 576234,
+      "sha256": "ba47c03bed34e0f6405936e241a52b1414ae2c18f0fc13fec4b87dcc23617d49"
+    }
+  ],
+  "models_before": {
+    "glb": "6d5e00dae247600671fa91e91bea9e9c31581096d59a2eb6c936af4b1cfbf24a",
+    "blend": "62637ee6baa7e497c7a043af0f894747b07c904f44b05a0e4a49942769bf559c"
+  },
+  "models_after": {
+    "glb": "6d5e00dae247600671fa91e91bea9e9c31581096d59a2eb6c936af4b1cfbf24a",
+    "blend": "62637ee6baa7e497c7a043af0f894747b07c904f44b05a0e4a49942769bf559c"
+  },
+  "existing_models_unchanged": true,
+  "conehead_3d_created": false,
+  "game_files_changed": false,
+  "godot_import_excluded": true,
+  "checks": {
+    "png_integrity": "PASS",
+    "existing_model_sha256": "PASS"
+  }
+}

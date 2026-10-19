@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "joints": 25,
+  "maximum_vertex_influences": 4,
+  "triangles": 382770,
+  "mesh_rest_geometry_preserved": true,
+  "weight_sum_max_error": 1.1920928955078125e-07,
+  "animations_seconds": {
+    "Eat": 1.2,
+    "Fall": 1.8,
+    "Hit": 0.4,
+    "Idle": 3.2,
+    "Walk": 1.1
+  },
+  "embedded_images": 3,
+  "external_dependencies": 0,
+  "original_sha256": "b7d828a23f494b60198b15f1cc472aa560c57bfc335fba88fd94395f14c91a3e",
+  "animated_glb_sha256": "87d8f6642c2dca15ab240818d12351db3b7748bfc43155c5e3210e9340e05ee0"
+}

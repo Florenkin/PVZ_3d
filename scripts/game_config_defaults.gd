@@ -3,6 +3,9 @@ extends RefCounted
 const TEXT = """
 {
   "version": 1,
+  "demo_zombie_animation": {
+    "enabled": true
+  },
   "sun": {
     "enabled": true,
     "spawn_interval": 10.0,
@@ -86,6 +89,11 @@ const TEXT = """
     },
     "pole_vaulting_zombie": {
       "row": 5,
+      "column": 9,
+      "yaw_degrees": 90
+    },
+    "newspaper_zombie": {
+      "row": 4,
       "column": 9,
       "yaw_degrees": 90
     }
@@ -174,6 +182,12 @@ const TEXT = """
         "vault_lean_degrees": 16.04281826366305,
         "flight_leg_degrees": 34.37746770784939,
         "target_lane_tolerance": 0.6
+      },
+      "newspaper_zombie": {
+        "maximum_health": 350,
+        "newspaper_drop_health": 200,
+        "anger_pause_duration": 1.0,
+        "enraged_speed_multiplier": 2.0
       }
     }
   },
@@ -286,6 +300,21 @@ const TEXT = """
         "spin_z": 0.0,
         "bounce": 0.1,
         "friction": 0.85
+      },
+      "newspaper": {
+        "mass": 0.12,
+        "lifetime": 10.0,
+        "backward_speed": 0.8,
+        "upward_speed": 1.2,
+        "side_speed": 0.3,
+        "spin_x_min": 2.0,
+        "spin_x_max": 3.0,
+        "spin_y": 1.2,
+        "spin_z": 0.4,
+        "linear_damp": 0.5,
+        "angular_damp": 1.2,
+        "friction": 0.95,
+        "bounce": 0.03
       }
     }
   },
@@ -337,7 +366,8 @@ const TEXT = """
       "size": 3.4,
       "pole_size": 4.8,
       "target_height": 0.78,
-      "armor_target_height": 1.0
+      "armor_target_height": 1.0,
+      "newspaper_yaw_degrees": -80.0
     }
   },
   "models": {
@@ -2612,6 +2642,353 @@ const TEXT = """
           ]
         }
       }
+    },
+    "newspaper_zombie": {
+      "scale": 1.0,
+      "parts": {
+        "Visuals/Torso": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "Visuals/Legs": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "Visuals/Arms": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "Visuals/Legs/LeftLeg": {
+          "position": [
+            -0.14750000000000002,
+            0.385,
+            0.0275
+          ],
+          "rotation_degrees": [
+            179.51445416999186,
+            0.0,
+            3.394801924729904
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "mesh_dimensions": {
+            "radius": 0.092,
+            "height": 0.591058
+          },
+          "color": [
+            0.5098,
+            0.58431,
+            0.45882,
+            1.0
+          ]
+        },
+        "Visuals/Arms/LeftSleeve": {
+          "position": [
+            -0.315,
+            1.0335,
+            -0.1075
+          ],
+          "rotation_degrees": [
+            -138.35240724710306,
+            0.0,
+            11.681206920954326
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "mesh_dimensions": {
+            "radius": 0.08,
+            "height": 0.345737
+          },
+          "color": [
+            0.18824,
+            0.20784,
+            0.18039,
+            1.0
+          ]
+        },
+        "Visuals/Arms/LeftHandAssembly": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "Visuals/Arms/LeftHandAssembly/LeftForearm": {
+          "position": [
+            -0.35,
+            0.942,
+            -0.39
+          ],
+          "rotation_degrees": [
+            -81.11934084947974,
+            0.0,
+            -0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "mesh_dimensions": {
+            "radius": 0.06,
+            "height": 0.323883
+          },
+          "color": [
+            0.5098,
+            0.58431,
+            0.45882,
+            1.0
+          ]
+        },
+        "Visuals/Legs/RightLeg": {
+          "position": [
+            0.14750000000000002,
+            0.385,
+            0.0275
+          ],
+          "rotation_degrees": [
+            179.51445416999186,
+            0.0,
+            -3.394801924729904
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "mesh_dimensions": {
+            "radius": 0.092,
+            "height": 0.591058
+          },
+          "color": [
+            0.5098,
+            0.58431,
+            0.45882,
+            1.0
+          ]
+        },
+        "Visuals/Arms/RightSleeve": {
+          "position": [
+            0.315,
+            1.0565,
+            -0.1075
+          ],
+          "rotation_degrees": [
+            -132.61405596961117,
+            0.0,
+            -12.895957242358305
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "mesh_dimensions": {
+            "radius": 0.08,
+            "height": 0.313646
+          },
+          "color": [
+            0.18824,
+            0.20784,
+            0.18039,
+            1.0
+          ]
+        },
+        "Visuals/Arms/RightHandAssembly": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "Visuals/Arms/RightHandAssembly/RightForearm": {
+          "position": [
+            0.35,
+            0.988,
+            -0.39
+          ],
+          "rotation_degrees": [
+            -81.11934084947977,
+            0.0,
+            -0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "mesh_dimensions": {
+            "radius": 0.06,
+            "height": 0.323883
+          },
+          "color": [
+            0.5098,
+            0.58431,
+            0.45882,
+            1.0
+          ]
+        },
+        "Visuals/Head": {
+          "position": [
+            0.0,
+            1.475,
+            -0.055
+          ],
+          "rotation_degrees": [
+            2.8647889756541165,
+            0.0,
+            -1.4323944878270582
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "Visuals/Torso/Jacket": {
+          "position": [
+            0,
+            0.955,
+            0.02
+          ],
+          "rotation_degrees": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.6,
+            0.61,
+            0.38
+          ],
+          "mesh_dimensions": {
+            "radius": 0.5,
+            "height": 1.0
+          },
+          "color": [
+            0.18824,
+            0.20784,
+            0.18039,
+            1.0
+          ]
+        },
+        "Visuals/Newspaper": {
+          "position": [
+            0,
+            1.095,
+            -0.66
+          ],
+          "rotation_degrees": [
+            -6.875493541569878,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "Visuals/Head/Glasses": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation_degrees": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "Visuals/Head/AngryEyes": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation_degrees": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
     }
   },
   "display": {
@@ -2776,6 +3153,599 @@ const TEXT = """
       0.2,
       1.0
     ]
+  },
+  "demo_tools": {
+    "shovel_reach": 4.8
+  },
+  "stages": {
+    "start_stage": 1,
+    "plant_columns": 4,
+    "minimum_rows": 6,
+    "board_columns": 13,
+    "plant_respawn_delay": 8.0,
+    "sun_value": 25,
+    "fog_opacity": 0.42,
+    "label_font_size": 26,
+    "plants": {
+      "peashooter": {
+        "sun_cost": 100,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "sunflower": {
+        "sun_cost": 50,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 24.0,
+        "range_cells": 13.0
+      },
+      "cherry_bomb": {
+        "sun_cost": 150,
+        "maximum_health": 300,
+        "damage": 1800,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "wall_nut": {
+        "sun_cost": 50,
+        "maximum_health": 4000,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "potato_mine": {
+        "sun_cost": 25,
+        "maximum_health": 300,
+        "damage": 1800,
+        "attack_interval": 1.5,
+        "range_cells": 0.65
+      },
+      "snow_pea": {
+        "sun_cost": 175,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "chomper": {
+        "sun_cost": 150,
+        "maximum_health": 300,
+        "damage": 40,
+        "attack_interval": 42.0,
+        "range_cells": 1.4
+      },
+      "repeater": {
+        "sun_cost": 200,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "puff_shroom": {
+        "sun_cost": 0,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 3.0
+      },
+      "sun_shroom": {
+        "sun_cost": 25,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 24.0,
+        "range_cells": 13.0
+      },
+      "fume_shroom": {
+        "sun_cost": 75,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 4.0
+      },
+      "grave_buster": {
+        "sun_cost": 75,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "hypno_shroom": {
+        "sun_cost": 75,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 0.55
+      },
+      "scaredy_shroom": {
+        "sun_cost": 25,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "ice_shroom": {
+        "sun_cost": 75,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "doom_shroom": {
+        "sun_cost": 125,
+        "maximum_health": 300,
+        "damage": 1800,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "lily_pad": {
+        "sun_cost": 25,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "squash": {
+        "sun_cost": 50,
+        "maximum_health": 300,
+        "damage": 1800,
+        "attack_interval": 1.5,
+        "range_cells": 1.4
+      },
+      "threepeater": {
+        "sun_cost": 325,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "tangle_kelp": {
+        "sun_cost": 25,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 0.85
+      },
+      "jalapeno": {
+        "sun_cost": 125,
+        "maximum_health": 300,
+        "damage": 1800,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "spikeweed": {
+        "sun_cost": 100,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.0,
+        "range_cells": 0.6
+      },
+      "torchwood": {
+        "sun_cost": 175,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "tall_nut": {
+        "sun_cost": 125,
+        "maximum_health": 8000,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "sea_shroom": {
+        "sun_cost": 0,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 3.0
+      },
+      "plantern": {
+        "sun_cost": 25,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "cactus": {
+        "sun_cost": 125,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "blover": {
+        "sun_cost": 100,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "split_pea": {
+        "sun_cost": 125,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "starfruit": {
+        "sun_cost": 125,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "pumpkin": {
+        "sun_cost": 125,
+        "maximum_health": 4000,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "magnet_shroom": {
+        "sun_cost": 100,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 15.0,
+        "range_cells": 3.0
+      },
+      "cabbage_pult": {
+        "sun_cost": 100,
+        "maximum_health": 300,
+        "damage": 40,
+        "attack_interval": 3.0,
+        "range_cells": 13.0
+      },
+      "flower_pot": {
+        "sun_cost": 25,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "kernel_pult": {
+        "sun_cost": 100,
+        "maximum_health": 300,
+        "damage": 20,
+        "attack_interval": 3.0,
+        "range_cells": 13.0
+      },
+      "coffee_bean": {
+        "sun_cost": 75,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "garlic": {
+        "sun_cost": 50,
+        "maximum_health": 400,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 0.55
+      },
+      "umbrella_leaf": {
+        "sun_cost": 100,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 1.5,
+        "range_cells": 13.0
+      },
+      "marigold": {
+        "sun_cost": 50,
+        "maximum_health": 300,
+        "damage": 0,
+        "attack_interval": 24.0,
+        "range_cells": 13.0
+      },
+      "melon_pult": {
+        "sun_cost": 300,
+        "maximum_health": 300,
+        "damage": 80,
+        "attack_interval": 3.0,
+        "range_cells": 13.0
+      }
+    },
+    "zombies": {
+      "zombie": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "flag_zombie": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.5,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "conehead_zombie": {
+        "body_health": 270,
+        "helmet_health": 370,
+        "shield_health": 0,
+        "speed_multiplier": 1.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "pole_vaulting_zombie": {
+        "body_health": 500,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 2.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "buckethead_zombie": {
+        "body_health": 270,
+        "helmet_health": 1100,
+        "shield_health": 0,
+        "speed_multiplier": 1.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "newspaper_zombie": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 150,
+        "speed_multiplier": 1.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "screen_door_zombie": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 1100,
+        "speed_multiplier": 1.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "football_zombie": {
+        "body_health": 270,
+        "helmet_health": 1400,
+        "shield_health": 0,
+        "speed_multiplier": 2.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "dancing_zombie": {
+        "body_health": 500,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.3,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "backup_dancer": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.3,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "ducky_tube_zombie": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "snorkel_zombie": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.7,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "zomboni": {
+        "body_health": 1350,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.3,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "bobsled_team": {
+        "body_health": 270,
+        "helmet_health": 300,
+        "shield_health": 0,
+        "speed_multiplier": 2.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "dolphin_rider": {
+        "body_health": 500,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 2.5,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "jack_in_the_box": {
+        "body_health": 500,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 2.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "balloon_zombie": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.6,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "digger_zombie": {
+        "body_health": 270,
+        "helmet_health": 100,
+        "shield_health": 0,
+        "speed_multiplier": 2.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "pogo_zombie": {
+        "body_health": 500,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.6,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "yeti_zombie": {
+        "body_health": 1350,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.3,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "bungee_zombie": {
+        "body_health": 450,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 0.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "ladder_zombie": {
+        "body_health": 500,
+        "helmet_health": 0,
+        "shield_health": 500,
+        "speed_multiplier": 2.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "catapult_zombie": {
+        "body_health": 850,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 0.8,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "gargantuar": {
+        "body_health": 3000,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 0.8,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "imp": {
+        "body_health": 270,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 1.8,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      },
+      "zomboss": {
+        "body_health": 40000,
+        "helmet_health": 0,
+        "shield_health": 0,
+        "speed_multiplier": 0.0,
+        "bite_damage_per_second": 100.0,
+        "ability_interval": 8.0
+      }
+    }
+  },
+  "adventure": {
+    "initial_sun_tutorial": 150,
+    "initial_sun": 50,
+    "first_wave_delay": 18.0,
+    "sunflower_tutorial_delay": 50.0,
+    "wave_interval": 25.0,
+    "wave_interval_range": 6.0,
+    "minimum_wave_gap": 4.0,
+    "flag_warning_duration": 5.0,
+    "sun_first_min": 4.25,
+    "sun_first_max": 7.0,
+    "sun_base_interval": 4.25,
+    "sun_interval_growth": 0.1,
+    "sun_max_interval": 9.5,
+    "sun_interval_jitter": 2.75,
+    "sun_value": 25,
+    "sun_radius": 0.46,
+    "cherry_fuse": 1.2,
+    "mower_speed": 8.0,
+    "night_first_wave_delay": 35.0,
+    "conveyor_interval": 4.0,
+    "conveyor_capacity": 10,
+    "bowling_speed": 8.0,
+    "bowling_damage": 400,
+    "bowling_explosion_damage": 1800,
+    "whack_damage": 500,
+    "whack_sun_value": 25,
+    "grave_eat_time": 4.0,
+    "mine_arm_time": 15.0,
+    "mushroom_fuse": 1.0,
+    "crater_lifetime": 180.0,
+    "card_cooldowns": {
+      "peashooter": 7.5,
+      "sunflower": 7.5,
+      "cherry_bomb": 50.0,
+      "wall_nut": 30.0,
+      "potato_mine": 30.0,
+      "snow_pea": 7.5,
+      "chomper": 7.5,
+      "repeater": 7.5,
+      "puff_shroom": 7.5,
+      "sun_shroom": 7.5,
+      "fume_shroom": 7.5,
+      "grave_buster": 7.5,
+      "hypno_shroom": 30.0,
+      "scaredy_shroom": 7.5,
+      "ice_shroom": 50.0,
+      "doom_shroom": 50.0,
+      "lily_pad": 7.5,
+      "squash": 30,
+      "threepeater": 7.5,
+      "tangle_kelp": 30,
+      "jalapeno": 50,
+      "spikeweed": 7.5,
+      "torchwood": 7.5,
+      "tall_nut": 30,
+      "sea_shroom": 30,
+      "plantern": 30,
+      "cactus": 7.5,
+      "blover": 7.5,
+      "split_pea": 7.5,
+      "starfruit": 7.5,
+      "pumpkin": 30,
+      "magnet_shroom": 7.5,
+      "cabbage_pult": 7.5,
+      "flower_pot": 7.5,
+      "kernel_pult": 7.5,
+      "coffee_bean": 7.5,
+      "garlic": 7.5,
+      "umbrella_leaf": 7.5,
+      "marigold": 30,
+      "melon_pult": 7.5
+    },
+    "pool_first_wave_delay": 30.0,
+    "roof_first_wave_delay": 45.0,
+    "ice_lifetime": 30.0,
+    "squash_windup": 0.8,
+    "blover_duration": 25.0,
+    "storm_interval": 12.0,
+    "storm_flash_duration": 2.0,
+    "mini_scale": 0.5,
+    "mini_speed_multiplier": 1.5,
+    "mini_health_multiplier": 0.5,
+    "boss_attack_interval": 20.0,
+    "boss_head_interval": 18.0,
+    "boss_head_duration": 9.0,
+    "boss_ball_speed": 3.2
   }
 }
 """

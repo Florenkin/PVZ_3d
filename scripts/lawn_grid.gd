@@ -12,13 +12,15 @@ var row_count: int = 5
 var column_count: int = 9
 var cell_size: float = 2.4
 var surface_height: float = 0.025
+@export var row_count_override: int = 0
+@export var column_count_override: int = 0
 const TILE_SCENE = preload("res://scenes/terrain/grass_tile.tscn")
 
 
 func _enter_tree() -> void:
 	var params := GameConfiguration.current().section("lawn")
-	row_count = int(params.rows)
-	column_count = int(params.columns)
+	row_count = row_count_override if row_count_override > 0 else int(params.rows)
+	column_count = column_count_override if column_count_override > 0 else int(params.columns)
 	cell_size = params.cell_size
 	surface_height = params.surface_height
 	var tiles := get_node("Tiles")

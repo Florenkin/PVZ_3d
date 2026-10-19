@@ -61,7 +61,7 @@ func _on_respawn(zombie: Zombie) -> void:
 	_watch(_zombie)
 	_check(_zombie.health == 500 and _zombie.has_pole and not _zombie.is_vaulting and _zombie._slow_remaining == 0.0, "Respawn failed to restore the pole zombie's type, health, pole or cold status.")
 	_check(_zombie.global_position.distance_to(_lawn.cell_to_world(4, 8)) < 0.001, "Pole zombie respawned outside the Snow Pea baseline.")
-	_check(_main.get_node("Enemies").get_child_count() == 4 and get_nodes_in_group("zombies").size() == 4, "Independent respawns duplicated enemies.")
+	_check(_main.get_node("Enemies").get_child_count() == 5 and get_nodes_in_group("zombies").size() == 5, "Independent respawns duplicated enemies.")
 	if _natural:
 		_check(_cycle_hits == 25, "Respawn lost the final natural damage count.")
 		_cycle_hits = 0
@@ -90,6 +90,10 @@ func _run() -> void:
 	GameConfiguration.current().apply_entity(_main)
 	_main.auto_respawn_enabled = false
 	root.add_child(_main)
+	# Isolate these existing cases from the new fifth-lane enemy.
+	_main._newspaper_zombie.movement_enabled = false
+	_main._newspaper_zombie.is_ground_zombie = false
+	_main._newspaper_zombie.set_spawn(_main._lawn.cell_to_world(3, 8) + Vector3(40, 0, 0), PI / 2.0)
 	_lawn = _main._lawn
 	_zombie = _main._pole_zombie
 	for other: Zombie in [_main._zombie, _main._cone_zombie, _main._bucket_zombie]:
@@ -272,7 +276,7 @@ func _run() -> void:
 			plant.combat_enabled = true
 	await _step(5400)
 	_check(_respawns[0] >= 6 and _respawns[1] >= 3 and _respawns[2] >= 2 and _respawns[3] >= 3 and _vaults >= 1 and _landings >= 1, "Four-lane natural combat did not independently refresh enemies and include a completed nut vault.")
-	_check(_main.get_node("Enemies").get_child_count() == 4 and _main._projectiles.get_child_count() < 35 and _main._debris.get_child_count() < 40, "Long combat accumulated enemies, projectiles or expired parts.")
+	_check(_main.get_node("Enemies").get_child_count() == 5 and _main._projectiles.get_child_count() < 35 and _main._debris.get_child_count() < 40, "Long combat accumulated enemies, projectiles or expired parts.")
 	_natural = false
 	_main._reset_view()
 	await _step(3)

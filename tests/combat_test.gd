@@ -70,12 +70,20 @@ func _spawn_pea(position: Vector3, speed: float = 10.0) -> PeaProjectile:
 
 
 func _run() -> void:
-	GameConfiguration.current().use_values_for_tests(GameConfiguration.current().default_values())
+	# This suite verifies the retained physical-parts mode; the imported model's
+	# default lifecycle is exercised separately by animated_zombie_test.gd.
+	var legacy_values := GameConfiguration.current().default_values()
+	legacy_values.demo_zombie_animation.enabled = false
+	GameConfiguration.current().use_values_for_tests(legacy_values)
 	_main = load("res://scenes/main.tscn").instantiate() as Node3D
 	GameConfiguration.current().apply_entity(_main)
 	# Keep individual combat cases isolated from the main scene's respawn loop.
 	_main.auto_respawn_enabled = false
 	root.add_child(_main)
+	# Isolate these existing cases from the new fifth-lane enemy.
+	_main._newspaper_zombie.movement_enabled = false
+	_main._newspaper_zombie.is_ground_zombie = false
+	_main._newspaper_zombie.set_spawn(_main._lawn.cell_to_world(3, 8) + Vector3(40, 0, 0), PI / 2.0)
 	_main._pole_zombie.movement_enabled = false
 	_main._pole_zombie.is_ground_zombie = false
 	_main._pole_zombie.set_spawn(_main._lawn.cell_to_world(4, 8) + Vector3(3, 0, 0), PI / 2.0)

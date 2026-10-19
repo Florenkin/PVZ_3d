@@ -1,0 +1,8 @@
+Tool: built-in image_gen (imagegen skill), precise-object-edit.
+Input: normal-zombie-transparent.png
+Output: normal-zombie-unified-skin.png
+transparent_background: true
+
+Final prompt:
+Use case: precise-object-edit. Input image 1 is the EDIT TARGET: the already-approved full-body ordinary zombie cutout with alpha transparency. Make exactly one local color correction: on the zombie's anatomical LEFT lower leg, which is on the RIGHT side of the image, recolor the off-white/ivory exposed shin segment immediately BELOW its green kneecap and ABOVE the loose blue trouser cuff into the same muted gray-green skin tone as the adjacent kneecap, hands and face. This is the pale bone-like strip near the bottom right of the character. The entire exposed shin must become continuous gray-green zombie skin with naturally matched existing light, shadow and surface texture; no ivory or white strip should remain. Do not change the leg's shape or pose, the kneecap, clothing edges, blue trouser cuff, shoe, or other parts. Preserve the exact approved character, face, expression, anatomy, pose, camera angle, framing, proportions, colors everywhere else, brown jacket, striped tie, ragged blue trousers, shoes, sparse hairs and all silhouette details. Keep the original canvas framing and character position. Preserve the genuine alpha-transparent background, including all gaps between limbs, fingers and hairs. No floor, no environment, no external shadow, no text, no solid or checkerboard background. This is a surgical recolor of the pale shin only, not a redesign or a new character render.
+
